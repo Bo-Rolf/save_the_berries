@@ -1,10 +1,22 @@
 package com.mycompany.app;
 
-/**
- * Hello world!
- */
+// Bootstrap of the project, contains the main method
 public class App {
-    public static void main(String[] args) {
-        System.out.println("Hello World!");
+
+    public static void main(String []args) {
+        App app = new App();
+    }
+    public App(){
+        // Create the MVC Model
+        // Declare the three parts of the MVC paradigm
+        Model model = new Model();
+        // Create the MVC View
+        View view = new View("Game", model);
+        // Create the MVC Controller
+        Controller controller = new Controller(model);
+
+
+        // Start the animation
+        model.startTimer();
     }
 }
