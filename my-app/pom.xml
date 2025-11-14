@@ -14,6 +14,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>17</maven.compiler.release>
+
   </properties>
 
   <dependencyManagement>
@@ -29,6 +30,24 @@
   </dependencyManagement>
 
   <dependencies>
+  
+    <dependency>
+          <groupId>com.badlogicgames.gdx</groupId>
+          <artifactId>gdx</artifactId>
+          <version>1.12.1</version>
+      </dependency>
+        <dependency>
+          <groupId>com.badlogicgames.gdx</groupId>
+          <artifactId>gdx-backend-lwjgl3</artifactId>
+          <version>1.12.1</version>
+      </dependency>
+      <dependency>
+          <groupId>com.badlogicgames.gdx</groupId>
+          <artifactId>gdx-platform</artifactId>
+          <version>1.12.1</version>
+          <classifier>natives-desktop</classifier>
+      </dependency>
+
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
