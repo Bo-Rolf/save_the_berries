@@ -1,12 +1,13 @@
 package com.mycompany.app.view;
 
-import com.mycompany.app.Model;
-import com.mycompany.app.view.ZombieView;
-import com.mycompany.app.view.PeaShooterView;
+import com.mycompany.app.model.Model;
+import com.mycompany.app.model.Zombie;
+import com.mycompany.app.model.BasicZombie;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -21,6 +22,7 @@ public class View implements ApplicationListener {
     private Viewport viewport;
     private Texture backgroundTexture;
     private ZombieView zombieView;
+    private Zombie zombie;  
     private PeaShooterView peaShooterView;
 
     @Override
@@ -28,6 +30,7 @@ public class View implements ApplicationListener {
         viewport = new FitViewport(800, 600); //Load texture 
         spriteBatch = new SpriteBatch();
         backgroundTexture = new Texture("board.png");
+        zombie = new BasicZombie(100, "Zombie1", new Vector2(700, 200), 50f, 10, 1f);
         zombieView = new ZombieView();
         peaShooterView = new PeaShooterView();
 
@@ -52,15 +55,18 @@ public class View implements ApplicationListener {
 
     @Override
     public void render() {
+        float delta = Gdx.graphics.getDeltaTime();
+        zombie.update(delta);
         ScreenUtils.clear(Color.BLACK);
         viewport.apply();
         spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
         spriteBatch.begin();
         float worldWidth = viewport.getWorldWidth();
         float worldHeight = viewport.getWorldHeight();
+
         spriteBatch.draw(backgroundTexture, 0, 0, worldWidth, worldHeight);
-        zombieView.draw(spriteBatch, null);
-        //peaShooterView.draw(spriteBatch, null);
+        zombieView.draw(spriteBatch, zombie);
+        peaShooterView.draw(spriteBatch, null);
 
         spriteBatch.end();
     }
