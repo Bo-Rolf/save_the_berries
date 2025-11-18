@@ -1,5 +1,8 @@
-package com.mycompany.app;
+package com.mycompany.app.view;
 
+import com.mycompany.app.Model;
+import com.mycompany.app.view.ZombieView;
+import com.mycompany.app.view.PeaShooterView;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -17,17 +20,16 @@ public class View implements ApplicationListener {
     private SpriteBatch spriteBatch;
     private Viewport viewport;
     private Texture backgroundTexture;
+    private ZombieView zombieView;
+    private PeaShooterView peaShooterView;
 
     @Override
     public void create() {
-        viewport = new FitViewport(800, 600);
+        viewport = new FitViewport(800, 600); //Load texture 
         spriteBatch = new SpriteBatch();
-        try {
-            backgroundTexture = new Texture("board.png");
-            System.out.println("Texture loaded!");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        backgroundTexture = new Texture("board.png");
+        zombieView = new ZombieView();
+        peaShooterView = new PeaShooterView();
 
     }
 
@@ -36,7 +38,6 @@ public class View implements ApplicationListener {
         config.setTitle("Game");
         config.setWindowedMode(800, 600);
         config.useVsync(true);
-
         new Lwjgl3Application(new View(new Model()), config);
     }
 
@@ -52,31 +53,33 @@ public class View implements ApplicationListener {
     @Override
     public void render() {
         ScreenUtils.clear(Color.BLACK);
-
         viewport.apply();
         spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
-
         spriteBatch.begin();
         float worldWidth = viewport.getWorldWidth();
         float worldHeight = viewport.getWorldHeight();
-
-        //spriteBatch.draw(backgroundTexture, 0, 0);
-        // Här ritar du dina sprites, t.ex:
         spriteBatch.draw(backgroundTexture, 0, 0, worldWidth, worldHeight);
+        zombieView.draw(spriteBatch, null);
+        //peaShooterView.draw(spriteBatch, null);
+
         spriteBatch.end();
     }
 
     @Override
     public void pause() {
+
     }
 
     @Override
     public void resume() {
+
     }
 
     @Override
     public void dispose() {
         spriteBatch.dispose();
         backgroundTexture.dispose();
+        zombieView.dispose();
+        //peaShooterView.dispose();
     }
 }

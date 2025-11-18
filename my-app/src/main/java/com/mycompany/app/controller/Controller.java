@@ -1,4 +1,6 @@
-package com.mycompany.app;
+package com.mycompany.app.controller;
+
+import com.mycompany.app.Model;
 
 public class Controller {
 
