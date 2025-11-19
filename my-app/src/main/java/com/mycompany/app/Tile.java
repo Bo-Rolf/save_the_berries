@@ -51,7 +51,7 @@ public class Tile {
 
         this.placeable = p;
 
-        p.setRemovalListener(() -> {
+        p.setTileRemovalListener(() -> {
             this.placeable = null;
         });
 

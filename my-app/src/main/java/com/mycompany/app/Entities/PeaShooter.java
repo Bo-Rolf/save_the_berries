@@ -13,8 +13,8 @@ public class PeaShooter extends Plant implements Shooter {
         super(50, "PeaShooter", position, new Rectangle2D.Double(position.getX(), position.getY(), 50,50), 100, 5, row, column);
     }
 
-    // call each frame from game loop with delta seconds
-    public void update(double delta) {
+    
+    public void update(double delta) { // den räknar tid ifrån förra skottet
         timeSinceLastShot += delta;
     }
 

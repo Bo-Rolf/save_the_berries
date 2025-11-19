@@ -9,7 +9,7 @@ public abstract class Plant extends Entity implements Placeable{
     private final int cooldown; //to place the plant again
     private final int row;
     private final int column;
-    private Runnable removalCallBack;
+    private Runnable tileRemovalListener;
     
     public Plant(int health, String name, Point2D position, Rectangle2D hitBox, int sunCost, int cooldown, int row, int column){
         super(health, name, position, hitBox);
@@ -38,21 +38,20 @@ public abstract class Plant extends Entity implements Placeable{
     @Override
     public void die(){
         super.die();
-        
 
+        removeFromTile();
         //Notify tile-listener that the plant has died
     }
 
-    public void setRemovalListener(Runnable listener){
-        this.removalCallBack = listener;
+    public void setTileRemovalListener(Runnable listener){
+        this.tileRemovalListener = listener;
     }
 
-
-
-    public void remove(){
-        
-        if (removalCallBack != null){
-            removalCallBack.run();
+    public void removeFromTile(){
+        if (tileRemovalListener != null){
+            tileRemovalListener.run();
         }
+        
+        super.die();
     }
 }

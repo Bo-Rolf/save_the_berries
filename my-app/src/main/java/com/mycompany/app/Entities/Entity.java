@@ -11,6 +11,7 @@ public abstract class Entity implements Damageable{
     private final String name;
     private Point2D position; // plantor kanske inte ska ha sån här position utan grid position?
     private Rectangle2D hitBox;
+    private Runnable deathListener;
 
     public Entity(int health, String name, Point2D position, Rectangle2D hitBox){
         this.health = health;
@@ -25,9 +26,7 @@ public abstract class Entity implements Damageable{
             die();
         }
     }
-    public void die(){
-        
-    }
+    
 
     protected void updateHitBox(){
         hitBox.setRect(position.getX(), position.getY(), hitBox.getWidth(), hitBox.getHeight());
@@ -50,5 +49,15 @@ public abstract class Entity implements Damageable{
     }
     public Rectangle2D getHitBox(){
         return hitBox;
+    }
+
+    public void setDeathListener(Runnable listener){
+        this.deathListener = listener;
+    }
+
+    public void die(){
+        if (deathListener != null){
+            deathListener.run();
+        }
     }
 }
