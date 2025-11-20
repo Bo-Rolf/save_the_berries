@@ -1,54 +1,32 @@
 // Varje Tile kan innehålla en Planta och sol
 package com.mycompany.app;
 
+import com.mycompany.app.Entities.Plant;
+import com.mycompany.app.Interfaces.Placeable;
 
 public class Tile {
     private int row;
     private int column;
 
     private boolean sunOnTile;
-    private boolean plantOnTile;
     private boolean isWater;
-    private Plant plant;
-    
+    private Placeable placeable;
+
     public Tile(int row, int column) {
         this.row = row;
         this.column = column;
         this.sunOnTile = false;
-        this.plantOnTile = false;
         this.isWater = false;
     }
 
-    public boolean getPlantOnTile(){
-        return plantOnTile;
-    }
     public boolean getSunOnTile(){
         return sunOnTile;
-    }
-    
-    private void setPlantOnTile(boolean bool){
-        this.plantOnTile = bool;
     }
 
     private void setSunOnTile(boolean bool){
         this.sunOnTile = bool;
     }
 
-    public boolean canPlant(){
-        return !plantOnTile;
-    }
-
-    public boolean canRemovePlant(){
-        return plantOnTile;
-    }
-
-    public void plantPlant(){
-        setPlantOnTile(true);
-    }
-
-    public void removePlant(){
-        setPlantOnTile(false);
-    }
 
     public boolean canPlaceSun(){
         return !sunOnTile;
@@ -66,6 +44,17 @@ public class Tile {
         setSunOnTile(false);
     }
 
+    public void place(Placeable p){
+        if (placeable != null){
+            throw new IllegalArgumentException("TIle already has a plant!");
+        } else {
 
-    
+        this.placeable = p;
+
+        p.setTileRemovalListener(() -> {
+            this.placeable = null;
+        });
+
+        }
+    }
 }

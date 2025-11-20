@@ -33,12 +33,4 @@ public class Lawn {
     public int getCols() {
         return grid[0].length;
     }
-    private void plantplant(Tile tile) {
-        if (tile.getPlantOnTile()) {
-            throw new IllegalArgumentException("Tile already has a plant.");
-        } else {
-            tile.plantPlant();
-
-        }   
-    }
 }
