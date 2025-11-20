@@ -1,7 +1,10 @@
-package com.mycompany.app;
+package com.mycompany.app.controller;
+
+import com.mycompany.app.Model;
 
 public class Controller {
-   private Model model;
+
+    private Model model;
 
     public Controller(Model model) {
         this.model = model;
