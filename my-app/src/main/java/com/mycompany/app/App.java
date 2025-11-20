@@ -11,11 +11,11 @@ public class App {
     public App() {
         // Create the MVC Model
         // Declare the three parts of the MVC paradigm
-        Model model = new Model();
+        // Model model = new Model();
         // Create the MVC View
-        View view = new View(model);
+        // View view = new View(model);
         // Create the MVC Controller
-        Controller controller = new Controller(model);
+        // Controller controller = new Controller(model);
 
     }
 }

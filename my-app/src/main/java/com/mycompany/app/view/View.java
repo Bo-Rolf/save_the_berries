@@ -1,8 +1,8 @@
 package com.mycompany.app.view;
 
 import com.mycompany.app.model.Model;
-import com.mycompany.app.model.Zombie;
-import com.mycompany.app.model.BasicZombie;
+import com.mycompany.app.model.entities.*;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -22,15 +22,15 @@ public class View implements ApplicationListener {
     private Viewport viewport;
     private Texture backgroundTexture;
     private ZombieView zombieView;
-    private Zombie zombie;  
+    private Zombie zombie;
     private PeaShooterView peaShooterView;
 
     @Override
     public void create() {
-        viewport = new FitViewport(800, 600); //Load texture 
+        viewport = new FitViewport(800, 600); // Load texture
         spriteBatch = new SpriteBatch();
         backgroundTexture = new Texture("board.png");
-        zombie = new BasicZombie(100, "Zombie1", new Vector2(700, 200), 50f, 10, 1f);
+        zombie = new NormalZombie(new Vector2(700, 100));
         zombieView = new ZombieView();
         peaShooterView = new PeaShooterView();
 
@@ -86,6 +86,6 @@ public class View implements ApplicationListener {
         spriteBatch.dispose();
         backgroundTexture.dispose();
         zombieView.dispose();
-        //peaShooterView.dispose();
+        peaShooterView.dispose();
     }
 }

@@ -1,54 +1,57 @@
 package com.mycompany.app;
+
 import java.util.ArrayList;
 import java.util.List;
-import com.mycompany.app.Entities.Plant;
-import com.mycompany.app.Entities.Zombie;
-import com.mycompany.app.Entities.Entity;
 
+import com.mycompany.app.model.entities.Entity;
+import com.mycompany.app.model.entities.Plant;
+import com.mycompany.app.model.entities.Zombie;
 
 public class Game {
-    
-private boolean Playing;
-private boolean Paused;
-private boolean Over;
 
-private final List<Plant> plants = new ArrayList<>();
-private final List<Zombie> zombies = new ArrayList<>();
+    private boolean Playing;
+    private boolean Paused;
+    private boolean Over;
 
-private long lastUpdateTime; 
+    private final List<Plant> plants = new ArrayList<>();
+    private final List<Zombie> zombies = new ArrayList<>();
 
-private void startGame(){
-    Playing = true;
-    lastUpdateTime = System.nanoTime();
-    while(Playing){
-        long currentTime = System.nanoTime();
-        double deltaTime = (currentTime - lastUpdateTime) / 1_000_000_000.0; // till sekunder
-        lastUpdateTime = currentTime;
+    private long lastUpdateTime;
 
-        if (!Paused && !Over){
-            updateGameState();
+    private void startGame() {
+        Playing = true;
+        lastUpdateTime = System.nanoTime();
+        while (Playing) {
+            long currentTime = System.nanoTime();
+            double deltaTime = (currentTime - lastUpdateTime) / 1_000_000_000.0; // till sekunder
+            lastUpdateTime = currentTime;
+
+            if (!Paused && !Over) {
+                updateGameState();
             }
-        drawGameState();
+            drawGameState();
         }
     }
-private void endGame(){
 
-    }
-private void updateGameState(){
-
-    }
-private void drawGameState(){
+    private void endGame() {
 
     }
 
+    private void updateGameState() {
 
-    private void removeEntity(Entity e){
+    }
+
+    private void drawGameState() {
+
+    }
+
+    private void removeEntity(Entity e) {
         e = null;
     }
-    
-    private void addEntity(Entity e){
+
+    private void addEntity(Entity e) {
         e.setDeathListener(() -> {
-            //entities.remove(e);
+            // entities.remove(e);
             removeEntity(e);
         });
     }

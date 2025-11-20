@@ -1,6 +1,6 @@
 package com.mycompany.app.view;
 
-import com.mycompany.app.model.PeaShooter;
+import com.mycompany.app.model.entities.PeaShooter;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -16,8 +16,8 @@ public class PeaShooterView {
     }
 
     public void draw(SpriteBatch batch, PeaShooter peaShooter) {
-        float x = 100;   //(float) peaShooter.getPosition().x;
-        float y = 100;   //(float) peaShooter.getPosition().y;
+        float x = peaShooter.getPosition().x;
+        float y = peaShooter.getPosition().y;
         batch.draw(texture, x, y, 100, 100);
     }
 

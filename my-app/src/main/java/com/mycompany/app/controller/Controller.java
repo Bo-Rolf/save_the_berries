@@ -1,6 +1,6 @@
 package com.mycompany.app.controller;
 
-import com.mycompany.app.Model;
+import com.mycompany.app.model.Model;
 
 public class Controller {
 

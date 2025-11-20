@@ -1,6 +1,6 @@
 package com.mycompany.app.view;
 
-import com.mycompany.app.model.Zombie;
+import com.mycompany.app.model.entities.*;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
