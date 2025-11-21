@@ -11,6 +11,7 @@ public abstract class Entity implements Damageable {
     private Vector2 position; // plantor kanske inte ska ha sån här position utan grid position?
     private Rectangle2D hitBox;
     private Runnable deathListener;
+    
 
     public Entity(int health, String name, Vector2 position, Rectangle2D hitBox) {
         this.health = health;

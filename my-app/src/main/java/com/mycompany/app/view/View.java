@@ -3,6 +3,9 @@ package com.mycompany.app.view;
 import com.mycompany.app.model.Model;
 import com.mycompany.app.model.entities.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -21,19 +24,14 @@ public class View implements ApplicationListener {
     private SpriteBatch spriteBatch;
     private Viewport viewport;
     private Texture backgroundTexture;
-    private ZombieView zombieView;
-    private Zombie zombie;
-    private PeaShooterView peaShooterView;
+    private EntityView entityView;
 
     @Override
     public void create() {
         viewport = new FitViewport(800, 600); // Load texture
         spriteBatch = new SpriteBatch();
         backgroundTexture = new Texture("board.png");
-        zombie = new NormalZombie(new Vector2(700, 100));
-        zombieView = new ZombieView();
-        peaShooterView = new PeaShooterView();
-
+        entityView = new EntityView();
     }
 
     public static void main(String[] args) {
@@ -41,7 +39,10 @@ public class View implements ApplicationListener {
         config.setTitle("Game");
         config.setWindowedMode(800, 600);
         config.useVsync(true);
-        new Lwjgl3Application(new View(new Model()), config);
+        Model m = new Model();
+        View v = new View(m);
+        Lwjgl3Application application =new Lwjgl3Application(v, config);
+        
     }
 
     public View(Model model) {
@@ -55,8 +56,17 @@ public class View implements ApplicationListener {
 
     @Override
     public void render() {
+        
+        List<Zombie> zombies = this.model.game.getZombies();
+        List<Plant> plants = this.model.game.getPlants();
+
+
+
+
         float delta = Gdx.graphics.getDeltaTime();
-        zombie.update(delta);
+        for (Zombie z : zombies) {
+            z.update(delta);
+        }
         ScreenUtils.clear(Color.BLACK);
         viewport.apply();
         spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
@@ -65,8 +75,13 @@ public class View implements ApplicationListener {
         float worldHeight = viewport.getWorldHeight();
 
         spriteBatch.draw(backgroundTexture, 0, 0, worldWidth, worldHeight);
-        zombieView.draw(spriteBatch, zombie);
-        peaShooterView.draw(spriteBatch, null);
+        
+        for (Zombie z : zombies) {
+            entityView.draw(new Texture("zombie.png"),spriteBatch, z);
+        }
+        for (Plant p : plants) {
+            entityView.draw(new Texture("pea_shooter.png"),spriteBatch, p);
+        }
 
         spriteBatch.end();
     }
@@ -85,7 +100,6 @@ public class View implements ApplicationListener {
     public void dispose() {
         spriteBatch.dispose();
         backgroundTexture.dispose();
-        zombieView.dispose();
-        peaShooterView.dispose();
+        entityView.dispose();
     }
 }

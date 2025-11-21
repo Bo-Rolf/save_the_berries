@@ -3,7 +3,9 @@ package com.mycompany.app;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.math.Vector2;
 import com.mycompany.app.model.entities.Entity;
+import com.mycompany.app.model.entities.NormalZombie;
 import com.mycompany.app.model.entities.Plant;
 import com.mycompany.app.model.entities.Zombie;
 
@@ -14,10 +16,10 @@ public class Game {
     private boolean Over;
 
     private final List<Plant> plants = new ArrayList<>();
+
     private final List<Zombie> zombies = new ArrayList<>();
-
+    
     private long lastUpdateTime;
-
     private void startGame() {
         Playing = true;
         lastUpdateTime = System.nanoTime();
@@ -49,11 +51,24 @@ public class Game {
         e = null;
     }
 
+
+    public void addZombie(Zombie zombie){
+        zombies.add(zombie);
+        addEntity(zombie);
+    }
+
     private void addEntity(Entity e) {
         e.setDeathListener(() -> {
             // entities.remove(e);
             removeEntity(e);
         });
+    }
+
+    public List<Zombie> getZombies(){
+        return this.zombies;
+    }
+    public List<Plant> getPlants(){
+        return this.plants;
     }
 
 }
