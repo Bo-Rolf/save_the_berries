@@ -1,9 +1,12 @@
 package com.mycompany.app.model;
 
-public class Model {
+import com.mycompany.app.Game;
 
+public class Model {
+    public Game game;
     // Model class implementation
     public Model() {
+        game = new Game();
         // Model initialization code
     }
 }
