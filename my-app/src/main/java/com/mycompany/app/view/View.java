@@ -34,19 +34,14 @@ public class View implements ApplicationListener {
         entityView = new EntityView();
     }
 
-    public static void main(String[] args) {
+
+    public View(Model model) {
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setTitle("Game");
         config.setWindowedMode(800, 600);
         config.useVsync(true);
-        Model m = new Model();
-        View v = new View(m);
-        Lwjgl3Application application =new Lwjgl3Application(v, config);
-        
-    }
-
-    public View(Model model) {
-        this.model = model;
+        this.model=model;
+        Lwjgl3Application application =new Lwjgl3Application(this, config);
     }
 
     @Override
