@@ -18,6 +18,7 @@ public class App {
         // Create the MVC Model
         // Declare the three parts of the MVC paradigm
         Model model = new Model();
+        
         // Create the MVC View
         View view = new View(model);
         // Create the MVC Controller
