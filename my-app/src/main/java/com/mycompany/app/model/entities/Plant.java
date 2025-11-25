@@ -53,8 +53,6 @@ public abstract class Plant extends Entity implements Placeable {
         if (tileRemovalListener != null) {
             tileRemovalListener.run();
         }
-
-        super.die();
     }
 
     public void update(float deltaTime) {

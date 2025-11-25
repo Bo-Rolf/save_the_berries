@@ -14,9 +14,9 @@ public abstract class Projectile extends Entity {
         this.damage = damage;
     }
 
-    public void move(float delta) {
+    private void move(float delta) {
         Vector2 pos = getPosition();
-        pos.x -= MoveSpeed * delta;
+        pos.x += MoveSpeed * delta;
         updatePosition(pos);
     }
 
@@ -24,9 +24,11 @@ public abstract class Projectile extends Entity {
         return getHitBox().intersects(zombie.getHitBox());
     }
 
-    private void onHit(Zombie target) {
+    public void onHit(Zombie target) {
+        if (checkCollision(target)==true) {
         target.takeDamage(damage);
         takeDamage(1); // så den dödar sig själv
+        }
     }
 
     public int getDamage() {
@@ -35,5 +37,8 @@ public abstract class Projectile extends Entity {
 
     public double getSpeed() {
         return MoveSpeed;
+    }
+    public void update(float deltaTime) {
+        move(deltaTime);
     }
 }

@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.mycompany.app.model.entities.Entity;
 import com.mycompany.app.model.entities.NormalZombie;
 import com.mycompany.app.model.entities.Plant;
+import com.mycompany.app.model.entities.Projectile;
 import com.mycompany.app.model.entities.Zombie;
 
 public class Game {
@@ -18,7 +19,10 @@ public class Game {
     private final List<Plant> plants = new ArrayList<>();
 
     private final List<Zombie> zombies = new ArrayList<>();
+
+    private final List<Projectile> projectiles = new ArrayList<>();
     
+    private double deltaTime=0.016;
     private long lastUpdateTime;
     private void startGame() {
         Playing = true;
@@ -29,7 +33,7 @@ public class Game {
             lastUpdateTime = currentTime;
 
             if (!Paused && !Over) {
-                updateGameState();
+                updateGameState(deltaTime);
             }
             drawGameState();
         }
@@ -39,8 +43,9 @@ public class Game {
 
     }
 
-    private void updateGameState() {
-
+    private void updateGameState(double deltaTime) {
+        updateProjectiles(deltaTime);
+        updateZombies(deltaTime);
     }
 
     private void drawGameState() {
@@ -48,13 +53,49 @@ public class Game {
     }
 
     private void removeEntity(Entity e) {
+        if (e instanceof Zombie)
+            zombies.remove(e);
+        else if (e instanceof Plant)
+            plants.remove(e);
+        else if (e instanceof Projectile)
+            projectiles.remove(e);
         e = null;
     }
 
+    private void updateZombies(double deltaTime) {
+        for (Zombie zombie : zombies) {
+            for (Plant plant : plants) {
+                if (zombie.checkCollision(plant)) {
+                    if (zombie.canEat()) {
+                    zombie.eat(plant);
+                    }
+                }
+                else {
+                    zombie.update(deltaTime);
+                } 
+            }
+        }
+    }
+
+    private void updateProjectiles(double deltaTime) {
+        for (Projectile projectile : projectiles) {
+            projectile.update((float) deltaTime);
+            for (Zombie zombie : zombies) {
+                if (projectile.checkCollision(zombie)) {
+                    projectile.onHit(zombie);
+                }
+            }
+        }
+    }
 
     public void addZombie(Zombie zombie){
         zombies.add(zombie);
         addEntity(zombie);
+    }
+
+    public void addPlant(Plant plant){
+        plants.add(plant);
+        addEntity(plant);
     }
 
     private void addEntity(Entity e) {
