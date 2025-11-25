@@ -100,12 +100,12 @@ public class View implements ApplicationListener {
     private void drawGrid() {
         int cols = lawn.getCols();
         int rows = lawn.getRows();
-        float gridWidth = viewport.getWorldWidth() * 0.75f;
-        float gridHeight = viewport.getWorldHeight() * 0.75f;
+        float gridWidth = viewport.getWorldWidth() * 0.80f;
+        float gridHeight = viewport.getWorldHeight() * 0.72f;
         float tileW = gridWidth / cols;
         float tileH = gridHeight / rows;
         float gridX = ((viewport.getWorldWidth() - gridWidth) / 2f)+ 15;
-        float gridY = ((viewport.getWorldHeight() - gridHeight) / 2f)-40;
+        float gridY = ((viewport.getWorldHeight() - gridHeight) / 2f)-50;
 
         shapeRenderer.setProjectionMatrix(viewport.getCamera().combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);

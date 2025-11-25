@@ -3,8 +3,8 @@ package com.mycompany.app.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mycompany.app.Lawn;
-import com.mycompany.app.Tile;
+import com.mycompany.app.model.Lawn;
+import com.mycompany.app.model.Tile;
 import com.mycompany.app.model.Model;
 import com.mycompany.app.model.entities.PeaShooter;
 import com.mycompany.app.model.entities.Plant;
@@ -16,9 +16,9 @@ public class Controller {
     private final Lawn lawn;
     private final Viewport viewport;
 
-    public Controller(Model model, Lawn lawn, Viewport viewport) {
+    public Controller(Model model, Viewport viewport) {
         this.model = model;
-        this.lawn = lawn;
+        this.lawn = model.getLawn();
         this.viewport = viewport;
     }
 
