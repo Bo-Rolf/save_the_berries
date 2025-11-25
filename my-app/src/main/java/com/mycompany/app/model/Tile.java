@@ -1,5 +1,5 @@
 // Varje Tile kan innehålla en Planta och sol
-package com.mycompany.app;
+package com.mycompany.app.model;
 
 import com.mycompany.app.Interfaces.Placeable;
 import com.mycompany.app.model.entities.Plant;
