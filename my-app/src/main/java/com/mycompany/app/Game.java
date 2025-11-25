@@ -19,6 +19,9 @@ public class Game {
 
     private final List<Zombie> zombies = new ArrayList<>();
     
+    public Game(){
+        zombies.add(new NormalZombie(new Vector2(50,50)));
+    }
     private long lastUpdateTime;
     private void startGame() {
         Playing = true;
