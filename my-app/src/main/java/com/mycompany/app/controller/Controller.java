@@ -3,8 +3,8 @@ package com.mycompany.app.controller;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.mycompany.app.Lawn;
-import com.mycompany.app.Tile;
+import com.mycompany.app.model.Lawn;
+import com.mycompany.app.model.Tile;
 import com.mycompany.app.model.Model;
 import com.mycompany.app.model.entities.PeaShooter;
 import com.mycompany.app.model.entities.Plant;
@@ -43,8 +43,15 @@ public class Controller {
                     Plant newPlant = new PeaShooter(new Vector2(x, y), row, col);
                      model.game.addPlant(newPlant);
                     clickedTile.place(newPlant);
+                                    System.out.println("Placed PeaShooter at row " + row + ", col " + col);
+            } else {
+                System.out.println("Tile already has a plant at row " + row + ", col " + col);
+            }
+
+                    
                 }
+                
             }
         }
     }
-}
+
