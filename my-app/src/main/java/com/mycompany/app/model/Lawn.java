@@ -33,4 +33,5 @@ public class Lawn {
     public int getCols() {
         return grid[0].length;
     }
+    
 }

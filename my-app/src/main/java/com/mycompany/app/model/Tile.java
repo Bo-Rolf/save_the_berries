@@ -10,7 +10,7 @@ public class Tile {
 
     private boolean sunOnTile;
     private boolean isWater;
-    private Placeable placeable;
+    public Placeable placeable;
 
     public Tile(int row, int column) {
         this.row = row;
@@ -41,6 +41,10 @@ public class Tile {
 
     public void removeSun() {
         setSunOnTile(false);
+    }
+
+    public Placeable getPlaceable() {
+    return placeable;
     }
 
     public void place(Placeable p) {

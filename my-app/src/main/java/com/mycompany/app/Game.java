@@ -38,6 +38,10 @@ public class Game {
         }
     }
 
+    public void addPlant(Plant p) {
+        plants.add(p);
+    }
+
     private void endGame() {
 
     }
