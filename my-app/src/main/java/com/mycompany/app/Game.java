@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.math.Vector2;
+import com.mycompany.app.Interfaces.Shooter;
 import com.mycompany.app.model.entities.Entity;
 import com.mycompany.app.model.entities.NormalZombie;
 import com.mycompany.app.model.entities.Plant;
@@ -46,6 +47,7 @@ public class Game {
     private void updateGameState(double deltaTime) {
         updateProjectiles(deltaTime);
         updateZombies(deltaTime);
+        updatePlants(deltaTime);
     }
 
     private void drawGameState() {
@@ -60,6 +62,18 @@ public class Game {
         else if (e instanceof Projectile)
             projectiles.remove(e);
         e = null;
+    }
+
+    private void updatePlants(double deltaTime) {
+        for (Plant plant : plants) {
+            plant.update(deltaTime);
+            if (plant instanceof Shooter shooter) {  
+                Projectile p = shooter.shoot();
+                if (p != null) {
+                    addProjectile(p);
+                }
+            }
+        }
     }
 
     private void updateZombies(double deltaTime) {
@@ -91,6 +105,11 @@ public class Game {
     public void addZombie(Zombie zombie){
         zombies.add(zombie);
         addEntity(zombie);
+    }
+
+    public void addProjectile(Projectile projectile){
+        projectiles.add(projectile);
+        addEntity(projectile);
     }
 
     public void addPlant(Plant plant){

@@ -55,7 +55,7 @@ public abstract class Plant extends Entity implements Placeable {
         }
     }
 
-    public void update(float deltaTime) {
+    public void update(double deltaTime) {
 
     }
 }
