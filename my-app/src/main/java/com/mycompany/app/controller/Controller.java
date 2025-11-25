@@ -43,8 +43,15 @@ public class Controller {
                     Plant newPlant = new PeaShooter(new Vector2(x, y), row, col);
                      model.game.addPlant(newPlant);
                     clickedTile.place(newPlant);
+                                    System.out.println("Placed PeaShooter at row " + row + ", col " + col);
+            } else {
+                System.out.println("Tile already has a plant at row " + row + ", col " + col);
+            }
+
+                    
                 }
+                
             }
         }
     }
-}
+

@@ -14,11 +14,15 @@ public class EntityView {
         this.texture = new Texture("pea_shooter.png");
     }
 
-    public void draw(Texture texture,SpriteBatch batch, Entity e) {
-        float x = e.getPosition().x;
-        float y = e.getPosition().y;
-        batch.draw(texture, x, y, 100, 100);
+    public void draw(Texture texture, SpriteBatch batch, Entity entity) {
+        Vector2 pos = entity.getPosition();
+        batch.draw(texture, pos.x, pos.y);
     }
+
+    public void draw(Texture texture, SpriteBatch batch, Entity entity, float x, float y, float width, float height) {
+        batch.draw(texture, x, y, width, height);
+    }
+
 
     public void dispose() {
         texture.dispose();
