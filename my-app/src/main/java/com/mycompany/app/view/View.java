@@ -74,7 +74,7 @@ public class View implements ApplicationListener {
     public void render() {
         
         float delta = Gdx.graphics.getDeltaTime();
-        System.out.print(delta);
+
         model.game.updateGameState(delta);
         List<Zombie> zombies = model.game.getZombies();
         List<Projectile> projectiles = model.game.getProjectiles();

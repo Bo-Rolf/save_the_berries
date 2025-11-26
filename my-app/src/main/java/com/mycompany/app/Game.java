@@ -38,6 +38,11 @@ public class Game {
             }
         }
     }
+    public Game() {
+        // Lägg till initiala zombies och plants här om det behövs
+        addZombie(new NormalZombie(new Vector2(800, 300)));
+        addZombie(new NormalZombie(new Vector2(400, 300)));
+    }
 
     private void endGame() {
 
@@ -47,17 +52,28 @@ public class Game {
         updateProjectiles(deltaTime);
         updateZombies(deltaTime);
         updatePlants(deltaTime);
+        updateDeathCheck();
+        //System.out.println("projectiles "+ projectiles.size());
+        
+        //System.out.println("plants "+ plants.size());
     }
 
-
+    
+    private void updateDeathCheck() {
+        // Tar bort döda entities från listorna
+        plants.removeIf(plant -> !plant.isAlive());
+        zombies.removeIf(zombie -> !zombie.isAlive());
+        projectiles.removeIf(projectile -> !projectile.isAlive());
+    }
 
     private void removeEntity(Entity e) {
         if (e instanceof Zombie)
-            zombies.remove(e);
+            //zombies.remove(e);
+            e=null;
         else if (e instanceof Plant)
-            plants.remove(e);
+           ((Plant) e).removeFromTile();
         else if (e instanceof Projectile)
-            projectiles.remove(e);
+            //projectiles.remove(e);
         e = null;
     }
 
@@ -76,18 +92,27 @@ public class Game {
 
     private void updateZombies(double deltaTime) {
         for (Zombie zombie : zombies) {
+            zombie.update(deltaTime);
+            //System.out.println("zhealth "+zombie.getHealth());
+            boolean hittatplanta = false;
             for (Plant plant : plants) {
                 if (zombie.checkCollision(plant)) {
+                    System.out.println(zombie.canEat());
+                    System.out.println(plant.getHealth());
                     if (zombie.canEat()) {
                     zombie.eat(plant);
                     }
+                    hittatplanta = true;
                 }
-                else {
-                    zombie.update(deltaTime);
-                } 
+                
+                
             }
+            if(!hittatplanta){
+                zombie.move(deltaTime);
+            }
+
         }
-    }
+        }
 
     private void updateProjectiles(double deltaTime) {
         for (Projectile projectile : projectiles) {

@@ -19,13 +19,14 @@ public abstract class Zombie extends Entity {
         this.attackSpeed = attackSpeed;
     }
 
-    private void move(double deltaTime) {
+    public void move(double deltaTime) {
 
         Vector2 pos = getPosition();
         pos.x -= moveSpeed * deltaTime;
     }
 
     public boolean canEat() {
+        
         return (TimeSinceLastBite >= attackSpeed);
         }
 
@@ -33,8 +34,9 @@ public abstract class Zombie extends Entity {
         return (getHitBox().intersects(((Entity) target).getHitBox()));
     }
 
-    public void eat(Damageable target) {
+    public void eat(Plant target) {
         target.takeDamage(damage);
+        System.out.println("health "+target.getHealth());
         TimeSinceLastBite = 0.0;
     }
 
@@ -48,6 +50,6 @@ public abstract class Zombie extends Entity {
 
     public void update(double deltaTime) {
         TimeSinceLastBite += deltaTime;
-        move(deltaTime);
+        
     }
 }

@@ -41,7 +41,7 @@ public abstract class Projectile extends Entity {
         Vector2 pos = getPosition();
 
         if(pos.x>1000 || pos.x<-200 ||pos.y>700 || pos.y <-200){
-            //this.die();
+            takeDamage(1);
         }
         move(deltaTime);
     }

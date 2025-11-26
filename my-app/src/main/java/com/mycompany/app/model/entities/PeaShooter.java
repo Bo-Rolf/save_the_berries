@@ -11,7 +11,7 @@ public class PeaShooter extends Plant implements Shooter {
     private double timeSinceLastShot = 0;
 
     public PeaShooter(Vector2 position, int row, int column) {
-        super(50, "PeaShooter", position, new Rectangle2D.Double(position.x, position.x, 50, 50), 100, 5, row,
+        super(50, "PeaShooter", position, new Rectangle2D.Double(position.x, position.x, 100, 100), 100, 5, row,
                 column);
     }
     @Override

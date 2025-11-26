@@ -8,6 +8,7 @@ import com.mycompany.app.model.Tile;
 import com.mycompany.app.model.Model;
 import com.mycompany.app.model.entities.PeaShooter;
 import com.mycompany.app.model.entities.Plant;
+import com.mycompany.app.model.entities.Wallnut;
 
 
 public class Controller {
@@ -40,7 +41,7 @@ public class Controller {
                 if (clickedTile != null && clickedTile.placeable == null) {
                     float x = startX + col * tileWidth + tileWidth / 2f;
                     float y = startY + row * tileHeight + tileHeight / 2f;
-                    Plant newPlant = new PeaShooter(new Vector2(x, y), row, col);
+                    Plant newPlant = new Wallnut(new Vector2(x, y), row, col);
                      model.game.addPlant(newPlant);
                     clickedTile.place(newPlant);
                                     System.out.println("Placed PeaShooter at row " + row + ", col " + col);
