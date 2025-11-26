@@ -4,7 +4,6 @@ C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\Game.java
 C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\Interfaces\Damageable.java
 C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\Interfaces\Placeable.java
 C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\Interfaces\Shooter.java
-C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\Lawn.java
 C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\model\entities\Entity.java
 C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\model\entities\NormalZombie.java
 C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\model\entities\PeaProjectile.java
@@ -13,7 +12,8 @@ C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\model\entiti
 C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\model\entities\Projectile.java
 C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\model\entities\Wallnut.java
 C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\model\entities\Zombie.java
+C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\model\Lawn.java
 C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\model\Model.java
-C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\Tile.java
+C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\model\Tile.java
 C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\view\EntityView.java
 C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\view\View.java

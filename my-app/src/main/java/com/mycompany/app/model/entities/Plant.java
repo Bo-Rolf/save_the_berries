@@ -44,20 +44,18 @@ public abstract class Plant extends Entity implements Placeable {
         removeFromTile();
         // Notify tile-listener that the plant has died
     }
-
+    @Override
     public void setTileRemovalListener(Runnable listener) {
         this.tileRemovalListener = listener;
     }
-
+    @Override
     public void removeFromTile() {
         if (tileRemovalListener != null) {
             tileRemovalListener.run();
         }
-
-        super.die();
     }
 
-    public void update(float deltaTime) {
+    public void update(double deltaTime) {
 
     }
 }

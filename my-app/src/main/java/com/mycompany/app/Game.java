@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.math.Vector2;
+import com.mycompany.app.Interfaces.Shooter;
 import com.mycompany.app.model.entities.Entity;
 import com.mycompany.app.model.entities.NormalZombie;
 import com.mycompany.app.model.entities.Plant;
+import com.mycompany.app.model.entities.Projectile;
 import com.mycompany.app.model.entities.Zombie;
+import java.lang.System;
 
 public class Game {
 
@@ -18,10 +21,9 @@ public class Game {
     private final List<Plant> plants = new ArrayList<>();
 
     private final List<Zombie> zombies = new ArrayList<>();
+
+    private final List<Projectile> projectiles = new ArrayList<>();
     
-    public Game(){
-        zombies.add(new NormalZombie(new Vector2(50,50)));
-    }
     private long lastUpdateTime;
     private void startGame() {
         Playing = true;
@@ -32,9 +34,8 @@ public class Game {
             lastUpdateTime = currentTime;
 
             if (!Paused && !Over) {
-                updateGameState();
+                updateGameState(deltaTime);
             }
-            drawGameState();
         }
     }
 
@@ -42,22 +43,76 @@ public class Game {
 
     }
 
-    private void updateGameState() {
-
+    public void updateGameState(double deltaTime) {
+        updateProjectiles(deltaTime);
+        updateZombies(deltaTime);
+        updatePlants(deltaTime);
     }
 
-    private void drawGameState() {
 
-    }
 
     private void removeEntity(Entity e) {
+        if (e instanceof Zombie)
+            zombies.remove(e);
+        else if (e instanceof Plant)
+            plants.remove(e);
+        else if (e instanceof Projectile)
+            projectiles.remove(e);
         e = null;
     }
 
+    private void updatePlants(double deltaTime) {
+        for (Plant plant : plants) {
+            
+            plant.update(deltaTime);
+            if (plant instanceof Shooter shooter) { 
+                Projectile p = shooter.shoot();
+                if (p != null) {
+                    addProjectile(p);
+                }
+            }
+        }
+    }
+
+    private void updateZombies(double deltaTime) {
+        for (Zombie zombie : zombies) {
+            for (Plant plant : plants) {
+                if (zombie.checkCollision(plant)) {
+                    if (zombie.canEat()) {
+                    zombie.eat(plant);
+                    }
+                }
+                else {
+                    zombie.update(deltaTime);
+                } 
+            }
+        }
+    }
+
+    private void updateProjectiles(double deltaTime) {
+        for (Projectile projectile : projectiles) {
+            projectile.update((float) deltaTime);
+            for (Zombie zombie : zombies) {
+                if (projectile.checkCollision(zombie)) {
+                    projectile.onHit(zombie);
+                }
+            }
+        }
+    }
 
     public void addZombie(Zombie zombie){
         zombies.add(zombie);
         addEntity(zombie);
+    }
+
+    public void addProjectile(Projectile projectile){
+        projectiles.add(projectile);
+        addEntity(projectile);
+    }
+
+    public void addPlant(Plant plant){
+        plants.add(plant);
+        addEntity(plant);
     }
 
     private void addEntity(Entity e) {
@@ -72,6 +127,9 @@ public class Game {
     }
     public List<Plant> getPlants(){
         return this.plants;
+    }
+    public List<Projectile> getProjectiles(){
+        return this.projectiles;
     }
 
 }

@@ -6,6 +6,8 @@ import com.mycompany.app.model.Model;
 
 import com.mycompany.app.view.View;
 
+import com.mycompany.app.controller.Controller;
+
 public class App {
 
     public static void main(String[] args) {
@@ -22,7 +24,7 @@ public class App {
         // Create the MVC View
         View view = new View(model);
         // Create the MVC Controller
-        // Controller controller = new Controller(model);
+        //Controller controller = new Controller(model);
 
     }
 }

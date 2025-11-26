@@ -8,7 +8,8 @@ import com.mycompany.app.Interfaces.Damageable;
 public abstract class Zombie extends Entity {
     private float moveSpeed;
     private int damage;
-    private double attackSpeed;
+    private double attackSpeed; //tiden mellan attacker i sekunder
+    private double TimeSinceLastBite = 0.0;
 
     public Zombie(int health, String name, Vector2 position, Rectangle2D hitBox, float moveSpeed, int damage,
             double attackSpeed) {
@@ -18,13 +19,23 @@ public abstract class Zombie extends Entity {
         this.attackSpeed = attackSpeed;
     }
 
-    public void move(float deltaTime) {
+    private void move(double deltaTime) {
+
         Vector2 pos = getPosition();
         pos.x -= moveSpeed * deltaTime;
     }
 
-    private void attack(Damageable target) {
+    public boolean canEat() {
+        return (TimeSinceLastBite >= attackSpeed);
+        }
+
+    public boolean checkCollision(Damageable target) {
+        return (getHitBox().intersects(((Entity) target).getHitBox()));
+    }
+
+    public void eat(Damageable target) {
         target.takeDamage(damage);
+        TimeSinceLastBite = 0.0;
     }
 
     public int getDamage() {
@@ -35,7 +46,8 @@ public abstract class Zombie extends Entity {
         return attackSpeed;
     }
 
-    public void update(float deltaTime) {
+    public void update(double deltaTime) {
+        TimeSinceLastBite += deltaTime;
         move(deltaTime);
     }
 }

@@ -1,6 +1,6 @@
 // En matrix som representerar rutnätet för gräsmattan
 // Varje cell i matrisen innehåller ett Tile-objekt
-package com.mycompany.app;
+package com.mycompany.app.model;
 
 
 
@@ -33,4 +33,5 @@ public class Lawn {
     public int getCols() {
         return grid[0].length;
     }
+    
 }

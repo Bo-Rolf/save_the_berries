@@ -58,7 +58,7 @@ public abstract class Entity implements Damageable {
     public void setDeathListener(Runnable listener) {
         this.deathListener = listener;
     }
-
+    @Override
     public void die() {
         if (deathListener != null) {
             deathListener.run();

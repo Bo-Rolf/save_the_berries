@@ -1,5 +1,5 @@
 // Varje Tile kan innehålla en Planta och sol
-package com.mycompany.app;
+package com.mycompany.app.model;
 
 import com.mycompany.app.Interfaces.Placeable;
 import com.mycompany.app.model.entities.Plant;
@@ -10,7 +10,7 @@ public class Tile {
 
     private boolean sunOnTile;
     private boolean isWater;
-    private Placeable placeable;
+    public Placeable placeable;
 
     public Tile(int row, int column) {
         this.row = row;
@@ -43,11 +43,14 @@ public class Tile {
         setSunOnTile(false);
     }
 
+    public Placeable getPlaceable() {
+        return this.placeable;
+    }
+
     public void place(Placeable p) {
         if (placeable != null) {
-            throw new IllegalArgumentException("TIle already has a plant!");
+            throw new IllegalArgumentException("Tile already has a plant!");
         } else {
-
             this.placeable = p;
 
             p.setTileRemovalListener(() -> {
