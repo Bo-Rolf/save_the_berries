@@ -44,14 +44,13 @@ public class Tile {
     }
 
     public Placeable getPlaceable() {
-    return placeable;
+        return this.placeable;
     }
 
     public void place(Placeable p) {
         if (placeable != null) {
-            throw new IllegalArgumentException("TIle already has a plant!");
+            throw new IllegalArgumentException("Tile already has a plant!");
         } else {
-
             this.placeable = p;
 
             p.setTileRemovalListener(() -> {

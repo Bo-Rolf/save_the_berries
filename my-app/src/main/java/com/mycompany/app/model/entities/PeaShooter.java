@@ -15,8 +15,8 @@ public class PeaShooter extends Plant implements Shooter {
                 column);
     }
 
-    public void update(double delta) { // den räknar tid ifrån förra skottet
-        timeSinceLastShot += delta;
+    public void update(double deltaTime) { // den räknar tid ifrån förra skottet
+        timeSinceLastShot += deltaTime;
     }
 
     @Override
