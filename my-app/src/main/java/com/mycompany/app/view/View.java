@@ -17,6 +17,7 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.mycompany.app.controller.Controller;
 
 import java.util.List;
+import java.util.Vector;
 
 public class View implements ApplicationListener {
 
@@ -28,23 +29,22 @@ public class View implements ApplicationListener {
     private Texture backgroundTexture;
     private Texture zombieTexture;
     private Texture plantTexture;
+    private Texture peaTexture;
 
     private EntityView entityView;
     private ShapeRenderer shapeRenderer;
     private Controller controller;
 
-    public static void main(String[] args) {
+
+    public View(Model model) {
+        this.model = model;
+        this.lawn = model.getLawn();
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setTitle("Game");
         config.setWindowedMode(800, 600);
         config.useVsync(true);
 
-        new Lwjgl3Application(new View(new Model()), config);
-    }
-
-    public View(Model model) {
-        this.model = model;
-        this.lawn = model.getLawn();
+        new Lwjgl3Application(this, config);
     }
 
     @Override
@@ -55,6 +55,7 @@ public class View implements ApplicationListener {
         backgroundTexture = new Texture("board.png");
         zombieTexture = new Texture("Zombie.png");
         plantTexture = new Texture("pea_shooter.png");
+        peaTexture = new Texture("pea.png");
 
         entityView = new EntityView();
         shapeRenderer = new ShapeRenderer();
@@ -67,19 +68,23 @@ public class View implements ApplicationListener {
         viewport.update(width, height, true);
     }
 
+
+
     @Override
     public void render() {
+        
         float delta = Gdx.graphics.getDeltaTime();
-
+        System.out.print(delta);
+        model.game.updateGameState(delta);
         List<Zombie> zombies = model.game.getZombies();
-        for (Zombie z : zombies) z.update(delta);
+        List<Projectile> projectiles = model.game.getProjectiles();
+        
 
         ScreenUtils.clear(Color.BLACK);
         viewport.apply();
 
         spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
         spriteBatch.begin();
-
         spriteBatch.draw(backgroundTexture, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
 
         // Grid
@@ -107,6 +112,12 @@ public class View implements ApplicationListener {
             Vector2 pos = z.getPosition();
             entityView.draw(zombieTexture, spriteBatch, z, pos.x, pos.y, tileW, tileH);
         }
+        for(Projectile p : projectiles){
+            Vector2 pPos = p.getPosition();
+            entityView.draw(peaTexture,spriteBatch,p,pPos.x,pPos.y,50,50);
+        }
+
+
 
         spriteBatch.end();
 
@@ -149,6 +160,8 @@ public class View implements ApplicationListener {
         backgroundTexture.dispose();
         zombieTexture.dispose();
         plantTexture.dispose();
+        peaTexture.dispose();
         shapeRenderer.dispose();
+        
     }
 }
