@@ -1,12 +1,12 @@
 package com.mycompany.app.model.entities;
 
-import java.awt.geom.Point2D;
+
 import java.awt.geom.Rectangle2D;
 import com.badlogic.gdx.math.Vector2;
 
 public abstract class Projectile extends Entity {
-    private double MoveSpeed;
-    private int damage;
+    private final double MoveSpeed;
+    private final int damage;
 
     public Projectile(int health, String name, Vector2 position, Rectangle2D hitBox, float MoveSpeed, int damage) {
         super(health, name, position, hitBox);

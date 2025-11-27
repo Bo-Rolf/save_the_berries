@@ -1,6 +1,6 @@
 package com.mycompany.app.model.entities;
 
-import org.w3c.dom.css.Rect;
+
 import java.awt.geom.Rectangle2D;
 import com.badlogic.gdx.math.Vector2;
 import com.mycompany.app.Interfaces.Damageable;
@@ -9,7 +9,7 @@ public abstract class Entity implements Damageable {
     private int health;
     private final String name;
     private Vector2 position; // plantor kanske inte ska ha sån här position utan grid position?
-    private Rectangle2D hitBox;
+    private final Rectangle2D hitBox;
     private Runnable deathListener;
     
 
@@ -21,6 +21,7 @@ public abstract class Entity implements Damageable {
     }
 
     // metoder
+    @Override
     public void takeDamage(int amount) {
         health -= amount;
         if (health <= 0) {

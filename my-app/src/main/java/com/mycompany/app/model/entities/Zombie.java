@@ -1,14 +1,13 @@
 package com.mycompany.app.model.entities;
 
-import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import com.badlogic.gdx.math.Vector2;
 import com.mycompany.app.Interfaces.Damageable;
 
 public abstract class Zombie extends Entity {
-    private float moveSpeed;
-    private int damage;
-    private double attackSpeed; //tiden mellan attacker i sekunder
+    private final float moveSpeed;
+    private final int damage;
+    private final double attackSpeed; //tiden mellan attacker i sekunder
     private double TimeSinceLastBite = 0.0;
 
     public Zombie(int health, String name, Vector2 position, Rectangle2D hitBox, float moveSpeed, int damage,

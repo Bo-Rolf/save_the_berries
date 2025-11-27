@@ -2,7 +2,6 @@
 package com.mycompany.app.model;
 
 import com.mycompany.app.Interfaces.Placeable;
-import com.mycompany.app.model.entities.Plant;
 
 public class Tile {
     private int row;

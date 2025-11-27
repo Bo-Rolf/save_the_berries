@@ -1,8 +1,7 @@
 package com.mycompany.app.model.entities;
 
-import java.awt.geom.Point2D;
+
 import java.awt.geom.Rectangle2D;
-import com.mycompany.app.Interfaces.Placeable;
 import com.mycompany.app.Interfaces.Shooter;
 import com.badlogic.gdx.math.Vector2;
 

@@ -6,9 +6,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mycompany.app.model.Lawn;
 import com.mycompany.app.model.Tile;
 import com.mycompany.app.model.Model;
-import com.mycompany.app.model.entities.PeaShooter;
-import com.mycompany.app.model.entities.Plant;
-import com.mycompany.app.model.entities.Wallnut;
+import com.mycompany.app.model.entities.*;
 
 
 public class Controller {
