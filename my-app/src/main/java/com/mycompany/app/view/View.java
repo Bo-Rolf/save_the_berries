@@ -27,10 +27,6 @@ public class View implements ApplicationListener {
     private Viewport viewport;
 
     private Texture backgroundTexture;
-    private Texture zombieTexture;
-    private Texture plantTexture;
-    private Texture peaTexture;
-
     private EntityView entityView;
     private ShapeRenderer shapeRenderer;
     private Controller controller;
@@ -43,7 +39,6 @@ public class View implements ApplicationListener {
         config.setTitle("Game");
         config.setWindowedMode(800, 600);
         config.useVsync(true);
-
         new Lwjgl3Application(this, config);
     }
 
@@ -53,9 +48,6 @@ public class View implements ApplicationListener {
         spriteBatch = new SpriteBatch();
 
         backgroundTexture = new Texture("board.png");
-        zombieTexture = new Texture("Zombie.png");
-        plantTexture = new Texture("pea_shooter.png");
-        peaTexture = new Texture("pea.png");
 
         entityView = new EntityView();
         shapeRenderer = new ShapeRenderer();
@@ -78,6 +70,7 @@ public class View implements ApplicationListener {
         model.game.updateGameState(delta);
         List<Zombie> zombies = model.game.getZombies();
         List<Projectile> projectiles = model.game.getProjectiles();
+        List<Sun> suns = model.game.getSuns();
         
 
         ScreenUtils.clear(Color.BLACK);
@@ -102,7 +95,7 @@ public class View implements ApplicationListener {
                 if (tile.getPlaceable() instanceof Plant plant) {
                     float x = gridX + c * tileW;
                     float y = gridY + r * tileH;
-                    entityView.draw(plantTexture, spriteBatch, plant, x, y, tileW, tileH);
+                    entityView.draw(new Texture(plant.getTexturestring()), spriteBatch, plant, x, y, tileW, tileH);
                 }
             }
         }
@@ -110,13 +103,17 @@ public class View implements ApplicationListener {
         // Draw zombies
         for (Zombie z : zombies) {
             Vector2 pos = z.getPosition();
-            entityView.draw(zombieTexture, spriteBatch, z, pos.x, pos.y, tileW, tileH);
+            entityView.draw(new Texture(z.getTexturestring()), spriteBatch, z, pos.x, pos.y, tileW, tileH);
         }
         for(Projectile p : projectiles){
             Vector2 pPos = p.getPosition();
-            entityView.draw(peaTexture,spriteBatch,p,pPos.x,pPos.y,50,50);
+            entityView.draw(new Texture(p.getTexturestring()),spriteBatch,p,pPos.x,pPos.y,50,50);
         }
 
+        for(Sun s :suns){
+             Vector2 pPos = s.getPosition();
+            entityView.draw(new Texture(s.getTexturestring()),spriteBatch,s,pPos.x,pPos.y,50,50);
+        }
 
 
         spriteBatch.end();
@@ -158,9 +155,6 @@ public class View implements ApplicationListener {
     public void dispose() {
         spriteBatch.dispose();
         backgroundTexture.dispose();
-        zombieTexture.dispose();
-        plantTexture.dispose();
-        peaTexture.dispose();
         shapeRenderer.dispose();
         
     }

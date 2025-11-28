@@ -7,39 +7,13 @@ public class Tile {
     private int row;
     private int column;
 
-    private boolean sunOnTile;
     private boolean isWater;
     public Placeable placeable;
 
     public Tile(int row, int column) {
         this.row = row;
         this.column = column;
-        this.sunOnTile = false;
         this.isWater = false;
-    }
-
-    public boolean getSunOnTile() {
-        return sunOnTile;
-    }
-
-    private void setSunOnTile(boolean bool) {
-        this.sunOnTile = bool;
-    }
-
-    public boolean canPlaceSun() {
-        return !sunOnTile;
-    }
-
-    public boolean canRemoveSun() {
-        return sunOnTile;
-    }
-
-    public void placeSun() {
-        setSunOnTile(true);
-    }
-
-    public void removeSun() {
-        setSunOnTile(false);
     }
 
     public Placeable getPlaceable() {

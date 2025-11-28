@@ -11,7 +11,7 @@ public class PeaShooter extends Plant implements Shooter {
 
     public PeaShooter(Vector2 position, int row, int column) {
         super(50, "PeaShooter", position, new Rectangle2D.Double(position.x, position.x, 100, 100), 100, 5, row,
-                column);
+                column,"pea_shooter.png");
     }
     @Override
     public void update(double deltaTime) { // den räknar tid ifrån förra skottet

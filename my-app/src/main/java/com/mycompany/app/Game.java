@@ -5,12 +5,11 @@ import java.util.List;
 
 import com.badlogic.gdx.math.Vector2;
 import com.mycompany.app.Interfaces.Shooter;
-import com.mycompany.app.model.entities.Entity;
-import com.mycompany.app.model.entities.NormalZombie;
-import com.mycompany.app.model.entities.Plant;
-import com.mycompany.app.model.entities.Projectile;
-import com.mycompany.app.model.entities.Zombie;
+import com.mycompany.app.model.entities.*;
+
 import java.lang.System;
+
+import com.mycompany.app.model.entities.Sunflower;
 
 public class Game {
 
@@ -18,11 +17,14 @@ public class Game {
     private boolean Paused;
     private boolean Over;
 
+
     private final List<Plant> plants = new ArrayList<>();
 
     private final List<Zombie> zombies = new ArrayList<>();
 
     private final List<Projectile> projectiles = new ArrayList<>();
+
+    private final List<Sun> collecable_suns = new ArrayList<>();
     
     private long lastUpdateTime;
     private void startGame() {
@@ -86,6 +88,13 @@ public class Game {
                 if (p != null) {
                     addProjectile(p);
                 }
+            }
+            if(plant instanceof Sunflower flower){
+                Sun s = flower.spawnSun();
+                if(s != null){
+                    collecable_suns.add(s);
+                }
+
             }
         }
     }
@@ -157,4 +166,7 @@ public class Game {
         return this.projectiles;
     }
 
+    public List<Sun> getSuns(){
+        return this.collecable_suns;
+    }
 }

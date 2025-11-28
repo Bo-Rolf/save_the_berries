@@ -13,8 +13,8 @@ public abstract class Plant extends Entity implements Placeable {
     private Runnable tileRemovalListener;
 
     public Plant(int health, String name, Vector2 position, Rectangle2D hitBox, int sunCost, int cooldown, int row,
-            int column) {
-        super(health, name, position, hitBox);
+            int column,String textureString) {
+        super(health, name, position, hitBox,textureString);
         this.sunCost = sunCost;
         this.cooldown = cooldown;
         this.row = row;

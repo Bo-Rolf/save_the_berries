@@ -39,7 +39,7 @@ public class Controller {
                 if (clickedTile != null && clickedTile.placeable == null) {
                     float x = startX + col * tileWidth + tileWidth / 2f;
                     float y = startY + row * tileHeight + tileHeight / 2f;
-                    Plant newPlant = new Wallnut(new Vector2(x, y), row, col);
+                    Plant newPlant = new Sunflower(new Vector2(x, y), row, col);
                      model.game.addPlant(newPlant);
                     clickedTile.place(newPlant);
                                     System.out.println("Placed PeaShooter at row " + row + ", col " + col);

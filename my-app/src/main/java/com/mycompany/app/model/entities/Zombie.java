@@ -11,8 +11,8 @@ public abstract class Zombie extends Entity {
     private double TimeSinceLastBite = 0.0;
 
     public Zombie(int health, String name, Vector2 position, Rectangle2D hitBox, float moveSpeed, int damage,
-            double attackSpeed) {
-        super(health, name, position, hitBox);
+            double attackSpeed,String texturestring) {
+        super(health, name, position, hitBox,texturestring);
         this.moveSpeed = moveSpeed;
         this.damage = damage;
         this.attackSpeed = attackSpeed;

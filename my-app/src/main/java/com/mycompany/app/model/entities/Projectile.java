@@ -8,8 +8,8 @@ public abstract class Projectile extends Entity {
     private final double MoveSpeed;
     private final int damage;
 
-    public Projectile(int health, String name, Vector2 position, Rectangle2D hitBox, float MoveSpeed, int damage) {
-        super(health, name, position, hitBox);
+    public Projectile(int health, String name, Vector2 position, Rectangle2D hitBox, float MoveSpeed, int damage,String textureString) {
+        super(health, name, position, hitBox,textureString);
         this.MoveSpeed = MoveSpeed;
         this.damage = damage;
     }
