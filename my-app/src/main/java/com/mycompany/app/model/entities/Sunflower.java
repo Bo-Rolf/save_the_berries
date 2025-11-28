@@ -6,11 +6,11 @@ import com.mycompany.app.Interfaces.Shooter;
 import com.badlogic.gdx.math.Vector2;
 
 public class Sunflower extends Plant{
-    private final double cooldownSeconds = 10;
+    private final double cooldownSeconds = 15;
     private double timeSinceLastSun = 0;
 
     public Sunflower(Vector2 position, int row, int column) {
-        super(50, "Sunflower", position, new Rectangle2D.Double(position.x, position.x, 100, 100), 50, 5, row,
+        super(50, "Sunflower", position, 50, 5, row,
                 column,"sunflower.png");
     }
     @Override
@@ -26,7 +26,7 @@ public class Sunflower extends Plant{
     public Sun spawnSun() {
         if (canSpawnSun()){
             timeSinceLastSun = 0;
-            return new Sun(new Vector2(getPosition()));
+            return new Sun(new Vector2(getPosition()),25);
         }
         return null;
 

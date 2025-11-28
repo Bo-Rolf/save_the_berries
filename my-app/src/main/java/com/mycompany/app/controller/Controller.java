@@ -1,5 +1,9 @@
 package com.mycompany.app.controller;
 
+import java.awt.Point;
+
+import javax.crypto.spec.PBEKeySpec;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -26,7 +30,12 @@ public class Controller {
             float mouseX = Gdx.input.getX();
             float mouseY = Gdx.input.getY();
 
+           
+            
+
             Vector2 worldCoords = viewport.unproject(new Vector2(mouseX, mouseY));
+
+            model.game.collect_sun(new Point((int)worldCoords.x, (int)worldCoords.y));
 
             if (worldCoords.x >= startX && worldCoords.x <= startX + tileWidth * lawn.getCols()
                     && worldCoords.y >= startY && worldCoords.y <= startY + tileHeight * lawn.getRows()) {
@@ -40,15 +49,16 @@ public class Controller {
                     float x = startX + col * tileWidth + tileWidth / 2f;
                     float y = startY + row * tileHeight + tileHeight / 2f;
                     Plant newPlant = new Sunflower(new Vector2(x, y), row, col);
-                     model.game.addPlant(newPlant);
+                    model.game.addPlant(newPlant);
                     clickedTile.place(newPlant);
-                                    System.out.println("Placed PeaShooter at row " + row + ", col " + col);
-            } else {
+                    System.out.println("Placed "+newPlant.getName()+" at row " + row + ", col " + col);
+            } 
+            else {
                 System.out.println("Tile already has a plant at row " + row + ", col " + col);
             }
 
                     
-                }
+            }
                 
             }
         }

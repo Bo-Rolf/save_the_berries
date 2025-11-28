@@ -12,9 +12,9 @@ public abstract class Plant extends Entity implements Placeable {
     private final int column;
     private Runnable tileRemovalListener;
 
-    public Plant(int health, String name, Vector2 position, Rectangle2D hitBox, int sunCost, int cooldown, int row,
+    public Plant(int health, String name, Vector2 position, int sunCost, int cooldown, int row,
             int column,String textureString) {
-        super(health, name, position, hitBox,textureString);
+        super(health, name, position, new Rectangle2D.Double(position.x-35,position.y-35,(float)70,(float)70),textureString);
         this.sunCost = sunCost;
         this.cooldown = cooldown;
         this.row = row;
@@ -56,6 +56,7 @@ public abstract class Plant extends Entity implements Placeable {
     }
 
     public void update(double deltaTime) {
-
+        //kör ej update hitbox för plantor här, den ska skapas ibörjan och alldrig ändras efteråt
+        
     }
 }

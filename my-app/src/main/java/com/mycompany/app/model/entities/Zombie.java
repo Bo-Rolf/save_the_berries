@@ -10,9 +10,10 @@ public abstract class Zombie extends Entity {
     private final double attackSpeed; //tiden mellan attacker i sekunder
     private double TimeSinceLastBite = 0.0;
 
-    public Zombie(int health, String name, Vector2 position, Rectangle2D hitBox, float moveSpeed, int damage,
+    public Zombie(int health, String name, Vector2 position, float moveSpeed, int damage,
             double attackSpeed,String texturestring) {
-        super(health, name, position, hitBox,texturestring);
+
+        super(health, name, position, new Rectangle2D.Double(position.x, position.y, 60, 80),texturestring);
         this.moveSpeed = moveSpeed;
         this.damage = damage;
         this.attackSpeed = attackSpeed;
@@ -22,6 +23,7 @@ public abstract class Zombie extends Entity {
 
         Vector2 pos = getPosition();
         pos.x -= moveSpeed * deltaTime;
+        this.updatePosition(pos);
     }
 
     public boolean canEat() {

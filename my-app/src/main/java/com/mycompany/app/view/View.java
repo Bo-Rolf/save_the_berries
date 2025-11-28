@@ -19,6 +19,8 @@ import com.mycompany.app.controller.Controller;
 import java.util.List;
 import java.util.Vector;
 
+import com.badlogic.gdx.utils.PerformanceCounter;
+
 public class View implements ApplicationListener {
 
     private Model model;
@@ -31,6 +33,12 @@ public class View implements ApplicationListener {
     private ShapeRenderer shapeRenderer;
     private Controller controller;
 
+    private Texturemanager t = new Texturemanager();
+
+
+
+
+
 
     public View(Model model) {
         this.model = model;
@@ -39,6 +47,7 @@ public class View implements ApplicationListener {
         config.setTitle("Game");
         config.setWindowedMode(800, 600);
         config.useVsync(true);
+        t = new Texturemanager();
         new Lwjgl3Application(this, config);
     }
 
@@ -64,10 +73,10 @@ public class View implements ApplicationListener {
 
     @Override
     public void render() {
-        
         float delta = Gdx.graphics.getDeltaTime();
 
         model.game.updateGameState(delta);
+        
         List<Zombie> zombies = model.game.getZombies();
         List<Projectile> projectiles = model.game.getProjectiles();
         List<Sun> suns = model.game.getSuns();
@@ -88,6 +97,8 @@ public class View implements ApplicationListener {
 
         controller.handleInput(gridX, gridY, tileW, tileH);
 
+
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
         // Draw plants
         for (int r = 0; r < lawn.getRows(); r++) {
             for (int c = 0; c < lawn.getCols(); c++) {
@@ -95,27 +106,33 @@ public class View implements ApplicationListener {
                 if (tile.getPlaceable() instanceof Plant plant) {
                     float x = gridX + c * tileW;
                     float y = gridY + r * tileH;
-                    entityView.draw(new Texture(plant.getTexturestring()), spriteBatch, plant, x, y, tileW, tileH);
+                    entityView.draw(t.get_Texture(plant.getTexturestring()), spriteBatch, plant, x, y, tileW, tileH);
+                    
+                    //shapeRenderer.line((float)plant.getHitBox().getMinX(),(float)plant.getHitBox().getMinY(),(float)plant.getHitBox().getMaxX(),(float)plant.getHitBox().getMaxY());
                 }
             }
         }
+        
 
         // Draw zombies
         for (Zombie z : zombies) {
             Vector2 pos = z.getPosition();
-            entityView.draw(new Texture(z.getTexturestring()), spriteBatch, z, pos.x, pos.y, tileW, tileH);
+            entityView.draw(t.get_Texture(z.getTexturestring()), spriteBatch, z, pos.x, pos.y, tileW, tileH);
         }
+
+        
         for(Projectile p : projectiles){
             Vector2 pPos = p.getPosition();
-            entityView.draw(new Texture(p.getTexturestring()),spriteBatch,p,pPos.x,pPos.y,50,50);
+            entityView.draw(t.get_Texture(p.getTexturestring()),spriteBatch,p,pPos.x,pPos.y,50,50);
         }
 
         for(Sun s :suns){
-             Vector2 pPos = s.getPosition();
-            entityView.draw(new Texture(s.getTexturestring()),spriteBatch,s,pPos.x,pPos.y,50,50);
+            Vector2 pPos = s.getPosition();
+            //shapeRenderer.line((float)s.getHitBox().getMinX(),(float)s.getHitBox().getMinY(),(float)s.getHitBox().getMaxX(), (float)s.getHitBox().getMaxY());
+            entityView.draw(t.get_Texture(s.getTexturestring()),spriteBatch,s,pPos.x,pPos.y,50,50);
         }
 
-
+        shapeRenderer.end();
         spriteBatch.end();
 
         // Draw grid
@@ -136,7 +153,7 @@ public class View implements ApplicationListener {
             shapeRenderer.line(x, gridY, x, gridY + rows * tileH);
         }
 
-        // Horizontal lines
+        //Horizontal lines
         for (int j = 0; j <= rows; j++) {
             float y = gridY + j * tileH;
             shapeRenderer.line(gridX, y, gridX + cols * tileW, y);

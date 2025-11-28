@@ -13,10 +13,10 @@ public abstract class Projectile extends Entity {
         this.MoveSpeed = MoveSpeed;
         this.damage = damage;
     }
-    private void move(float delta) {
+    private void move(double delta) {
         Vector2 pos = getPosition();
         pos.x += MoveSpeed * delta;
-        //updatePosition(pos);
+        updatePosition(pos);
     }
 
     public boolean checkCollision(Zombie zombie) {
@@ -37,11 +37,12 @@ public abstract class Projectile extends Entity {
     public double getSpeed() {
         return MoveSpeed;
     }
-    public void update(float deltaTime) {
+    @Override
+    public void update(double deltaTime) {
         Vector2 pos = getPosition();
 
         if(pos.x>1000 || pos.x<-200 ||pos.y>700 || pos.y <-200){
-            takeDamage(1);
+            takeDamage(1000);
         }
         move(deltaTime);
     }

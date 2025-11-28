@@ -23,6 +23,8 @@ public abstract class Entity implements Damageable {
         this.textureString=texString;
     }
 
+    public abstract void update(double deltaTime);
+
     // metoder
     @Override
     public void takeDamage(int amount) {
