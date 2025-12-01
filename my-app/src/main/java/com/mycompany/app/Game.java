@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.mycompany.app.Interfaces.Shooter;
 import com.mycompany.app.model.entities.*;
 
@@ -24,7 +25,9 @@ public class Game {
 
     private final List<Projectile> projectiles = new ArrayList<>();
 
-    private final List<Sun> collecable_suns = new ArrayList<>();
+    private final List<Sun> collectable_suns = new ArrayList<>();
+
+    private final List<String> plantSeeds = new ArrayList<>();
     
     private long lastUpdateTime;
     private void startGame() {
@@ -45,6 +48,9 @@ public class Game {
         addZombie(new NormalZombie(new Vector2(800, 300)));
         addZombie(new NormalZombie(new Vector2(400, 300)));
         sun = 200;
+        plantSeeds.add("PeaShooter");
+        plantSeeds.add("Sunflower");
+        plantSeeds.add("Wallnut");
     }
 
     private void endGame() {
@@ -67,7 +73,7 @@ public class Game {
         plants.removeIf(plant -> !plant.isAlive());
         zombies.removeIf(zombie -> !zombie.isAlive());
         projectiles.removeIf(projectile -> !projectile.isAlive());
-        collecable_suns.removeIf(s -> !s.isAlive());
+        collectable_suns.removeIf(s -> !s.isAlive());
     }
 
     private void removeEntity(Entity e) {
@@ -94,7 +100,7 @@ public class Game {
             if(plant instanceof Sunflower flower){
                 Sun s = flower.spawnSun();
                 if(s != null){
-                    collecable_suns.add(s);
+                    collectable_suns.add(s);
                 }
 
             }
@@ -104,12 +110,9 @@ public class Game {
     private void updateZombies(double deltaTime) {
         for (Zombie zombie : zombies) {
             zombie.update(deltaTime);
-            //System.out.println("zhealth "+zombie.getHealth());
             boolean hittatplanta = false;
             for (Plant plant : plants) {
                 if (zombie.checkCollision(plant)) {
-                    System.out.println(zombie.canEat());
-                    System.out.println(plant.getHealth());
                     if (zombie.canEat()) {
                     zombie.eat(plant);
                     }
@@ -145,6 +148,7 @@ public class Game {
 
     public void addPlant(Plant plant){
         plants.add(plant);
+        sun -= plant.getSunCost();
         addEntity(plant);
     }
 
@@ -166,14 +170,14 @@ public class Game {
     }
 
     public List<Sun> getSuns(){
-        return this.collecable_suns;
+        return this.collectable_suns;
     }
 
     //Funktion för att försöka kollekta sol, iterarar över varje sol och kollar ifall musen är på rätt plats
     //Vector2 strulade så jag konverterade det till point istället
     public void collect_sun(Point mouse){
         System.out.print(mouse);
-        for(Sun s :this.collecable_suns){
+        for(Sun s :this.collectable_suns){
             System.out.print(s.getHitBox().getMinX());
             if(s.getHitBox().contains(mouse)){
                 sun+=s.get_sun_value();
@@ -182,6 +186,15 @@ public class Game {
                 System.out.print("du collectade");
             }
         }
-
+    }
+    public List<String> getplantSeeds(){
+        return this.plantSeeds;
+    }
+    
+    public String getPlantSeed(int index){
+        if (index<0 || index>=plantSeeds.size()){
+            return "PeaShooter";
+        }
+        return plantSeeds.get(index);
     }
 }

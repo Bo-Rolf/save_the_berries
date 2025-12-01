@@ -11,18 +11,30 @@ import com.mycompany.app.model.Lawn;
 import com.mycompany.app.model.Tile;
 import com.mycompany.app.model.Model;
 import com.mycompany.app.model.entities.*;
-
+import com.mycompany.app.model.PlantSeedList;
+import com.mycompany.app.model.EntityFactory;
+import com.mycompany.app.Game;
+import com.mycompany.app.view.PlantSeedView;
 
 public class Controller {
 
     private final Model model;
     private final Lawn lawn;
     private final Viewport viewport;
+    private final PlantSeedView seedView;
+    private int selectedSeedIndex = 0;
 
-    public Controller(Model model, Viewport viewport) {
+    // UI layout for seeds (should match View.draw call)
+    private final float seedMarginLeft = 10f;
+    private final float seedMarginTop = 10f;
+    private final float seedSize = 64f;
+    private final float seedSpacing = 8f;
+
+    public Controller(Model model, Viewport viewport, PlantSeedView seedView) {
         this.model = model;
         this.lawn = model.getLawn();
         this.viewport = viewport;
+        this.seedView = seedView;
     }
 
     public void handleInput(float startX, float startY, float tileWidth, float tileHeight) {
@@ -30,10 +42,16 @@ public class Controller {
             float mouseX = Gdx.input.getX();
             float mouseY = Gdx.input.getY();
 
-           
-            
-
             Vector2 worldCoords = viewport.unproject(new Vector2(mouseX, mouseY));
+
+
+            int clickedSeed = seedView.getSeedIndexAt(worldCoords.x, worldCoords.y, viewport, model.game.getplantSeeds(),
+                    seedMarginLeft, seedMarginTop, seedSize, seedSpacing);
+            if (clickedSeed != -1) {
+                selectedSeedIndex = clickedSeed;
+                System.out.println("Selected seed index " + selectedSeedIndex + " -> " + model.game.getPlantSeed(selectedSeedIndex));
+                return; // don't try to place on grid for this click
+            }
 
             model.game.collect_sun(new Point((int)worldCoords.x, (int)worldCoords.y));
 
@@ -45,12 +63,13 @@ public class Controller {
 
                 Tile clickedTile = lawn.getTile(row, col);
 
-                if (clickedTile != null && clickedTile.placeable == null) {
+                if (clickedTile != null) { //(clickedTile != null && clickedTile.placeable == null)
                     float x = startX + col * tileWidth + tileWidth / 2f;
                     float y = startY + row * tileHeight + tileHeight / 2f;
-                    Plant newPlant = new Sunflower(new Vector2(x, y), row, col);
-                    model.game.addPlant(newPlant);
-                    clickedTile.place(newPlant);
+                    
+                    Plant newPlant = EntityFactory.createPlant(model.game.getPlantSeed(selectedSeedIndex), x, y, row, col);
+                    
+                    model.placePlant(newPlant, row, col);
                     System.out.println("Placed "+newPlant.getName()+" at row " + row + ", col " + col);
             } 
             else {
@@ -62,5 +81,9 @@ public class Controller {
                 
             }
         }
-    }
+    
 
+    public int getSelectedSeedIndex() {
+        return selectedSeedIndex;
+    }
+}

@@ -20,15 +20,16 @@ public class Tile {
         return this.placeable;
     }
 
-    public void place(Placeable p) {
+    public boolean place(Placeable p) {
         if (placeable != null) {
-            throw new IllegalArgumentException("Tile already has a plant!");
+            return false;
         } else {
             this.placeable = p;
 
             p.setTileRemovalListener(() -> {
                 this.placeable = null;
             });
+            return true;
 
         }
     }

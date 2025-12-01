@@ -2,7 +2,7 @@
 // Varje cell i matrisen innehåller ett Tile-objekt
 package com.mycompany.app.model;
 
-
+import com.mycompany.app.Interfaces.Placeable;
 
 public class Lawn {
 
@@ -24,6 +24,10 @@ public class Lawn {
 
     public Tile getTile(int row, int col) {
         return grid[row][col];
+    }
+
+    public boolean place(Placeable p, int row, int col) {
+        return getTile(row, col).place(p);
     }
 
     public int getRows() {
