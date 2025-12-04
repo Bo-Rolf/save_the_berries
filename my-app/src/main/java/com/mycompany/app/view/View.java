@@ -16,6 +16,7 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.mycompany.app.controller.Controller;
 import com.mycompany.app.view.PlantSeedView;
+import com.mycompany.app.controller.ZombieSpawner;
 
 import java.util.List;
 import java.util.Vector;
@@ -33,6 +34,7 @@ public class View implements ApplicationListener {
     private EntityView entityView;
     private ShapeRenderer shapeRenderer;
     private Controller controller;
+    private ZombieSpawner zombieSpawner;
 
     private Texturemanager t = new Texturemanager();
     private PlantSeedView plantSeedView;
@@ -57,6 +59,7 @@ public class View implements ApplicationListener {
 
         entityView = new EntityView();
         shapeRenderer = new ShapeRenderer();
+        zombieSpawner = new ZombieSpawner(model, Difficulty.EASY);
         plantSeedView = new PlantSeedView();
         controller = new Controller(model, viewport, plantSeedView);
     }
@@ -90,6 +93,8 @@ public class View implements ApplicationListener {
         float tileH = viewport.getWorldHeight() * 0.72f / lawn.getRows();
         float gridX = (viewport.getWorldWidth() - tileW * lawn.getCols()) / 2f + 15;
         float gridY = (viewport.getWorldHeight() - tileH * lawn.getRows()) / 2f - 50;
+
+        zombieSpawner.update(delta, viewport.getWorldWidth(), gridY, tileH, lawn.getRows());
 
         controller.handleInput(gridX, gridY, tileW, tileH);
 

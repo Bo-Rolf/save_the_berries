@@ -45,8 +45,6 @@ public class Game {
     }
     public Game() {
         // Lägg till initiala zombies och plants här om det behövs
-        addZombie(new NormalZombie(new Vector2(800, 300)));
-        addZombie(new NormalZombie(new Vector2(400, 300)));
         sun = 200;
         plantSeeds.add("PeaShooter");
         plantSeeds.add("Sunflower");
