@@ -16,8 +16,9 @@ public class Game {
 
     private boolean Playing;
     private boolean Paused;
-    private boolean Over;
+    private boolean Over = false;
     public int sun;
+    private float elapsedTime = 0f;
 
     private final List<Plant> plants = new ArrayList<>();
 
@@ -30,19 +31,19 @@ public class Game {
     private final List<String> plantSeeds = new ArrayList<>();
     
     private long lastUpdateTime;
-    private void startGame() {
-        Playing = true;
-        lastUpdateTime = System.nanoTime();
-        while (Playing) {
-            long currentTime = System.nanoTime();
-            double deltaTime = (currentTime - lastUpdateTime) / 1_000_000_000.0; // till sekunder
-            lastUpdateTime = currentTime;
+    // private void startGame() {
+    //     Playing = true;
+    //     lastUpdateTime = System.nanoTime();
+    //     while (Playing) {
+    //         long currentTime = System.nanoTime();
+    //         double deltaTime = (currentTime - lastUpdateTime) / 1_000_000_000.0; // till sekunder
+    //         lastUpdateTime = currentTime;
 
-            if (!Paused && !Over) {
-                updateGameState(deltaTime);
-            }
-        }
-    }
+    //         if (!Paused && !Over) {
+    //             updateGameState(deltaTime);
+    //         }
+    //     }
+    // }
     public Game() {
         // Lägg till initiala zombies och plants här om det behövs
         sun = 200;
@@ -60,6 +61,11 @@ public class Game {
         updateZombies(deltaTime);
         updatePlants(deltaTime);
         updateDeathCheck();
+
+        if(!Over){
+            elapsedTime += deltaTime;
+        }
+        
         //System.out.println(+zombies.size()+collecable_suns.size()+projectiles.size());
         
         //System.out.println("plants "+ plants.size());
