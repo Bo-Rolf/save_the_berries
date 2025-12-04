@@ -20,42 +20,42 @@ public class Game {
 
     private boolean Playing;
     private boolean Paused;
-    private boolean Over;
+    private boolean Over = false;
     public int sun;
+    private float elapsedTime = 0f;
 
     private final List<Plant> plants = new ArrayList<>();
     private final List<Zombie> zombies = new ArrayList<>();
     private final List<Projectile> projectiles = new ArrayList<>();
     private final List<Sun> collectable_suns = new ArrayList<>();
 
-
+    
 
 
     private final List<PlantSeed> plantSeeds = new ArrayList<>();
     
-    private long lastUpdateTime;
-    private void startGame() {
-        Playing = true;
-        lastUpdateTime = System.nanoTime();
-        while (Playing) {
-            long currentTime = System.nanoTime();
-            double deltaTime = (currentTime - lastUpdateTime) / 1_000_000_000.0; // till sekunder
-            lastUpdateTime = currentTime;
+    private Sunspawner sunspawner = new Sunspawner();
 
-            if (!Paused && !Over) {
-                updateGameState(deltaTime);
-            }
-        }
-    }
+    private long lastUpdateTime;
+    // private void startGame() {
+    //     Playing = true;
+    //     lastUpdateTime = System.nanoTime();
+    //     while (Playing) {
+    //         long currentTime = System.nanoTime();
+    //         double deltaTime = (currentTime - lastUpdateTime) / 1_000_000_000.0; // till sekunder
+    //         lastUpdateTime = currentTime;
+
+    //         if (!Paused && !Over) {
+    //             updateGameState(deltaTime);
+    //         }
+    //     }
+    // }
     public Game() {
         // Lägg till initiala zombies och plants här om det behövs
-        addZombie(new NormalZombie(new Vector2(800, 300)));
-        addZombie(new NormalZombie(new Vector2(400, 300)));
         this.sun = 200;
-        plantSeeds.add(new PlantSeed(PeaShooter.class));
-        plantSeeds.add(new PlantSeed(Sunflower.class));
-        plantSeeds.add(new PlantSeed(Wallnut.class));
-        
+        this.plantSeeds.add(new PlantSeed(PeaShooter.class));
+        this.plantSeeds.add(new PlantSeed(Sunflower.class));
+        this.plantSeeds.add(new PlantSeed(Wallnut.class));
     }
 
     private void endGame() {
@@ -67,7 +67,13 @@ public class Game {
         updateZombies(deltaTime);
         updatePlants(deltaTime);
         updatePlantSeeds(deltaTime);
+        updateSunSpawner(deltaTime);
         updateDeathCheck();
+
+        if(!Over){
+            elapsedTime += deltaTime;
+        }
+        
         //System.out.println(+zombies.size()+collecable_suns.size()+projectiles.size());
         
         //System.out.println("plants "+ plants.size());
@@ -112,6 +118,15 @@ public class Game {
                 }
 
             }
+        }
+    }
+
+
+    private void updateSunSpawner(double deltaTime) {
+        this.sunspawner.update(deltaTime);
+        Sun s = sunspawner.spawnSun();
+        if(s != null){
+            collectable_suns.add(s);
         }
     }
 

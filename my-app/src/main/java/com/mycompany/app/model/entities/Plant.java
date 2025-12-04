@@ -7,6 +7,7 @@ import com.mycompany.app.Interfaces.Placeable;
 
 public abstract class Plant extends Entity implements Placeable {
     private final int sunCost;
+
     private final double cooldown; // to place the plant again
     private final int row;
     private final int column;

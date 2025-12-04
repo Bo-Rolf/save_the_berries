@@ -9,6 +9,8 @@ public class Sunflower extends Plant{
     private final double sunCooldown = 15;
     private double timeSinceLastSun = 0;
 
+    
+
     public Sunflower(Vector2 position, int row, int column) {
         super(50, "Sunflower", position, 50, 7.5, row,
                 column,"sunflower.png");

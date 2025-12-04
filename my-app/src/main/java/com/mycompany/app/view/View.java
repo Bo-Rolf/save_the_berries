@@ -18,10 +18,13 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.mycompany.app.controller.Controller;
 import com.mycompany.app.view.PlantSeedView;
+import com.mycompany.app.controller.ZombieSpawner;
 
 import java.util.List;
 import java.util.Vector;
 import java.util.List;
+
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.mycompany.app.view.PlantSeedView;
 
 public class View implements ApplicationListener {
@@ -30,15 +33,19 @@ public class View implements ApplicationListener {
     private Lawn lawn;
     private SpriteBatch spriteBatch;
     private Viewport viewport;
+    private float gameTime = 0;
+    private Boolean gameOver = false;
 
     private Texture backgroundTexture;
     private EntityView entityView;
     private ShapeRenderer shapeRenderer;
     private Controller controller;
+    private ZombieSpawner zombieSpawner;
     private Texture whiteTexture;
 
     private Texturemanager t = new Texturemanager();
     private PlantSeedView plantSeedView;
+
     private BitmapFont font;
 
     public View(Model model) {
@@ -61,6 +68,8 @@ public class View implements ApplicationListener {
 
         entityView = new EntityView();
         shapeRenderer = new ShapeRenderer();
+        zombieSpawner = new ZombieSpawner(model, Difficulty.EASY);
+        plantSeedView = new PlantSeedView(this.t,this.whiteTexture);
 
         Pixmap pm = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         pm.setColor(Color.WHITE);
@@ -73,6 +82,8 @@ public class View implements ApplicationListener {
 
         font = new BitmapFont();
         controller = new Controller(model, viewport, plantSeedView);
+
+        font = new BitmapFont();
     }
 
     @Override
@@ -84,8 +95,6 @@ public class View implements ApplicationListener {
     public void render() {
         float delta = Gdx.graphics.getDeltaTime();
 
-        model.game.updateGameState(delta);
-
         List<Zombie> zombies = model.game.getZombies();
         List<Projectile> projectiles = model.game.getProjectiles();
         List<Sun> suns = model.game.getSuns();
@@ -96,6 +105,8 @@ public class View implements ApplicationListener {
         spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
         spriteBatch.begin();
         spriteBatch.draw(backgroundTexture, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
+
+        
         // draw the plant seed icons in the top-left of the screen (pass viewport and selected index)
         plantSeedView.draw(spriteBatch, viewport, model.game.getplantSeeds(), 10, 10, 64, 8, controller.getSelectedSeedIndex());
 
@@ -104,6 +115,7 @@ public class View implements ApplicationListener {
         float tileH = viewport.getWorldHeight() * 0.72f / lawn.getRows();
         float gridX = (viewport.getWorldWidth() - tileW * lawn.getCols()) / 2f + 15;
         float gridY = (viewport.getWorldHeight() - tileH * lawn.getRows()) / 2f - 50;
+
 
         controller.handleInput(gridX, gridY, tileW, tileH);
 
@@ -140,11 +152,31 @@ public class View implements ApplicationListener {
         }
         font.draw(spriteBatch,"Sun:"+model.game.get_current_sun(),500,500);
 
+        font.draw(spriteBatch, "Time: " + (int)gameTime, viewport.getWorldWidth() - 100, viewport.getWorldHeight() - 10);
         shapeRenderer.end();
         spriteBatch.end();
 
         // Draw grid
         drawGrid(gridX, gridY, tileW, tileH, lawn.getCols(), lawn.getRows());
+
+        if (!gameOver) {
+            gameTime += delta;
+
+            model.game.updateGameState(delta);
+            zombieSpawner.update(delta, viewport.getWorldWidth(), gridY, tileH, lawn.getRows());
+            if (checkZombie()) {
+                gameOver = true;
+            }
+        }
+    }
+
+    private boolean checkZombie(){
+        for(Zombie z : model.game.getZombies()){
+            if(z.getPosition().x <= 0){
+                return true;
+            }
+        }
+        return false;
     }
 
     private void drawGrid(float gridX, float gridY, float tileW, float tileH, int cols, int rows) {
@@ -165,6 +197,7 @@ public class View implements ApplicationListener {
         }
 
         shapeRenderer.end();
+
     }
 
     @Override
@@ -179,5 +212,6 @@ public class View implements ApplicationListener {
         backgroundTexture.dispose();
         shapeRenderer.dispose();
         plantSeedView.dispose();
+        font.dispose();
     }
 }
