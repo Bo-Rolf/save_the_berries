@@ -12,6 +12,10 @@ import com.mycompany.app.model.entities.*;
 import java.awt.Point;
 import java.lang.System;
 
+import com.mycompany.app.model.EntityFactory;
+import com.mycompany.app.model.PlantSeed;
+import com.mycompany.app.model.Tile;
+
 public class Game {
 
     private boolean Playing;
@@ -20,14 +24,14 @@ public class Game {
     public int sun;
 
     private final List<Plant> plants = new ArrayList<>();
-
     private final List<Zombie> zombies = new ArrayList<>();
-
     private final List<Projectile> projectiles = new ArrayList<>();
-
     private final List<Sun> collectable_suns = new ArrayList<>();
 
-    private final List<String> plantSeeds = new ArrayList<>();
+
+
+
+    private final List<PlantSeed> plantSeeds = new ArrayList<>();
     
     private long lastUpdateTime;
     private void startGame() {
@@ -47,10 +51,11 @@ public class Game {
         // Lägg till initiala zombies och plants här om det behövs
         addZombie(new NormalZombie(new Vector2(800, 300)));
         addZombie(new NormalZombie(new Vector2(400, 300)));
-        sun = 200;
-        plantSeeds.add("PeaShooter");
-        plantSeeds.add("Sunflower");
-        plantSeeds.add("Wallnut");
+        this.sun = 200;
+        plantSeeds.add(new PlantSeed(PeaShooter.class));
+        plantSeeds.add(new PlantSeed(Sunflower.class));
+        plantSeeds.add(new PlantSeed(Wallnut.class));
+        
     }
 
     private void endGame() {
@@ -61,6 +66,7 @@ public class Game {
         updateProjectiles(deltaTime);
         updateZombies(deltaTime);
         updatePlants(deltaTime);
+        updatePlantSeeds(deltaTime);
         updateDeathCheck();
         //System.out.println(+zombies.size()+collecable_suns.size()+projectiles.size());
         
@@ -75,6 +81,8 @@ public class Game {
         projectiles.removeIf(projectile -> !projectile.isAlive());
         collectable_suns.removeIf(s -> !s.isAlive());
     }
+
+
 
     private void removeEntity(Entity e) {
         if (e instanceof Zombie)
@@ -135,6 +143,11 @@ public class Game {
             }
         }
     }
+    private void updatePlantSeeds(double deltaTime) {
+        for (PlantSeed plantseed : this.plantSeeds) {
+            plantseed.update((float) deltaTime);
+        }
+    }
 
     public void addZombie(Zombie zombie){
         zombies.add(zombie);
@@ -146,10 +159,37 @@ public class Game {
         addEntity(projectile);
     }
 
-    public void addPlant(Plant plant){
-        plants.add(plant);
-        sun -= plant.getSunCost();
-        addEntity(plant);
+
+    public void placePlant(int plantseedIndex,Tile tile, int row, int col,float x, float y) {
+        PlantSeed p =getPlantSeed(plantseedIndex);
+        if(p==null){
+            System.out.print("No plantseed selected");
+        }
+        else{
+            Plant newPlant = EntityFactory.createPlant(getPlantSeed(plantseedIndex).type, x, y, row, col);
+            if(newPlant==null){
+                System.out.print("Plant error, plant does not exist");
+            }
+            else if(this.sun<newPlant.getSunCost()){
+                System.out.println("Not enough sun for "+newPlant.getName()+", current:"+this.sun+" "+newPlant.getSunCost());
+            }
+            else if (!this.getPlantSeed(plantseedIndex).ready_to_place()) {
+                System.out.print(newPlant.getName()+" Is not ready yet,"+getPlantSeed(plantseedIndex).cooldown_left+" seconds left");
+            }   
+            else if(tile.is_occupied()){
+                System.out.print("That tile is already occupied");
+            }
+            else{
+                this.plants.add(newPlant);
+                sun -= newPlant.getSunCost();
+                addEntity(newPlant);
+                tile.place(newPlant);
+                this.getPlantSeed(plantseedIndex).try_place();
+                System.out.println("Placed "+newPlant.getName()+" at row " + row + ", col " + col);
+            }
+        }
+        
+        
     }
 
     private void addEntity(Entity e) {
@@ -172,6 +212,9 @@ public class Game {
     public List<Sun> getSuns(){
         return this.collectable_suns;
     }
+    public int get_current_sun(){
+        return this.sun;
+    }
 
     //Funktion för att försöka kollekta sol, iterarar över varje sol och kollar ifall musen är på rätt plats
     //Vector2 strulade så jag konverterade det till point istället
@@ -187,14 +230,16 @@ public class Game {
             }
         }
     }
-    public List<String> getplantSeeds(){
+    public  List<PlantSeed> getplantSeeds(){
         return this.plantSeeds;
     }
     
-    public String getPlantSeed(int index){
-        if (index<0 || index>=plantSeeds.size()){
-            return "PeaShooter";
+
+
+    public PlantSeed getPlantSeed(int index){
+        if (index<0 || index>=this.plantSeeds.size()){
+            return null;
         }
-        return plantSeeds.get(index);
+        return this.plantSeeds.get(index);
     }
 }

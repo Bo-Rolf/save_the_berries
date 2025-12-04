@@ -5,7 +5,9 @@ import com.mycompany.app.model.entities.*;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -33,9 +35,11 @@ public class View implements ApplicationListener {
     private EntityView entityView;
     private ShapeRenderer shapeRenderer;
     private Controller controller;
+    private Texture whiteTexture;
 
     private Texturemanager t = new Texturemanager();
     private PlantSeedView plantSeedView;
+    private BitmapFont font;
 
     public View(Model model) {
         this.model = model;
@@ -57,7 +61,17 @@ public class View implements ApplicationListener {
 
         entityView = new EntityView();
         shapeRenderer = new ShapeRenderer();
-        plantSeedView = new PlantSeedView();
+
+        Pixmap pm = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+        pm.setColor(Color.WHITE);
+        pm.fill();
+        this.whiteTexture = new Texture(pm);
+        pm.dispose();
+        plantSeedView = new PlantSeedView(t,this.whiteTexture);
+
+
+
+        font = new BitmapFont();
         controller = new Controller(model, viewport, plantSeedView);
     }
 
@@ -124,6 +138,7 @@ public class View implements ApplicationListener {
             //shapeRenderer.line((float)s.getHitBox().getMinX(),(float)s.getHitBox().getMinY(),(float)s.getHitBox().getMaxX(), (float)s.getHitBox().getMaxY());
             entityView.draw(t.get_Texture(s.getTexturestring()), spriteBatch, s, pPos.x, pPos.y, 50, 50);
         }
+        font.draw(spriteBatch,"Sun:"+model.game.get_current_sun(),500,500);
 
         shapeRenderer.end();
         spriteBatch.end();

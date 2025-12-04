@@ -10,7 +10,7 @@ public class PeaShooter extends Plant implements Shooter {
     private double timeSinceLastShot = 0;
 
     public PeaShooter(Vector2 position, int row, int column) {
-        super(50, "PeaShooter", position, 100, 5, row,
+        super(50, "PeaShooter", position, 100, 7.5, row,
                 column,"pea_shooter.png");
     }
     @Override
@@ -32,4 +32,6 @@ public class PeaShooter extends Plant implements Shooter {
         return null;
 
     }
+
+    
 }

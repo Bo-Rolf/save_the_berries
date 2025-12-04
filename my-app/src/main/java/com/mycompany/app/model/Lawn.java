@@ -30,6 +30,10 @@ public class Lawn {
         return getTile(row, col).place(p);
     }
 
+    public boolean check_tile(int row, int col) {
+        return getTile(row, col).getPlaceable()==null;
+    }
+
     public int getRows() {
         return grid.length;
     }

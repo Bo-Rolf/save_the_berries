@@ -20,6 +20,10 @@ public class Tile {
         return this.placeable;
     }
 
+    public boolean is_occupied(){
+        return !(this.placeable==null);
+    }
+
     public boolean place(Placeable p) {
         if (placeable != null) {
             return false;

@@ -11,7 +11,7 @@ public abstract class Entity implements Damageable {
     private Vector2 position; // plantor kanske inte ska ha sån här position utan grid position?
     private final Rectangle2D hitBox;
     private Runnable deathListener;
-    private String textureString;
+    public String textureString;
 
     
 
@@ -77,4 +77,5 @@ public abstract class Entity implements Damageable {
     public String getTexturestring(){
         return this.textureString;
     }
+    
 }

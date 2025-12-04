@@ -7,20 +7,24 @@ import com.mycompany.app.Interfaces.Placeable;
 
 public abstract class Plant extends Entity implements Placeable {
     private final int sunCost;
-    private final int cooldown; // to place the plant again
+    private final double cooldown; // to place the plant again
     private final int row;
     private final int column;
     private Runnable tileRemovalListener;
 
-    public Plant(int health, String name, Vector2 position, int sunCost, int cooldown, int row,
+
+    public Plant(int health, String name, Vector2 position, int sunCost, double cooldown, int row,
             int column,String textureString) {
         super(health, name, position, new Rectangle2D.Double(position.x-35,position.y-35,(float)70,(float)70),textureString);
         this.sunCost = sunCost;
         this.cooldown = cooldown;
         this.row = row;
         this.column = column;
+        
     }
 
+
+    
     public int getRow() {
         return row;
     }
@@ -29,7 +33,7 @@ public abstract class Plant extends Entity implements Placeable {
         return column;
     }
 
-    public int getCooldown() {
+    public double getCooldown() {
         return cooldown;
     }
 
@@ -57,6 +61,6 @@ public abstract class Plant extends Entity implements Placeable {
 
     public void update(double deltaTime) {
         //kör ej update hitbox för plantor här, den ska skapas ibörjan och alldrig ändras efteråt
-        
+
     }
 }
