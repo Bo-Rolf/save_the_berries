@@ -8,7 +8,7 @@ public class Wallnut extends Plant {
 
     
     public Wallnut(Vector2 position, int row, int column) { // borde ta in en grid
-        super(2000, "wallnut", position, 50, 30, row,
+        super(1000, "wallnut", position, 50, 30, row,
                 column,"wallnut.png");
     }
 }
