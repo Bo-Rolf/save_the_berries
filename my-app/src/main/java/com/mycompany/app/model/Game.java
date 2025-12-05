@@ -1,20 +1,20 @@
-package com.mycompany.app;
+package com.mycompany.app.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Json;
+import com.mycompany.app.Sunspawner;
 import com.mycompany.app.Interfaces.Shooter;
 import com.mycompany.app.model.entities.*;
 
+
 import java.awt.Point;
 import java.lang.System;
-
-import com.mycompany.app.model.EntityFactory;
-import com.mycompany.app.model.PlantSeed;
-import com.mycompany.app.model.Tile;
 
 public class Game {
 
@@ -24,12 +24,15 @@ public class Game {
     public int sun;
     private float elapsedTime = 0f;
 
+    private final Lawn lawn = new Lawn(5, 8);
+
     private final List<Plant> plants = new ArrayList<>();
     private final List<Zombie> zombies = new ArrayList<>();
     private final List<Projectile> projectiles = new ArrayList<>();
     private final List<Sun> collectable_suns = new ArrayList<>();
 
-    
+    private EntityFactory entityFactory;
+    private ZombieSpawner zombieSpawner;
 
 
     private final List<PlantSeed> plantSeeds = new ArrayList<>();
@@ -50,16 +53,17 @@ public class Game {
     //         }
     //     }
     // }
-    public Game() {
+    public Game(GameConfig gcfg) {
         // Lägg till initiala zombies och plants här om det behövs
         this.sun = 200;
-        this.plantSeeds.add(new PlantSeed(PeaShooter.class));
-        this.plantSeeds.add(new PlantSeed(Sunflower.class));
-        this.plantSeeds.add(new PlantSeed(Wallnut.class));
+        this.entityFactory = new EntityFactory(gcfg);
+        this.zombieSpawner=new ZombieSpawner(this.entityFactory);
+
+        //this.plants.add(new Plant("asd",asd,asd,asd,asd))
     }
 
     private void endGame() {
-
+        
     }
 
     public void updateGameState(double deltaTime) {
@@ -69,7 +73,10 @@ public class Game {
         updatePlantSeeds(deltaTime);
         updateSunSpawner(deltaTime);
         updateDeathCheck();
-
+        Zombie z = this.zombieSpawner.update((float)deltaTime, 800, 10, 80, 8);
+        if(z!=null){
+            EntityFactory.add(z);
+        }
         if(!Over){
             elapsedTime += deltaTime;
         }
@@ -257,4 +264,9 @@ public class Game {
         }
         return this.plantSeeds.get(index);
     }
+
+    public Lawn getLawn() {
+        return this.lawn;
+    }
+
 }

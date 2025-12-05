@@ -5,7 +5,7 @@ import java.awt.geom.Rectangle2D;
 
 import com.mycompany.app.Interfaces.Placeable;
 
-public abstract class Plant extends Entity implements Placeable {
+public class Plant extends Entity implements Placeable {
     private final int sunCost;
 
     private final double cooldown; // to place the plant again
@@ -14,13 +14,12 @@ public abstract class Plant extends Entity implements Placeable {
     private Runnable tileRemovalListener;
 
 
-    public Plant(int health, String name, Vector2 position, int sunCost, double cooldown, int row,
-            int column,String textureString) {
-        super(health, name, position, new Rectangle2D.Double(position.x-35,position.y-35,(float)70,(float)70),textureString);
-        this.sunCost = sunCost;
-        this.cooldown = cooldown;
-        this.row = row;
-        this.column = column;
+    public Plant(entitycfg cfg, Vector2 position) {
+        super(cfg, position, new Rectangle2D.Double(position.x-35,position.y-35,(float)70,(float)70));
+        this.sunCost = cfg.sunCost;
+        this.cooldown = cfg.cooldown;
+        this.row = cfg.row;
+        this.column = cfg.column;
         
     }
 
@@ -64,4 +63,5 @@ public abstract class Plant extends Entity implements Placeable {
         //kör ej update hitbox för plantor här, den ska skapas ibörjan och alldrig ändras efteråt
 
     }
+    
 }

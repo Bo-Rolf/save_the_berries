@@ -12,10 +12,16 @@ public class Sun extends Entity{
     int sun_value;
     double time_out=0;
     int dissapear_timer=8; //tid tills den försvinner
-    public Sun(Vector2 vector,int value) {
+    public Sun(entitycfg,Vector2 position) {
         //Health används bara för takedamage när den ska dö (this.die kraschar ifall det sker under iteration)/Sixten
-        super(1, "Sun", vector, new Rectangle2D.Double(vector.x-10, vector.y-10, 50, 50),"sun.png");
-        this.sun_value=value;
+        super(cfg,position,new Rectangle2D.Double((float)0,(float)0,(float)0,(float)0));
+
+        Rectangle2D r = new Rectangle2D
+        
+        
+        //super(cfg,position,new Rectangle2D.Double(position.x,position.y,20,20));
+        //super(cfg, vector, new Rectangle2D.Double(vector.x-10, vector.y-10, 50, 50));
+        this.sun_value=25;
         
     }
     @Override

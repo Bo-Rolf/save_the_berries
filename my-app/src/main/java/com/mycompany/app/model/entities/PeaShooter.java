@@ -9,9 +9,9 @@ public class PeaShooter extends Plant implements Shooter {
     private final double cooldownSeconds = 1.5;
     private double timeSinceLastShot = 0;
 
-    public PeaShooter(Vector2 position, int row, int column) {
-        super(50, "PeaShooter", position, 100, 7.5, row,
-                column,"pea_shooter.png");
+    public PeaShooter(entitycfg cfg,Vector2 position) {
+        super(cfg,position);
+
     }
     @Override
     public void update(double deltaTime) { // den räknar tid ifrån förra skottet
@@ -27,7 +27,12 @@ public class PeaShooter extends Plant implements Shooter {
     public Projectile shoot() {
         if (canShoot()){
             timeSinceLastShot = 0;
-            return new PeaProjectile(new Vector2(getPosition()));
+            entitycfg cfg = new entitycfg();
+            cfg.health = 1;
+            cfg.name = "Pea";
+            cfg.moveSpeed = 500;
+            cfg.texture = "pea.png";
+            return new Projectile(cfg,new Vector2(getPosition()));
         }
         return null;
 

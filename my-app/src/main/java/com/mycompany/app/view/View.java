@@ -11,31 +11,33 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+import com.badlogic.gdx.files.FileHandle;
 import com.mycompany.app.controller.Controller;
 import com.mycompany.app.view.PlantSeedView;
-import com.mycompany.app.controller.ZombieSpawner;
 
 import java.util.List;
 import java.util.Vector;
-import java.util.List;
 
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.mycompany.app.view.PlantSeedView;
 
 public class View implements ApplicationListener {
 
-    private Model model;
+    private Game game;
     private Lawn lawn;
     private SpriteBatch spriteBatch;
     private Viewport viewport;
     private float gameTime = 0;
     private Boolean gameOver = false;
-
+    private json_reader js;
     private Texture backgroundTexture;
     private EntityView entityView;
     private ShapeRenderer shapeRenderer;
@@ -48,19 +50,23 @@ public class View implements ApplicationListener {
 
     private BitmapFont font;
 
-    public View(Model model) {
-        this.model = model;
-        this.lawn = model.getLawn();
+    public View() {
+        
+
+        
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setTitle("Game");
         config.setWindowedMode(800, 600);
         config.useVsync(true);
         t = new Texturemanager();
         new Lwjgl3Application(this, config);
+        
     }
 
     @Override
     public void create() {
+        this.js = new json_reader();
+        this.game = new Game();
         viewport = new FitViewport(800, 600);
         spriteBatch = new SpriteBatch();
 
@@ -68,20 +74,21 @@ public class View implements ApplicationListener {
 
         entityView = new EntityView();
         shapeRenderer = new ShapeRenderer();
-        zombieSpawner = new ZombieSpawner(model, Difficulty.EASY);
+        
         plantSeedView = new PlantSeedView(this.t,this.whiteTexture);
 
         Pixmap pm = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         pm.setColor(Color.WHITE);
         pm.fill();
         this.whiteTexture = new Texture(pm);
+        
         pm.dispose();
         plantSeedView = new PlantSeedView(t,this.whiteTexture);
 
 
 
         font = new BitmapFont();
-        controller = new Controller(model, viewport, plantSeedView);
+        controller = new Controller(this.game, viewport, plantSeedView);
 
         font = new BitmapFont();
     }
@@ -93,11 +100,14 @@ public class View implements ApplicationListener {
 
     @Override
     public void render() {
+        
+        System.out.print(this.gameOver);
+        
         float delta = Gdx.graphics.getDeltaTime();
 
-        List<Zombie> zombies = model.game.getZombies();
-        List<Projectile> projectiles = model.game.getProjectiles();
-        List<Sun> suns = model.game.getSuns();
+        List<Zombie> zombies = this.game.getZombies();
+        List<Projectile> projectiles = this.game.getProjectiles();
+        List<Sun> suns = this.game.getSuns();
 
         ScreenUtils.clear(Color.BLACK);
         viewport.apply();
@@ -108,7 +118,7 @@ public class View implements ApplicationListener {
 
         
         // draw the plant seed icons in the top-left of the screen (pass viewport and selected index)
-        plantSeedView.draw(spriteBatch, viewport, model.game.getplantSeeds(), 10, 10, 64, 8, controller.getSelectedSeedIndex());
+        plantSeedView.draw(spriteBatch, viewport, this.game.getplantSeeds(), 10, 10, 64, 8, controller.getSelectedSeedIndex());
 
         // Grid
         float tileW = viewport.getWorldWidth() * 0.80f / lawn.getCols();
@@ -150,7 +160,7 @@ public class View implements ApplicationListener {
             //shapeRenderer.line((float)s.getHitBox().getMinX(),(float)s.getHitBox().getMinY(),(float)s.getHitBox().getMaxX(), (float)s.getHitBox().getMaxY());
             entityView.draw(t.get_Texture(s.getTexturestring()), spriteBatch, s, pPos.x, pPos.y, 50, 50);
         }
-        font.draw(spriteBatch,"Sun:"+model.game.get_current_sun(),500,500);
+        font.draw(spriteBatch,"Sun:"+this.game.get_current_sun(),500,500);
 
         font.draw(spriteBatch, "Time: " + (int)gameTime, viewport.getWorldWidth() - 100, viewport.getWorldHeight() - 10);
         shapeRenderer.end();
@@ -162,7 +172,7 @@ public class View implements ApplicationListener {
         if (!gameOver) {
             gameTime += delta;
 
-            model.game.updateGameState(delta);
+            this.game.updateGameState(delta);
             zombieSpawner.update(delta, viewport.getWorldWidth(), gridY, tileH, lawn.getRows());
             if (checkZombie()) {
                 gameOver = true;
@@ -171,7 +181,7 @@ public class View implements ApplicationListener {
     }
 
     private boolean checkZombie(){
-        for(Zombie z : model.game.getZombies()){
+        for(Zombie z : this.game.getZombies()){
             if(z.getPosition().x <= 0){
                 return true;
             }

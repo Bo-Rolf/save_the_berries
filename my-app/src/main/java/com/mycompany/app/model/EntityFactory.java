@@ -10,6 +10,7 @@ public class EntityFactory {
             cArg[0] = Vector2.class; //First argument is of *object* type Long
             cArg[1] = int.class; //Second argument is of *object* type String
             cArg[2] = int.class;
+           
             return type.getDeclaredConstructor(cArg).newInstance(new Vector2(x, y), row, col);
         } catch (Exception e) {
             throw new IllegalArgumentException("Unknown plant type: " + type+", error: "+e);

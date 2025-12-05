@@ -15,12 +15,12 @@ public abstract class Entity implements Damageable {
 
     
 
-    public Entity(int health, String name, Vector2 position, Rectangle2D hitBox,String texString) {
-        this.health = health;
-        this.name = name;
+    public Entity(entitycfg cfg,Vector2 position,Rectangle2D.Double hb) {
+        this.health = cfg.health;
+        this.name = cfg.name;
         this.position = position;
-        this.hitBox = hitBox;
-        this.textureString=texString;
+        this.hitBox = hb;
+        this.textureString=cfg.texture;
     }
 
     public abstract void update(double deltaTime);

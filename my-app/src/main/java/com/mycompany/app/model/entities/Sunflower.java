@@ -2,6 +2,9 @@ package com.mycompany.app.model.entities;
 
 
 import java.awt.geom.Rectangle2D;
+
+import javax.swing.text.Position;
+
 import com.mycompany.app.Interfaces.Shooter;
 import com.badlogic.gdx.math.Vector2;
 
@@ -9,12 +12,12 @@ public class Sunflower extends Plant{
     private final double sunCooldown = 15;
     private double timeSinceLastSun = 0;
 
+
+    public Sunflower(entitycfg cfg, Vector2 pos){
+        super(cfg,pos);
+    }
     
 
-    public Sunflower(Vector2 position, int row, int column) {
-        super(50, "Sunflower", position, 50, 7.5, row,
-                column,"sunflower.png");
-    }
     @Override
     public void update(double deltaTime) { // den räknar tid ifrån förra skottet
         timeSinceLastSun +=deltaTime;
@@ -28,7 +31,11 @@ public class Sunflower extends Plant{
     public Sun spawnSun() {
         if (canSpawnSun()){
             timeSinceLastSun = 0;
-            return new Sun(new Vector2(getPosition()),25);
+            entitycfg cfg = new entitycfg();
+            cfg.health=1;
+            cfg.name="Sun";
+            cfg.texture="sun.png";
+            return new Sun(cfg,new Vector2(getPosition()));
         }
         return null;
 

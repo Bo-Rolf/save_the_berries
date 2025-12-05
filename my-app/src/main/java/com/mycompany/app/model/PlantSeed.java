@@ -24,6 +24,11 @@ public class PlantSeed {
            // (något som är gemensamt för varje subtyp)(tex wallnut kommer alltid ha 50 cost)
            //Jag lyckades inte få en statisk funktion som returnarar värdena att fungera,
            //Så för att få värdena skapar jag en ny instans av objektet och hämtar de gemensamma värdena
+
+
+
+        
+
            Class[] cArg = new Class[3]; //Our constructor has 3 arguments
            cArg[0]= Vector2.class;
            cArg[1] = int.class; 

@@ -1,0 +1,59 @@
+{
+
+  "zombies": [
+    {
+      "class": "Zombie",
+      "health": 10,
+      "name": "Normal Zombie",
+      "moveSpeed": 10,
+      "damage": 10,
+      "attackSpeed": 0.2,
+      "texturestring": "zombie.png"
+    },
+    {
+      "class": "Zombie",
+      "health": 10,
+      "name": "Fast Zombie",
+      "moveSpeed": 25,
+      "damage": 10,
+      "attackSpeed": 0.2,
+      "texturestring": "zombie.png"
+    },
+    {
+      "class": "Zombie",
+      "health": 20,
+      "name": "Tank Zombie",
+      "moveSpeed": 10,
+      "damage": 10,
+      "attackSpeed": 0.2,
+      "texturestring": "zombie.png"
+    }
+  ],
+  "plants":[
+    {
+      "class": "Plant",
+      "health":1000,
+      "name":"Wallnut",
+      "sunCost":50,
+      "cooldown":30,
+      "texturestring":"wallnut.png"
+    },
+    {
+      "class": "Peashooter",
+      "health":1000,
+      "name":"Peashooter",
+      "sunCost":50,
+      "cooldown":30,
+      "texturestring":"wallnut.png"
+    },
+    {
+      "class": "Sunflower",
+      "health":1000,
+      "name":"Sunflower",
+      "sunCost":50,
+      "cooldown":30,
+      "texturestring":"wallnut.png"
+    }
+
+  ]
+}

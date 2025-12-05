@@ -7,15 +7,12 @@ C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\Interfaces\P
 C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\Interfaces\Shooter.java
 C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\model\Difficulty.java
 C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\model\entities\Entity.java
-C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\model\entities\FastZombie.java
-C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\model\entities\NormalZombie.java
 C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\model\entities\PeaProjectile.java
 C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\model\entities\PeaShooter.java
 C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\model\entities\Plant.java
 C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\model\entities\Projectile.java
 C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\model\entities\Sun.java
 C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\model\entities\Sunflower.java
-C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\model\entities\TankyZombie.java
 C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\model\entities\Wallnut.java
 C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\model\entities\Zombie.java
 C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\model\EntityFactory.java
@@ -26,6 +23,7 @@ C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\model\SpawnC
 C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\model\Tile.java
 C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\Sunspawner.java
 C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\view\EntityView.java
+C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\view\json_reader.java
 C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\view\PlantSeedView.java
 C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\view\Texturemanager.java
 C:\Users\Sixte\Desktop\OOPvz\my-app\src\main\java\com\mycompany\app\view\View.java
