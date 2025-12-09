@@ -15,7 +15,7 @@ public abstract class Entity implements Damageable {
 
     
 
-    public Entity(entitycfg cfg,Vector2 position,Rectangle2D.Double hb) {
+    public Entity(Entitycfg cfg,Vector2 position,Rectangle2D.Double hb) {
         this.health = cfg.health;
         this.name = cfg.name;
         this.position = position;

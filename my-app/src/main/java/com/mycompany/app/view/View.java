@@ -1,9 +1,11 @@
 package com.mycompany.app.view;
 
-import com.mycompany.app.model.*;
-import com.mycompany.app.model.entities.*;
+import java.util.List;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
+import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -11,23 +13,17 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonReader;
-import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import com.badlogic.gdx.files.FileHandle;
 import com.mycompany.app.controller.Controller;
-import com.mycompany.app.view.PlantSeedView;
-
-import java.util.List;
-import java.util.Vector;
-
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.mycompany.app.view.PlantSeedView;
+import com.mycompany.app.model.Game;
+import com.mycompany.app.model.Lawn;
+import com.mycompany.app.model.Tile;
+import com.mycompany.app.model.entities.Plant;
+import com.mycompany.app.model.entities.Projectile;
+import com.mycompany.app.model.entities.Sun;
+import com.mycompany.app.model.entities.Zombie;
 
 public class View implements ApplicationListener {
 
@@ -42,7 +38,6 @@ public class View implements ApplicationListener {
     private EntityView entityView;
     private ShapeRenderer shapeRenderer;
     private Controller controller;
-    private ZombieSpawner zombieSpawner;
     private Texture whiteTexture;
 
     private Texturemanager t = new Texturemanager();
@@ -66,7 +61,8 @@ public class View implements ApplicationListener {
     @Override
     public void create() {
         this.js = new json_reader();
-        this.game = new Game();
+        this.game = new Game(js.config);
+        this.lawn = game.getLawn();
         viewport = new FitViewport(800, 600);
         spriteBatch = new SpriteBatch();
 
@@ -101,7 +97,7 @@ public class View implements ApplicationListener {
     @Override
     public void render() {
         
-        System.out.print(this.gameOver);
+        //System.out.print(this.gameOver);
         
         float delta = Gdx.graphics.getDeltaTime();
 
@@ -173,7 +169,7 @@ public class View implements ApplicationListener {
             gameTime += delta;
 
             this.game.updateGameState(delta);
-            zombieSpawner.update(delta, viewport.getWorldWidth(), gridY, tileH, lawn.getRows());
+            
             if (checkZombie()) {
                 gameOver = true;
             }

@@ -1,13 +1,13 @@
 package com.mycompany.app.model;
 
-import com.badlogic.gdx.math.Vector2;
-import com.mycompany.app.model.entities.Zombie;
-
 import java.util.Random;
+
+import com.mycompany.app.model.entities.Zombie;
 
 public class ZombieSpawner {
 
     private final SpawnConfig config;
+    private EntityFactory factory;
 
     private float spawnTimer = 0f;
     private float currentInterval;
@@ -15,7 +15,8 @@ public class ZombieSpawner {
 
     private Random random = new Random();
 
-    public ZombieSpawner(EntityFactory factory,Difficulty difficulty) {
+    public ZombieSpawner(EntityFactory factory2,Difficulty difficulty) {
+        this.factory = factory2;
         this.config = SpawnConfig.forDifficulty(difficulty);
         this.currentInterval = config.startInterval;
     }
@@ -60,10 +61,11 @@ public class ZombieSpawner {
             fastChance = 0.45f;
             tankyChance = 0.25f;
         }
+        
 
-        if (r < normalChance) return new Zombie(new Vector2(x, y));
-        else if (r < normalChance + fastChance) return new Zombie(new Vector2(x, y));
-        else return new Zombie(new Vector2(x, y));
+        if (r < normalChance) return this.factory.createZombie("Normal Zombie",x,y);
+        else if (r < normalChance + fastChance) return this.factory.createZombie("Fast Zombie", x,y);
+        else return this.factory.createZombie("Tank Zombie", x,y);
 
     }
 }

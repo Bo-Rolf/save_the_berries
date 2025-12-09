@@ -14,7 +14,7 @@ public class Plant extends Entity implements Placeable {
     private Runnable tileRemovalListener;
 
 
-    public Plant(entitycfg cfg, Vector2 position) {
+    public Plant(Entitycfg cfg, Vector2 position) {
         super(cfg, position, new Rectangle2D.Double(position.x-35,position.y-35,(float)70,(float)70));
         this.sunCost = cfg.sunCost;
         this.cooldown = cfg.cooldown;

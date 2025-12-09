@@ -2,57 +2,65 @@
 
   "zombies": [
     {
-      "class": "Zombie",
+      "class": "Entitycfg",
       "health": 10,
       "name": "Normal Zombie",
       "moveSpeed": 10,
       "damage": 10,
       "attackSpeed": 0.2,
-      "texturestring": "zombie.png"
+      "texture": "zombie.png",
+      "class_type": "Zombie"
     },
     {
-      "class": "Zombie",
+      "class": "Entitycfg",
       "health": 10,
       "name": "Fast Zombie",
       "moveSpeed": 25,
       "damage": 10,
       "attackSpeed": 0.2,
-      "texturestring": "zombie.png"
+      "texture": "zombie.png",
+      "class_type":"Zombie"
+      
     },
     {
-      "class": "Zombie",
+      "class": "Entitycfg",
       "health": 20,
       "name": "Tank Zombie",
       "moveSpeed": 10,
       "damage": 10,
       "attackSpeed": 0.2,
-      "texturestring": "zombie.png"
+      "texture": "zombie.png",
+      "class_type":"Zombie"
     }
   ],
   "plants":[
     {
-      "class": "Plant",
+      "class": "Entitycfg",
       "health":1000,
       "name":"Wallnut",
       "sunCost":50,
       "cooldown":30,
-      "texturestring":"wallnut.png"
+      "texture":"wallnut.png",
+      "class_type":"Plant"
+      
     },
     {
-      "class": "Peashooter",
+      "class": "Entitycfg",
       "health":1000,
       "name":"Peashooter",
       "sunCost":50,
       "cooldown":30,
-      "texturestring":"wallnut.png"
+      "texture":"pea_shooter.png",
+      "class_type":"Shooter"
     },
     {
-      "class": "Sunflower",
+      "class": "Entitycfg",
       "health":1000,
       "name":"Sunflower",
       "sunCost":50,
       "cooldown":30,
-      "texturestring":"wallnut.png"
+      "texture":"sunflower.png",
+      "class_type":"SunPlant"
     }
 
   ]

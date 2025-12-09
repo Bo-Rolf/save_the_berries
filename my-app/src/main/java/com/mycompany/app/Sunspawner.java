@@ -4,7 +4,7 @@ package com.mycompany.app;
 import java.util.Random;
 
 import com.mycompany.app.model.entities.Sun;
-import com.mycompany.app.model.entities.entitycfg;
+import com.mycompany.app.model.entities.Entitycfg;
 import com.badlogic.gdx.math.Vector2;
 
 import java.util.random.*;
@@ -30,9 +30,9 @@ public class Sunspawner {
         if (canSpawnSun()){
             timeSinceLastSun = 0;
             Vector2 sunpos = new Vector2(this.r.nextInt(100,700),this.r.nextInt(100,500));
-                    entitycfg cfg = new entitycfg();
-        cfg.health=1;
-        cfg.name="Sun";
+            Entitycfg cfg = new Entitycfg();
+            cfg.health=1;
+            cfg.name="Sun";
             cfg.texture="sun.png";
             return new Sun(cfg,sunpos);
         }

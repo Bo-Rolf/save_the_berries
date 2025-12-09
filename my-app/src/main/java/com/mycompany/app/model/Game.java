@@ -1,20 +1,19 @@
 package com.mycompany.app.model;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Json;
-import com.mycompany.app.Sunspawner;
 import com.mycompany.app.Interfaces.Shooter;
-import com.mycompany.app.model.entities.*;
-
-
-import java.awt.Point;
-import java.lang.System;
+import com.mycompany.app.Sunspawner;
+import com.mycompany.app.model.entities.Entity;
+import com.mycompany.app.model.entities.Entitycfg;
+import com.mycompany.app.model.entities.GameConfig;
+import com.mycompany.app.model.entities.Plant;
+import com.mycompany.app.model.entities.Projectile;
+import com.mycompany.app.model.entities.Sun;
+import com.mycompany.app.model.entities.Sunflower;
+import com.mycompany.app.model.entities.Zombie;
 
 public class Game {
 
@@ -57,8 +56,10 @@ public class Game {
         // Lägg till initiala zombies och plants här om det behövs
         this.sun = 200;
         this.entityFactory = new EntityFactory(gcfg);
-        this.zombieSpawner=new ZombieSpawner(this.entityFactory);
-
+        this.zombieSpawner=new ZombieSpawner(this.entityFactory,Difficulty.EASY);
+        for(Entitycfg cfg : gcfg.plants){
+            this.plantSeeds.add(new PlantSeed(cfg));
+        }
         //this.plants.add(new Plant("asd",asd,asd,asd,asd))
     }
 
@@ -75,7 +76,7 @@ public class Game {
         updateDeathCheck();
         Zombie z = this.zombieSpawner.update((float)deltaTime, 800, 10, 80, 8);
         if(z!=null){
-            EntityFactory.add(z);
+            addZombie(z);
         }
         if(!Over){
             elapsedTime += deltaTime;
@@ -184,11 +185,15 @@ public class Game {
 
     public void placePlant(int plantseedIndex,Tile tile, int row, int col,float x, float y) {
         PlantSeed p =getPlantSeed(plantseedIndex);
+
         if(p==null){
             System.out.print("No plantseed selected");
         }
         else{
-            Plant newPlant = EntityFactory.createPlant(getPlantSeed(plantseedIndex).type, x, y, row, col);
+            
+            
+            Plant newPlant = this.entityFactory.createPlant(p.type, x, y, row, col);
+            
             if(newPlant==null){
                 System.out.print("Plant error, plant does not exist");
             }
