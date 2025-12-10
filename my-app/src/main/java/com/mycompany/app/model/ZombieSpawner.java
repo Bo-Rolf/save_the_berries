@@ -36,6 +36,7 @@ public class ZombieSpawner {
             int row = random.nextInt(rows);
             float x = worldWidth + 20;
             float y = gridY + row * tileHeight;
+            
 
             Zombie z = chooseZombie(row, x, y);
             return z;

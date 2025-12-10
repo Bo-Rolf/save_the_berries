@@ -60,6 +60,8 @@ public class Game {
         for(Entitycfg cfg : gcfg.plants){
             this.plantSeeds.add(new PlantSeed(cfg));
         }
+
+        
         //this.plants.add(new Plant("asd",asd,asd,asd,asd))
     }
 
@@ -74,7 +76,21 @@ public class Game {
         updatePlantSeeds(deltaTime);
         updateSunSpawner(deltaTime);
         updateDeathCheck();
-        Zombie z = this.zombieSpawner.update((float)deltaTime, 800, 10, 80, 8);
+
+        //float tileW = 800 * 0.80f / lawn.getCols();
+
+
+        //Det här borde nog inte vara här men jag visste inte riktigt hur man skulle få in det från view
+        //Innan kördes zombiesspawner.update från view, jag flyttade den till modelen(där den borde vara)
+        //Men funktionen behöver värden från view 
+        //det här är också väldigt oeffektivt(räknar ut samma sak varje frame) 
+        float tileH = 600 * 0.72f / lawn.getRows();
+        float gridY = (600 - tileH * lawn.getRows()) / 2f - 50;
+        
+        Zombie z = this.zombieSpawner.update((float)deltaTime, (float)800.0,gridY, tileH, this.getLawn().getRows());
+        
+
+        //System.out.println(deltaTime+" "+800+" "+gridY+" "+tileH+" "+this.getLawn().getRows());
         if(z!=null){
             addZombie(z);
         }

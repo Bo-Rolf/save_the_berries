@@ -162,6 +162,7 @@ public class View implements ApplicationListener {
         shapeRenderer.end();
         spriteBatch.end();
 
+        System.out.println(delta+ " "+viewport.getWorldWidth()+" " + gridY+" "+ tileH+" ");
         // Draw grid
         drawGrid(gridX, gridY, tileW, tileH, lawn.getCols(), lawn.getRows());
 
