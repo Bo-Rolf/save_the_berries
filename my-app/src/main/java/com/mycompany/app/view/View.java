@@ -60,6 +60,7 @@ public class View implements ApplicationListener {
 
     @Override
     public void create() {
+        font = new BitmapFont();
         this.js = new json_reader();
         this.game = new Game(js.config);
         this.lawn = game.getLawn();
@@ -71,7 +72,7 @@ public class View implements ApplicationListener {
         entityView = new EntityView();
         shapeRenderer = new ShapeRenderer();
         
-        plantSeedView = new PlantSeedView(this.t,this.whiteTexture);
+        plantSeedView = new PlantSeedView(this.t,this.whiteTexture,font);
 
         Pixmap pm = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         pm.setColor(Color.WHITE);
@@ -79,14 +80,13 @@ public class View implements ApplicationListener {
         this.whiteTexture = new Texture(pm);
         
         pm.dispose();
-        plantSeedView = new PlantSeedView(t,this.whiteTexture);
+        plantSeedView = new PlantSeedView(t,this.whiteTexture,this.font);
 
 
 
-        font = new BitmapFont();
         controller = new Controller(this.game, viewport, plantSeedView);
 
-        font = new BitmapFont();
+
     }
 
     @Override
@@ -162,7 +162,7 @@ public class View implements ApplicationListener {
         shapeRenderer.end();
         spriteBatch.end();
 
-        System.out.println(delta+ " "+viewport.getWorldWidth()+" " + gridY+" "+ tileH+" ");
+        //System.out.println(delta+ " "+viewport.getWorldWidth()+" " + gridY+" "+ tileH+" ");
         // Draw grid
         drawGrid(gridX, gridY, tileW, tileH, lawn.getCols(), lawn.getRows());
 
