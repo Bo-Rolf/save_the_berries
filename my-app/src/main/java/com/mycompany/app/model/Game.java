@@ -83,10 +83,10 @@ public class Game {
         //Det här borde nog inte vara här men jag visste inte riktigt hur man skulle få in det från view
         //Innan kördes zombiesspawner.update från view, jag flyttade den till modelen(där den borde vara)
         //Men funktionen behöver värden från view 
-        //det här är också väldigt oeffektivt(räknar ut samma sak varje frame) 
+        //det här är också väldigt oeffektivt(räknar ut samma sak varje frame)
+        // /sixten 
         float tileH = 600 * 0.72f / lawn.getRows();
         float gridY = (600 - tileH * lawn.getRows()) / 2f - 50;
-        
         Zombie z = this.zombieSpawner.update((float)deltaTime, (float)800.0,gridY, tileH, this.getLawn().getRows());
         
 
