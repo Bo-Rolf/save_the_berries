@@ -1,8 +1,7 @@
 package com.mycompany.app.view;
 
-import com.mycompany.app.model.*;
-import com.mycompany.app.model.entities.*;
-import com.badlogic.gdx.ApplicationListener;
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -14,20 +13,18 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.mycompany.app.controller.Controller;
-import com.mycompany.app.view.PlantSeedView;
 import com.mycompany.app.controller.ZombieSpawner;
+import com.mycompany.app.model.Difficulty;
+import com.mycompany.app.model.Lawn;
+import com.mycompany.app.model.Model;
+import com.mycompany.app.model.Tile;
+import com.mycompany.app.model.entities.Plant;
+import com.mycompany.app.model.entities.Projectile;
+import com.mycompany.app.model.entities.Sun;
+import com.mycompany.app.model.entities.Zombie;
 
-import java.util.List;
-import java.util.Vector;
-import java.util.List;
-
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.mycompany.app.view.PlantSeedView;
-
-public class View implements ApplicationListener {
+public class View {
 
     private Model model;
     private Lawn lawn;
@@ -42,6 +39,7 @@ public class View implements ApplicationListener {
     private Controller controller;
     private ZombieSpawner zombieSpawner;
     private Texture whiteTexture;
+    private Difficulty difficulty;
 
     private Texturemanager t = new Texturemanager();
     private PlantSeedView plantSeedView;
@@ -51,15 +49,11 @@ public class View implements ApplicationListener {
     public View(Model model) {
         this.model = model;
         this.lawn = model.getLawn();
-        Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-        config.setTitle("Game");
-        config.setWindowedMode(800, 600);
-        config.useVsync(true);
         t = new Texturemanager();
-        new Lwjgl3Application(this, config);
+        this.difficulty = model.getDifficulty();
     }
 
-    @Override
+    
     public void create() {
         viewport = new FitViewport(800, 600);
         spriteBatch = new SpriteBatch();
@@ -68,7 +62,7 @@ public class View implements ApplicationListener {
 
         entityView = new EntityView();
         shapeRenderer = new ShapeRenderer();
-        zombieSpawner = new ZombieSpawner(model, Difficulty.EASY);
+        zombieSpawner = new ZombieSpawner(model, difficulty);
         plantSeedView = new PlantSeedView(this.t,this.whiteTexture);
 
         Pixmap pm = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
@@ -86,12 +80,10 @@ public class View implements ApplicationListener {
         font = new BitmapFont();
     }
 
-    @Override
     public void resize(int width, int height) {
         viewport.update(width, height, true);
     }
 
-    @Override
     public void render() {
         float delta = Gdx.graphics.getDeltaTime();
 
@@ -107,7 +99,7 @@ public class View implements ApplicationListener {
         spriteBatch.draw(backgroundTexture, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
 
         
-        // draw the plant seed icons in the top-left of the screen (pass viewport and selected index)
+        
         plantSeedView.draw(spriteBatch, viewport, model.game.getplantSeeds(), 10, 10, 64, 8, controller.getSelectedSeedIndex());
 
         // Grid
@@ -128,8 +120,6 @@ public class View implements ApplicationListener {
                     float x = gridX + c * tileW;
                     float y = gridY + r * tileH;
                     entityView.draw(t.get_Texture(plant.getTexturestring()), spriteBatch, plant, x, y, tileW, tileH);
-
-                    //shapeRenderer.line((float)plant.getHitBox().getMinX(),(float)plant.getHitBox().getMinY(),(float)plant.getHitBox().getMaxX(),(float)plant.getHitBox().getMaxY());
                 }
             }
         }
@@ -147,7 +137,6 @@ public class View implements ApplicationListener {
 
         for (Sun s : suns) {
             Vector2 pPos = s.getPosition();
-            //shapeRenderer.line((float)s.getHitBox().getMinX(),(float)s.getHitBox().getMinY(),(float)s.getHitBox().getMaxX(), (float)s.getHitBox().getMaxY());
             entityView.draw(t.get_Texture(s.getTexturestring()), spriteBatch, s, pPos.x, pPos.y, 50, 50);
         }
         font.draw(spriteBatch,"Sun:"+model.game.get_current_sun(),500,500);
@@ -166,6 +155,8 @@ public class View implements ApplicationListener {
             zombieSpawner.update(delta, viewport.getWorldWidth(), gridY, tileH, lawn.getRows());
             if (checkZombie()) {
                 gameOver = true;
+                model.setGameOver(true);
+                model.setGameOver((int) gameTime);
             }
         }
     }
@@ -200,13 +191,13 @@ public class View implements ApplicationListener {
 
     }
 
-    @Override
+
     public void pause() {}
 
-    @Override
+
     public void resume() {}
 
-    @Override
+
     public void dispose() {
         spriteBatch.dispose();
         backgroundTexture.dispose();

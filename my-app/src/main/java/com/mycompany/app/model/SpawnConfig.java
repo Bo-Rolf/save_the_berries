@@ -15,7 +15,7 @@ public class SpawnConfig {
         return switch (difficulty) {
             case EASY -> new SpawnConfig(10f, 6.5f, 0.01f);
             case NORMAL -> new SpawnConfig(14f, 9f, 0.02f);
-            case HARD -> new SpawnConfig(20f, 11f, 0.03f);
+            case HARD -> new SpawnConfig(20f, 1f, 100f);
         };
     }
 }

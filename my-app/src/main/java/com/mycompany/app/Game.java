@@ -1,20 +1,21 @@
 package com.mycompany.app;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import com.mycompany.app.Interfaces.Shooter;
-import com.mycompany.app.model.entities.*;
-
-import java.awt.Point;
-import java.lang.System;
-
 import com.mycompany.app.model.EntityFactory;
 import com.mycompany.app.model.PlantSeed;
 import com.mycompany.app.model.Tile;
+import com.mycompany.app.model.entities.Entity;
+import com.mycompany.app.model.entities.PeaShooter;
+import com.mycompany.app.model.entities.Plant;
+import com.mycompany.app.model.entities.Projectile;
+import com.mycompany.app.model.entities.Sun;
+import com.mycompany.app.model.entities.Sunflower;
+import com.mycompany.app.model.entities.Wallnut;
+import com.mycompany.app.model.entities.Zombie;
 
 public class Game {
 

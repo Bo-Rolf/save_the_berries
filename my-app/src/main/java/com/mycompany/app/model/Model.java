@@ -1,21 +1,67 @@
 package com.mycompany.app.model;
 
 import com.mycompany.app.Game;
-import com.mycompany.app.model.entities.Plant;
 
 public class Model {
-    private final Lawn lawn = new Lawn(5, 8);
+    private Lawn lawn;
     public Game game;
-    // Model class implementation
+    private Difficulty difficulty;
+    private boolean goToMainMenu = false;
+    private boolean gameOver = false;
+    private int finalTime = 0;
+    private boolean paused = false;
+
+
     public Model() {
+        this.lawn = new Lawn(5, 8); 
         this.game = new Game();
-        // Model initialization code
-    }   
+    }
 
+    public boolean isPaused() {
+    return paused;
+    }
 
+    public void setPaused(boolean paused) {
+    this.paused = paused;
+    }
 
     public Lawn getLawn() {
         return lawn;
     }
 
+    public Difficulty getDifficulty() {
+        return difficulty;
+    }
+
+    public void setDifficulty(Difficulty difficulty) {
+        this.difficulty = difficulty;
+    }
+
+    public boolean isGoToMainMenu() {
+        return goToMainMenu;
+    }
+
+    public void setGoToMainMenu(boolean value) {
+        this.goToMainMenu = value;
+    }
+
+    public void setGameOver(int time) {
+        this.gameOver = true;
+        this.finalTime = time;
+    }
+
+    public void setGameOver(boolean value) {
+        this.gameOver = value;
+        if (value && finalTime == 0) {
+            this.finalTime = 0;
+        }
+    }
+
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    public int getFinalTime() {
+        return finalTime;
+    }
 }
