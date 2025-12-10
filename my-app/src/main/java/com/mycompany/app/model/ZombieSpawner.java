@@ -47,9 +47,9 @@ public class ZombieSpawner {
     private Zombie chooseZombie(int row, float x, float y) {
         float r = random.nextFloat();
 
-        float normalChance = 0.7f;
-        float fastChance = 0.2f;
-        float tankyChance = 0.1f;
+        float normalChance = 1f;
+        float fastChance = 0.0f;
+        float tankyChance = 0.0f;
 
         // More tank/fast later in the game
         if (gameTime > 30) {

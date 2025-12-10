@@ -56,7 +56,7 @@ public class Controller {
 
             
 
-            if (worldCoords.x >= startX && worldCoords.x <= startX + tileWidth * this.lawn.getCols()
+            if (worldCoords.x >= startX && worldCoords.x <= startX-3 + tileWidth * this.lawn.getCols()
                     && worldCoords.y >= startY && worldCoords.y <= startY + tileHeight * this.lawn.getRows()) {
                 int col = (int) ((worldCoords.x - startX) / tileWidth);
                 int row = (int) ((worldCoords.y - startY) / tileHeight);

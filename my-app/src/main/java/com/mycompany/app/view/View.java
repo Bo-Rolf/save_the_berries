@@ -154,7 +154,7 @@ public class View implements ApplicationListener {
         for (Sun s : suns) {
             Vector2 pPos = s.getPosition();
             //shapeRenderer.line((float)s.getHitBox().getMinX(),(float)s.getHitBox().getMinY(),(float)s.getHitBox().getMaxX(), (float)s.getHitBox().getMaxY());
-            entityView.draw(t.get_Texture(s.getTexturestring()), spriteBatch, s, pPos.x, pPos.y, 50, 50);
+            entityView.draw(t.get_Texture(s.getTexturestring()), spriteBatch, s, pPos.x, pPos.y, 100, 100);
         }
         font.draw(spriteBatch,"Sun:"+this.game.get_current_sun(),500,500);
 
