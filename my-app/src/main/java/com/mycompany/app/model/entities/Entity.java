@@ -34,9 +34,9 @@ public abstract class Entity implements Damageable {
         }
     }
 
-        public boolean isAlive() {
+    public boolean isAlive() {
         return health > 0;
-        }
+    }
 
     protected void updateHitBox() {
         double x = (double) position.x;
