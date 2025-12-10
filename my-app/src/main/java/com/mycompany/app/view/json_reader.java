@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Json;
-import com.mycompany.app.model.entities.Entitycfg;
+import com.mycompany.app.model.entities.EntityCfg;
 import com.mycompany.app.model.entities.GameConfig;
 import com.mycompany.app.model.entities.PeaShooter;
 import com.mycompany.app.model.entities.Plant;
@@ -22,19 +22,19 @@ public class json_reader {
         j.addClassTag("SunPlant", Sunflower.class);
         j.addClassTag("Shooter", PeaShooter.class);
         j.addClassTag("Plant", Plant.class);
-        j.addClassTag("Entitycfg",Entitycfg.class);
+        j.addClassTag("EntityCfg",EntityCfg.class);
 
 
         GameConfig gcfg = j.fromJson(GameConfig.class, Gdx.files.internal("entitys.json"));
         
         
         
-        for(Entitycfg cfg : gcfg.plants){
+        for(EntityCfg cfg : gcfg.plants){
             cfg.p_type = j.getClass(cfg.class_type);
             System.out.print(cfg.p_type);
             System.out.print(cfg.class_type);
         }
-        for(Entitycfg cfg : gcfg.zombies){
+        for(EntityCfg cfg : gcfg.zombies){
            cfg.z_type = j.getClass(cfg.class_type);
         }
 

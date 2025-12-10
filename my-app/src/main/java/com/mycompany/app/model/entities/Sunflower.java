@@ -13,7 +13,7 @@ public class Sunflower extends Plant{
     private double timeSinceLastSun = 0;
 
 
-    public Sunflower(Entitycfg cfg, Vector2 pos){
+    public Sunflower(EntityCfg cfg, Vector2 pos){
         super(cfg,pos);
     }
     
@@ -31,7 +31,7 @@ public class Sunflower extends Plant{
     public Sun spawnSun() {
         if (canSpawnSun()){
             timeSinceLastSun = 0;
-            Entitycfg cfg = new Entitycfg();
+            EntityCfg cfg = new EntityCfg();
             cfg.health=1;
             cfg.name="Sun";
             cfg.texture="sun.png";

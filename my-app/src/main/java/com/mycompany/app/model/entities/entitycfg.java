@@ -4,7 +4,7 @@ package com.mycompany.app.model.entities;
 //Varenda fält i json filen blir konverterade till saken med samma namn.
 //Det här är en class som sparar all info om objektet
 
-public class Entitycfg {
+public class EntityCfg {
     public String type;   // "normal", "fast", …
     public int health;
     public String name;

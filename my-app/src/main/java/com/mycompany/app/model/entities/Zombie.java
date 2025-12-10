@@ -11,7 +11,7 @@ public class Zombie extends Entity {
     private final double attackSpeed; //tiden mellan attacker i sekunder
     private double TimeSinceLastBite = 0.0;
 
-    public Zombie(Entitycfg cfg,Vector2 position) {
+    public Zombie(EntityCfg cfg,Vector2 position) {
         super(cfg,position,new Rectangle2D.Double(position.x, position.y, 60, 80));
         this.moveSpeed = cfg.moveSpeed;
         this.damage = cfg.damage;

@@ -7,7 +7,7 @@ import java.util.List;
 import com.mycompany.app.Interfaces.Shooter;
 import com.mycompany.app.Sunspawner;
 import com.mycompany.app.model.entities.Entity;
-import com.mycompany.app.model.entities.Entitycfg;
+import com.mycompany.app.model.entities.EntityCfg;
 import com.mycompany.app.model.entities.GameConfig;
 import com.mycompany.app.model.entities.Plant;
 import com.mycompany.app.model.entities.Projectile;
@@ -57,7 +57,7 @@ public class Game {
         this.sun = 200;
         this.entityFactory = new EntityFactory(gcfg);
         this.zombieSpawner=new ZombieSpawner(this.entityFactory,Difficulty.EASY);
-        for(Entitycfg cfg : gcfg.plants){
+        for(EntityCfg cfg : gcfg.plants){
             this.plantSeeds.add(new PlantSeed(cfg));
         }
 

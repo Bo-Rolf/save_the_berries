@@ -9,7 +9,7 @@ public class PeaShooter extends Plant implements Shooter {
     private final double cooldownSeconds = 1.5;
     private double timeSinceLastShot = 0;
 
-    public PeaShooter(Entitycfg cfg,Vector2 position) {
+    public PeaShooter(EntityCfg cfg,Vector2 position) {
         super(cfg,position);
 
     }
@@ -27,7 +27,7 @@ public class PeaShooter extends Plant implements Shooter {
     public Projectile shoot() {
         if (canShoot()){
             timeSinceLastShot = 0;
-            Entitycfg cfg = new Entitycfg();
+            EntityCfg cfg = new EntityCfg();
             cfg.health = 1;
             cfg.name = "Pea";
             cfg.moveSpeed = 500;

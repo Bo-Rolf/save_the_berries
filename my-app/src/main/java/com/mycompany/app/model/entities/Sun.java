@@ -12,7 +12,7 @@ public class Sun extends Entity{
     int sun_value;
     double time_out=0;
     int dissapear_timer=8; //tid tills den försvinner
-    public Sun(Entitycfg cfg ,Vector2 position) {
+    public Sun(EntityCfg cfg ,Vector2 position) {
         //Health används bara för takedamage när den ska dö (this.die kraschar ifall det sker under iteration)/Sixten
         super(cfg,position,new Rectangle2D.Double(position.x-10, position.y-10, 50, 50));
         this.sun_value=25;

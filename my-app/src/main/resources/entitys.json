@@ -2,7 +2,7 @@
 
   "zombies": [
     {
-      "class": "Entitycfg",
+      "class": "EntityCfg",
       "health": 10,
       "name": "Normal Zombie",
       "moveSpeed": 10,
@@ -12,7 +12,7 @@
       "class_type": "Zombie"
     },
     {
-      "class": "Entitycfg",
+      "class": "EntityCfg",
       "health": 10,
       "name": "Fast Zombie",
       "moveSpeed": 25,
@@ -23,7 +23,7 @@
       
     },
     {
-      "class": "Entitycfg",
+      "class": "EntityCfg",
       "health": 20,
       "name": "Tank Zombie",
       "moveSpeed": 10,
@@ -35,7 +35,7 @@
   ],
   "plants":[
     {
-      "class": "Entitycfg",
+      "class": "EntityCfg",
       "health":1000,
       "name":"Wallnut",
       "sunCost":50,
@@ -45,7 +45,7 @@
       
     },
     {
-      "class": "Entitycfg",
+      "class": "EntityCfg",
       "health":1000,
       "name":"Peashooter",
       "sunCost":100,
@@ -54,7 +54,7 @@
       "class_type":"Shooter"
     },
     {
-      "class": "Entitycfg",
+      "class": "EntityCfg",
       "health":1000,
       "name":"Sunflower",
       "sunCost":50,

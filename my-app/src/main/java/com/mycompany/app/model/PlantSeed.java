@@ -3,11 +3,11 @@ import java.util.Vector;
 import com.badlogic.gdx.math.Vector2;
 
 import com.mycompany.app.model.entities.PeaShooter;
-import com.mycompany.app.model.entities.Entitycfg;
+import com.mycompany.app.model.entities.EntityCfg;
 import com.mycompany.app.model.entities.Plant;
 
 public class PlantSeed {
-    public Entitycfg type;
+    public EntityCfg type;
     public String t;
     public int cost;
     public double cooldown;
@@ -15,7 +15,7 @@ public class PlantSeed {
 
     
 
-    public PlantSeed(Entitycfg cfg){
+    public PlantSeed(EntityCfg cfg){
         this.type=cfg;
         this.t=cfg.texture;
         this.cooldown=cfg.cooldown;

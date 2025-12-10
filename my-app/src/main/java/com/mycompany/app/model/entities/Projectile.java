@@ -8,7 +8,7 @@ public class Projectile extends Entity {
     private final double MoveSpeed;
     private final int damage;
 
-    public Projectile(Entitycfg cfg,Vector2 position) {
+    public Projectile(EntityCfg cfg,Vector2 position) {
         super(cfg,position,new Rectangle2D.Double(position.x,position.y,20,20));
         this.MoveSpeed = 500;
         this.damage = 1;
