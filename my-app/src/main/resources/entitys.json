@@ -48,7 +48,7 @@
       "class": "Entitycfg",
       "health":1000,
       "name":"Peashooter",
-      "sunCost":50,
+      "sunCost":100,
       "cooldown":30,
       "texture":"pea_shooter.png",
       "class_type":"Shooter"
