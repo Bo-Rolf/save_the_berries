@@ -1,28 +1,57 @@
 package com.mycompany.app.model;
-import com.mycompany.app.model.entities.*;
+import java.util.HashMap;
+import java.util.Map;
+
 import com.badlogic.gdx.math.Vector2;
+import com.mycompany.app.model.entities.EntityCfg;
+import com.mycompany.app.model.entities.GameConfig;
+import com.mycompany.app.model.entities.Plant;
+import com.mycompany.app.model.entities.Zombie;
 
 public class EntityFactory {
 
-    public static <T extends Plant> T createPlant(Class<T> type, float x, float y, int row, int col){
+
+    public Map<String,EntityCfg> plant_cfgs;
+    public Map<String,EntityCfg> zombie_cfgs;
+
+
+    public EntityFactory(GameConfig gcfg){
+        this.plant_cfgs = new HashMap<>();
+        this.zombie_cfgs = new HashMap<>();
+        for(EntityCfg e : gcfg.plants){
+            plant_cfgs.put(e.name, e);
+        }
+        for(EntityCfg e2 : gcfg.zombies){
+            zombie_cfgs.put(e2.name, e2);
+        }
+
+
+
+    }
+
+    public Plant createPlant(EntityCfg cfg, float x, float y, int row, int col){
         try {
-            Class[] cArg = new Class[3]; //Our constructor has 3 arguments
-            cArg[0] = Vector2.class; //First argument is of *object* type Long
-            cArg[1] = int.class; //Second argument is of *object* type String
-            cArg[2] = int.class;
-            return type.getDeclaredConstructor(cArg).newInstance(new Vector2(x, y), row, col);
+            //Class[] cArg = new Class[2]; //Our constructor has 3 arguments
+            //cArg[0] = EntityCfg.class;
+            //cArg[1] = Vector2.class; //First argument is of *object* type Long
+
+            Plant p =cfg.p_type.getDeclaredConstructor(EntityCfg.class,Vector2.class).newInstance(cfg,new Vector2(x,y));
+            return p;
+            //return this.plant_cfgs.get(type).classtype.getDeclaredConstructor(cArg).newInstance(new Vector2(x,y),row,col);
         } catch (Exception e) {
-            throw new IllegalArgumentException("Unknown plant type: " + type+", error: "+e);
+            throw new IllegalArgumentException("Unknown plant type: " + cfg.class_type+", error: "+e);
         }
     }
-    public static <T extends Zombie> T  createZombie(Class<T> zombieType, float x, float y, int row) {
+    public Zombie createZombie(String type, float x, float y) {
         try {
-            //Skapar ett nytt objekt av typen
-            Class[] cArg = new Class[3]; //
-            cArg[0] = Vector2.class; //First argument is of *object* type Long
-            return zombieType.getDeclaredConstructor(cArg).newInstance(new Vector2(x, y)); //Kör konstruktorn för typen
+            
+            EntityCfg cfg = this.zombie_cfgs.get(type);
+            System.out.println("info:"+type+" "+cfg.name+" "+cfg.class_type+" ");
+            Zombie z = cfg.z_type.getDeclaredConstructor(EntityCfg.class,Vector2.class).newInstance(cfg,new Vector2(x, y)); //Kör konstruktorn för typen
+            return z;
+            //return zombie_construct.get(type).getDeclaredConstructor(Vector2.class).newInstance(new Vector2(x, y)); //Kör konstruktorn för typen
         } catch (Exception e) {
-            throw new IllegalArgumentException("Unknown plant type: " + zombieType+", error: "+e);
+            throw new IllegalArgumentException("Unknown zombie type: " + type+", error: "+e);
         }
     }
 }

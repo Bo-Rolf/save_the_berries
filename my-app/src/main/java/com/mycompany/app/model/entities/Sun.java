@@ -2,9 +2,9 @@ package com.mycompany.app.model.entities;
 
 
 
-import com.badlogic.gdx.math.Vector2;
-
 import java.awt.geom.Rectangle2D;
+
+import com.badlogic.gdx.math.Vector2;
 
 
 public class Sun extends Entity{
@@ -12,10 +12,10 @@ public class Sun extends Entity{
     int sun_value;
     double time_out=0;
     int dissapear_timer=8; //tid tills den försvinner
-    public Sun(Vector2 vector,int value) {
+    public Sun(EntityCfg cfg ,Vector2 position) {
         //Health används bara för takedamage när den ska dö (this.die kraschar ifall det sker under iteration)/Sixten
-        super(1, "Sun", vector, new Rectangle2D.Double(vector.x-10, vector.y-10, 50, 50),"sun.png");
-        this.sun_value=value;
+        super(cfg,position,new Rectangle2D.Double(position.x+10, position.y+10, 90, 90));
+        this.sun_value=50;
         
     }
     @Override

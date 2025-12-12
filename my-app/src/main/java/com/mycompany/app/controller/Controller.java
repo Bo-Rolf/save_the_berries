@@ -7,21 +7,20 @@ import javax.crypto.spec.PBEKeySpec;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mycompany.app.model.Game;
 import com.mycompany.app.model.Lawn;
 import com.mycompany.app.model.Tile;
-import com.mycompany.app.model.Model;
+import com.mycompany.app.model.Game;
 import com.mycompany.app.model.entities.*;
-import com.mycompany.app.Game;
 import com.mycompany.app.view.PlantSeedView;
 
 public class Controller {
 
-    private final Model model;
     private final Game game;
     private final Lawn lawn;
     private final Viewport viewport;
     private final PlantSeedView seedView;
-    private int selectedSeedIndex = 0;
+    private int selectedSeedIndex = -1;
 
     // UI layout for seeds (should match View.draw call)
     private final float seedMarginLeft = 10f;
@@ -29,10 +28,9 @@ public class Controller {
     private final float seedSize = 64f;
     private final float seedSpacing = 8f;
 
-    public Controller(Model model, Viewport viewport, PlantSeedView seedView) {
-        this.model = model;
-        this.game = model.game;
-        this.lawn = model.getLawn();
+    public Controller(Game game, Viewport viewport, PlantSeedView seedView) {
+        this.game = game;
+        this.lawn = this.game.getLawn();
         this.viewport = viewport;
         this.seedView = seedView;
     }
@@ -44,8 +42,10 @@ public class Controller {
             float mouseY = Gdx.input.getY();
             Vector2 worldCoords = viewport.unproject(new Vector2(mouseX, mouseY));
 
-            model.game.collect_sun(new Point((int)worldCoords.x, (int)worldCoords.y));
-            int clickedSeed = seedView.getSeedIndexAt(worldCoords.x, worldCoords.y, viewport, model.game.getplantSeeds(),
+            this.game.collect_sun(new Point((int)worldCoords.x, (int)worldCoords.y));
+
+            //int oldIndex = this.
+            int clickedSeed = seedView.getSeedIndexAt(worldCoords.x, worldCoords.y, viewport, this.game.getplantSeeds(),
                     seedMarginLeft, seedMarginTop, seedSize, seedSpacing);
 
             if (clickedSeed != -1) {
@@ -56,11 +56,11 @@ public class Controller {
 
             
 
-            if (worldCoords.x >= startX && worldCoords.x <= startX + tileWidth * lawn.getCols()
-                    && worldCoords.y >= startY && worldCoords.y <= startY + tileHeight * lawn.getRows()) {
+            if (worldCoords.x >= startX && worldCoords.x <= startX-3 + tileWidth * this.lawn.getCols()
+                    && worldCoords.y >= startY && worldCoords.y <= startY + tileHeight * this.lawn.getRows()) {
                 int col = (int) ((worldCoords.x - startX) / tileWidth);
                 int row = (int) ((worldCoords.y - startY) / tileHeight);
-                Tile clickedTile = lawn.getTile(row, col);
+                Tile clickedTile = this.lawn.getTile(row, col);
 
 
                 if (clickedTile != null) { //(clickedTile != null && clickedTile.placeable == null)
@@ -68,7 +68,7 @@ public class Controller {
                     float y = startY + row * tileHeight + tileHeight / 2f;
                     
                     
-                    Tile tile =model.getLawn().getTile(row, col);
+                    Tile tile =this.game.getLawn().getTile(row, col);
                     game.placePlant(selectedSeedIndex,tile, row, col, x,y);
                     selectedSeedIndex = -1; //oselecta seedet du använder
             }       

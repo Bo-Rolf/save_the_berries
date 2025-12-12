@@ -4,14 +4,14 @@ package com.mycompany.app.model.entities;
 import java.awt.geom.Rectangle2D;
 import com.badlogic.gdx.math.Vector2;
 
-public abstract class Projectile extends Entity {
+public class Projectile extends Entity {
     private final double MoveSpeed;
     private final int damage;
 
-    public Projectile(int health, String name, Vector2 position, Rectangle2D hitBox, float MoveSpeed, int damage,String textureString) {
-        super(health, name, position, hitBox,textureString);
-        this.MoveSpeed = MoveSpeed;
-        this.damage = damage;
+    public Projectile(EntityCfg cfg,Vector2 position) {
+        super(cfg,position,new Rectangle2D.Double(position.x,position.y,20,20));
+        this.MoveSpeed = 500;
+        this.damage = 1;
     }
     private void move(double delta) {
         Vector2 pos = getPosition();

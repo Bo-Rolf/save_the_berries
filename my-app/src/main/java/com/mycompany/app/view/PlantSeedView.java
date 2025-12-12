@@ -14,17 +14,20 @@ import java.util.HashMap;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mycompany.app.model.PlantSeed;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 public class PlantSeedView {
     private final Map<String, Texture> textures = new HashMap<>();
     private final Texture placeholder;
     private final Texturemanager t;
     public static Texture white_tex;
+    public BitmapFont font;
 
-    public PlantSeedView(Texturemanager texture_manager,Texture white) {
+    public PlantSeedView(Texturemanager texture_manager,Texture white,BitmapFont font) {
         // load known seed textures (adjust filenames to match your assets)
         this.white_tex = white;
         this.t = texture_manager;
+        this.font = font;
         placeholder = new Texture("pea.png"); // fallback texture - add to assets or change name
     }
 
@@ -44,20 +47,11 @@ public class PlantSeedView {
             int i = plantSeedList.indexOf(e2);
             float drawSize = (i == selectedIndex) ? size * 1.08f : size;
             float offset = (drawSize - size) / 2f;
-            batch.end();
+            
                   // stop sprite batch before shape renderer
-            shape.begin(ShapeRenderer.ShapeType.Filled);
-            shape.setColor(Color.GRAY);
-            shape.rect(x - offset, y - offset, drawSize, drawSize);
-            shape.end();
-
-            batch.begin();
-
-            //shape.begin(ShapeRenderer.ShapeType.Line);
-            //shape.setColor(Color.GRAY);
-            //shape.rect(x, y, 100, 100);
-            //shape.end();
-            batch.draw(tex, x - offset, y - offset, drawSize, drawSize);
+            batch.setColor(Color.GRAY);
+            batch.draw(this.white_tex,x - offset, y - offset, drawSize, drawSize);
+            batch.setColor(Color.WHITE);
             
             // Draw texture card
             batch.draw(tex, x - offset, y - offset, drawSize, drawSize);
@@ -71,18 +65,19 @@ public class PlantSeedView {
                 batch.setColor(0, 0, 0, 0.55f);  // ändrar färgen till svart och halvtransparant
             
                 // Draw rectangle at TOP of the card
-                batch.draw(this.white_tex,x - offset,(float)((y - offset) + (drawSize - overlayHeight)), // top aligned
-                    drawSize,
-                    (float)overlayHeight);
+                //batch.draw(tex, x - offset, y - offset, drawSize, drawSize);
+                //batch.draw(this.white_tex, x - offset, y - offset, drawSize, drawSize);
+                batch.draw(this.white_tex,(x - offset),(float)((y - offset) + (drawSize - overlayHeight)), // top aligned
+                    drawSize,(float)overlayHeight);
 
                 batch.setColor(Color.WHITE); // reseta färgen
                 batch.end();
             }
+            batch.begin();
+            font.draw(batch,"Cost:"+e2.cost, x,y);
+            batch.end();
             x += size + spacing;
             
-            
-            
-
             
         }
         batch.begin();

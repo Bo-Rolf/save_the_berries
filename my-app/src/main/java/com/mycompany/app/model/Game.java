@@ -1,20 +1,19 @@
-package com.mycompany.app;
+package com.mycompany.app.model;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import com.mycompany.app.Interfaces.Shooter;
-import com.mycompany.app.model.entities.*;
-
-import java.awt.Point;
-import java.lang.System;
-
-import com.mycompany.app.model.EntityFactory;
-import com.mycompany.app.model.PlantSeed;
-import com.mycompany.app.model.Tile;
+import com.mycompany.app.Sunspawner;
+import com.mycompany.app.model.entities.Entity;
+import com.mycompany.app.model.entities.EntityCfg;
+import com.mycompany.app.model.entities.GameConfig;
+import com.mycompany.app.model.entities.Plant;
+import com.mycompany.app.model.entities.Projectile;
+import com.mycompany.app.model.entities.Sun;
+import com.mycompany.app.model.entities.Sunflower;
+import com.mycompany.app.model.entities.Zombie;
 
 public class Game {
 
@@ -24,12 +23,15 @@ public class Game {
     public int sun;
     private float elapsedTime = 0f;
 
+    private final Lawn lawn = new Lawn(5, 8);
+
     private final List<Plant> plants = new ArrayList<>();
     private final List<Zombie> zombies = new ArrayList<>();
     private final List<Projectile> projectiles = new ArrayList<>();
     private final List<Sun> collectable_suns = new ArrayList<>();
 
-    
+    private EntityFactory entityFactory;
+    private ZombieSpawner zombieSpawner;
 
 
     private final List<PlantSeed> plantSeeds = new ArrayList<>();
@@ -50,16 +52,21 @@ public class Game {
     //         }
     //     }
     // }
-    public Game() {
+    public Game(GameConfig gcfg) {
         // Lägg till initiala zombies och plants här om det behövs
         this.sun = 200;
-        this.plantSeeds.add(new PlantSeed(PeaShooter.class));
-        this.plantSeeds.add(new PlantSeed(Sunflower.class));
-        this.plantSeeds.add(new PlantSeed(Wallnut.class));
+        this.entityFactory = new EntityFactory(gcfg);
+        this.zombieSpawner=new ZombieSpawner(this.entityFactory,Difficulty.EASY);
+        for(EntityCfg cfg : gcfg.plants){
+            this.plantSeeds.add(new PlantSeed(cfg));
+        }
+
+        
+        //this.plants.add(new Plant("asd",asd,asd,asd,asd))
     }
 
     private void endGame() {
-
+        
     }
 
     public void updateGameState(double deltaTime) {
@@ -70,6 +77,23 @@ public class Game {
         updateSunSpawner(deltaTime);
         updateDeathCheck();
 
+        //float tileW = 800 * 0.80f / lawn.getCols();
+
+
+        //Det här borde nog inte vara här men jag visste inte riktigt hur man skulle få in det från view
+        //Innan kördes zombiesspawner.update från view, jag flyttade den till modelen(där den borde vara)
+        //Men funktionen behöver värden från view 
+        //det här är också väldigt oeffektivt(räknar ut samma sak varje frame)
+        // /sixten 
+        float tileH = 600 * 0.72f / lawn.getRows();
+        float gridY = (600 - tileH * lawn.getRows()) / 2f - 50;
+        Zombie z = this.zombieSpawner.update((float)deltaTime, (float)800.0,gridY, tileH, this.getLawn().getRows());
+        
+
+        //System.out.println(deltaTime+" "+800+" "+gridY+" "+tileH+" "+this.getLawn().getRows());
+        if(z!=null){
+            addZombie(z);
+        }
         if(!Over){
             elapsedTime += deltaTime;
         }
@@ -177,11 +201,15 @@ public class Game {
 
     public void placePlant(int plantseedIndex,Tile tile, int row, int col,float x, float y) {
         PlantSeed p =getPlantSeed(plantseedIndex);
+
         if(p==null){
             System.out.print("No plantseed selected");
         }
         else{
-            Plant newPlant = EntityFactory.createPlant(getPlantSeed(plantseedIndex).type, x, y, row, col);
+            
+            
+            Plant newPlant = this.entityFactory.createPlant(p.type, x, y, row, col);
+            
             if(newPlant==null){
                 System.out.print("Plant error, plant does not exist");
             }
@@ -257,4 +285,9 @@ public class Game {
         }
         return this.plantSeeds.get(index);
     }
+
+    public Lawn getLawn() {
+        return this.lawn;
+    }
+
 }
