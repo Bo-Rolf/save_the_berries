@@ -2,9 +2,7 @@ package com.mycompany.app.view;
 
 import java.util.List;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -17,15 +15,17 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mycompany.app.controller.Controller;
+import com.mycompany.app.model.Difficulty;
 import com.mycompany.app.model.Game;
 import com.mycompany.app.model.Lawn;
+import com.mycompany.app.model.Model;
 import com.mycompany.app.model.Tile;
 import com.mycompany.app.model.entities.Plant;
 import com.mycompany.app.model.entities.Projectile;
 import com.mycompany.app.model.entities.Sun;
 import com.mycompany.app.model.entities.Zombie;
 
-public class View implements ApplicationListener {
+public class View {
 
     private Game game;
     private Lawn lawn;
@@ -39,26 +39,25 @@ public class View implements ApplicationListener {
     private ShapeRenderer shapeRenderer;
     private Controller controller;
     private Texture whiteTexture;
+    private Difficulty difficulty;
+    private Model model;
 
     private Texturemanager t = new Texturemanager();
     private PlantSeedView plantSeedView;
 
     private BitmapFont font;
 
-    public View() {
-        
-
-        
+    public View(Model model) {
+        this.model=model;
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setTitle("Game");
         config.setWindowedMode(800, 600);
         config.useVsync(true);
         t = new Texturemanager();
-        new Lwjgl3Application(this, config);
-        
+        this.difficulty = model.getDifficulty();
     }
 
-    @Override
+    
     public void create() {
         font = new BitmapFont();
         this.js = new json_reader();
@@ -89,12 +88,10 @@ public class View implements ApplicationListener {
 
     }
 
-    @Override
     public void resize(int width, int height) {
         viewport.update(width, height, true);
     }
 
-    @Override
     public void render() {
         
         //System.out.print(this.gameOver);
@@ -134,8 +131,6 @@ public class View implements ApplicationListener {
                     float x = gridX + c * tileW;
                     float y = gridY + r * tileH;
                     entityView.draw(t.get_Texture(plant.getTexturestring()), spriteBatch, plant, x, y, tileW, tileH);
-
-                    //shapeRenderer.line((float)plant.getHitBox().getMinX(),(float)plant.getHitBox().getMinY(),(float)plant.getHitBox().getMaxX(),(float)plant.getHitBox().getMaxY());
                 }
             }
         }
@@ -173,6 +168,8 @@ public class View implements ApplicationListener {
             
             if (checkZombie()) {
                 gameOver = true;
+                model.setGameOver(true);
+                model.setGameOver((int) gameTime);
             }
         }
     }
@@ -207,13 +204,13 @@ public class View implements ApplicationListener {
 
     }
 
-    @Override
+
     public void pause() {}
 
-    @Override
+
     public void resume() {}
 
-    @Override
+
     public void dispose() {
         spriteBatch.dispose();
         backgroundTexture.dispose();
