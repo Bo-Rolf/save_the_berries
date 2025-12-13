@@ -1,66 +1,66 @@
 {
 
-  "zombies": [
+  "enemys": [
     {
       "class": "EntityCfg",
       "health": 10,
-      "name": "Normal Zombie",
+      "name": "Normal Enemy",
       "moveSpeed": 10,
       "damage": 10,
       "attackSpeed": 0.2,
-      "texture": "zombie.png",
-      "class_type": "Zombie"
+      "texture": "enemy.png",
+      "class_type": "Enemy"
     },
     {
       "class": "EntityCfg",
       "health": 10,
-      "name": "Fast Zombie",
+      "name": "Fast Enemy",
       "moveSpeed": 25,
       "damage": 10,
       "attackSpeed": 0.2,
-      "texture": "zombie.png",
-      "class_type":"Zombie"
+      "texture": "fast_enemy.png",
+      "class_type":"Enemy"
       
     },
     {
       "class": "EntityCfg",
       "health": 20,
-      "name": "Tank Zombie",
+      "name": "Tank Enemy",
       "moveSpeed": 10,
       "damage": 10,
       "attackSpeed": 0.2,
-      "texture": "zombie.png",
-      "class_type":"Zombie"
+      "texture": "tank_enemy.png",
+      "class_type":"Enemy"
     }
   ],
-  "plants":[
+  "characters":[
     {
       "class": "EntityCfg",
       "health":1000,
-      "name":"Wallnut",
-      "sunCost":50,
-      "cooldown":30,
-      "texture":"wallnut.png",
-      "class_type":"Plant"
+      "name":"Tank",
+      "currencyCost":50,
+      "cooldown":15,
+      "texture":"tank.png",
+      "class_type":"Character"
       
     },
     {
       "class": "EntityCfg",
       "health":1000,
-      "name":"Peashooter",
-      "sunCost":100,
-      "cooldown":30,
-      "texture":"pea_shooter.png",
+      "name":"Shootingcharacter",
+      "currencyCost":100,
+      "cooldown":15,
+      "texture":"shooting_character.png",
       "class_type":"Shooter"
     },
     {
       "class": "EntityCfg",
       "health":1000,
-      "name":"Sunflower",
-      "sunCost":50,
-      "cooldown":30,
-      "texture":"sunflower.png",
-      "class_type":"SunPlant"
+      "name":"Currency_Character",
+      "currencyCost":50,
+      "cooldown":15,
+      "texture":"currency_character.png",
+      "class_type":"CurrencyCharacter"
     }
 
   ]

@@ -2,6 +2,7 @@ package com.mycompany.app.model.entities;
 
 
 import java.awt.geom.Rectangle2D;
+
 import com.badlogic.gdx.math.Vector2;
 
 public class Projectile extends Entity {
@@ -19,11 +20,11 @@ public class Projectile extends Entity {
         updatePosition(pos);
     }
 
-    public boolean checkCollision(Zombie zombie) {
-        return getHitBox().intersects(zombie.getHitBox());
+    public boolean checkCollision(Enemy enemy) {
+        return getHitBox().intersects(enemy.getHitBox());
     }
 
-    public void onHit(Zombie target) {
+    public void onHit(Enemy target) {
         if (checkCollision(target)==true) {
         target.takeDamage(damage);
         takeDamage(1); // så den dödar sig själv

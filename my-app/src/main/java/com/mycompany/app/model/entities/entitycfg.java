@@ -13,14 +13,14 @@ public class EntityCfg {
     public float attackSpeed;
     public String texture;
     public String class_type;
-    //Plant saker
-    public int sunCost;
+    //Character saker
+    public int currencyCost;
     public double cooldown;
     public int row;
     public int column;
 
     
     //Dom här används för att kalla på deras konstruktor, tex om jag vill s
-    public Class<Plant> p_type;
-    public Class<Zombie> z_type;
+    public Class<Character> p_type;
+    public Class<Enemy> z_type;
 }

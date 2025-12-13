@@ -2,13 +2,14 @@ package com.mycompany.app.model.entities;
 
 
 import java.awt.geom.Rectangle2D;
+
 import com.badlogic.gdx.math.Vector2;
 import com.mycompany.app.Interfaces.Damageable;
 
 public abstract class Entity implements Damageable {
     private int health;
     private final String name;
-    private Vector2 position; // plantor kanske inte ska ha sån här position utan grid position?
+    private Vector2 position; // characteror kanske inte ska ha sån här position utan grid position?
     private final Rectangle2D hitBox;
     private Runnable deathListener;
     public String textureString;

@@ -1,50 +1,46 @@
 package com.mycompany.app.view;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import com.badlogic.gdx.graphics.Color;
-import com.mycompany.app.model.entities.Plant;
-
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.mycompany.app.model.PlantSeed;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mycompany.app.model.CharacterSeed;
 
-public class PlantSeedView {
+public class CharacterSeedView {
     private final Map<String, Texture> textures = new HashMap<>();
     private final Texture placeholder;
     private final Texturemanager t;
     public static Texture white_tex;
     public BitmapFont font;
 
-    public PlantSeedView(Texturemanager texture_manager,Texture white,BitmapFont font) {
+    public CharacterSeedView(Texturemanager texture_manager,Texture white,BitmapFont font) {
         // load known seed textures (adjust filenames to match your assets)
         this.white_tex = white;
         this.t = texture_manager;
         this.font = font;
-        placeholder = new Texture("pea.png"); // fallback texture - add to assets or change name
+        placeholder = new Texture("projectile.png"); // fallback texture - add to assets or change name
     }
 
 
 
-    // Draw the plant seed images in order starting at the top-left.
+    // Draw the character seed images in order starting at the top-left.
     // marginLeft/marginTop are pixels from the top-left corner; size is width/height per icon; spacing is pixels between icons
-    public void draw(SpriteBatch batch, Viewport viewport, List<PlantSeed> plantSeedList, float marginLeft, float marginTop, float size, float spacing, int selectedIndex) {
+    public void draw(SpriteBatch batch, Viewport viewport, List<CharacterSeed> characterSeedList, float marginLeft, float marginTop, float size, float spacing, int selectedIndex) {
         batch.end();
         float x = marginLeft;
         ShapeRenderer shape = new ShapeRenderer();
         float y = viewport.getWorldHeight() - marginTop - size; // top-left in world units
         
-        for (PlantSeed e2: plantSeedList){
+        for (CharacterSeed e2: characterSeedList){
             batch.begin();
             Texture tex = this.t.get_Texture(e2.getTexturestring());
-            int i = plantSeedList.indexOf(e2);
+            int i = characterSeedList.indexOf(e2);
             float drawSize = (i == selectedIndex) ? size * 1.08f : size;
             float offset = (drawSize - size) / 2f;
             
@@ -84,11 +80,11 @@ public class PlantSeedView {
     }
 
     // Return index of seed clicked in world coords, or -1 if miss.
-    public int getSeedIndexAt(float worldX, float worldY, Viewport viewport, List<PlantSeed> plantSeeds,
+    public int getSeedIndexAt(float worldX, float worldY, Viewport viewport, List<CharacterSeed> characterSeeds,
                               float marginLeft, float marginTop, float size, float spacing) {
         float x = marginLeft;
         float y = viewport.getWorldHeight() - marginTop - size;
-        for (int i = 0; i < plantSeeds.size(); i++) {
+        for (int i = 0; i < characterSeeds.size(); i++) {
             if (worldX >= x && worldX <= x + size && worldY >= y && worldY <= y + size) {
                 return i;
             }

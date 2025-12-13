@@ -2,9 +2,9 @@ package com.mycompany.app.model;
 
 import java.util.Random;
 
-import com.mycompany.app.model.entities.Zombie;
+import com.mycompany.app.model.entities.Enemy;
 
-public class ZombieSpawner {
+public class EnemySpawner {
 
     private final SpawnConfig config;
     private EntityFactory factory;
@@ -15,13 +15,13 @@ public class ZombieSpawner {
 
     private Random random = new Random();
 
-    public ZombieSpawner(EntityFactory factory2,Difficulty difficulty) {
+    public EnemySpawner(EntityFactory factory2,Difficulty difficulty) {
         this.factory = factory2;
         this.config = SpawnConfig.forDifficulty(difficulty);
         this.currentInterval = config.startInterval;
     }
 
-    public Zombie update(float delta,float worldWidth, float gridY, float tileHeight, int rows) {
+    public Enemy update(float delta,float worldWidth, float gridY, float tileHeight, int rows) {
         gameTime += delta;
         spawnTimer += delta;
 
@@ -38,13 +38,13 @@ public class ZombieSpawner {
             float y = gridY + row * tileHeight;
             
 
-            Zombie z = chooseZombie(row, x, y);
+            Enemy z = chooseEnemy(row, x, y);
             return z;
         }
         return null;
     }
 
-    private Zombie chooseZombie(int row, float x, float y) {
+    private Enemy chooseEnemy(int row, float x, float y) {
         float r = random.nextFloat();
 
         float normalChance = 1f;
@@ -64,9 +64,9 @@ public class ZombieSpawner {
         }
         
 
-        if (r < normalChance) return this.factory.createZombie("Normal Zombie",x,y);
-        else if (r < normalChance + fastChance) return this.factory.createZombie("Fast Zombie", x,y);
-        else return this.factory.createZombie("Tank Zombie", x,y);
+        if (r < normalChance) return this.factory.createEnemy("Normal Enemy",x,y);
+        else if (r < normalChance + fastChance) return this.factory.createEnemy("Fast Enemy", x,y);
+        else return this.factory.createEnemy("Tank Enemy", x,y);
 
     }
 }

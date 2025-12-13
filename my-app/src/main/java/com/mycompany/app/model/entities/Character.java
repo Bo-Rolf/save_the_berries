@@ -1,22 +1,22 @@
 package com.mycompany.app.model.entities;
 
-import com.badlogic.gdx.math.Vector2;
 import java.awt.geom.Rectangle2D;
 
+import com.badlogic.gdx.math.Vector2;
 import com.mycompany.app.Interfaces.Placeable;
 
-public class Plant extends Entity implements Placeable {
-    private final int sunCost;
+public class Character extends Entity implements Placeable {
+    private final int currencyCost;
 
-    private final double cooldown; // to place the plant again
+    private final double cooldown; // to place the character again
     private final int row;
     private final int column;
     private Runnable tileRemovalListener;
 
 
-    public Plant(EntityCfg cfg, Vector2 position) {
+    public Character(EntityCfg cfg, Vector2 position) {
         super(cfg, position, new Rectangle2D.Double(position.x-35,position.y-35,(float)70,(float)70));
-        this.sunCost = cfg.sunCost;
+        this.currencyCost = cfg.currencyCost;
         this.cooldown = cfg.cooldown;
         this.row = cfg.row;
         this.column = cfg.column;
@@ -37,8 +37,8 @@ public class Plant extends Entity implements Placeable {
         return cooldown;
     }
 
-    public int getSunCost() {
-        return sunCost;
+    public int getCurrencyCost() {
+        return currencyCost;
     }
 
     @Override
@@ -46,7 +46,7 @@ public class Plant extends Entity implements Placeable {
         super.die();
 
         removeFromTile();
-        // Notify tile-listener that the plant has died
+        // Notify tile-listener that the character has died
     }
     @Override
     public void setTileRemovalListener(Runnable listener) {
@@ -60,7 +60,7 @@ public class Plant extends Entity implements Placeable {
     }
 
     public void update(double deltaTime) {
-        //kör ej update hitbox för plantor här, den ska skapas ibörjan och alldrig ändras efteråt
+        //kör ej update hitbox för characteror här, den ska skapas ibörjan och alldrig ändras efteråt
 
     }
     

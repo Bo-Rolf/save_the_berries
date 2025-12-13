@@ -1,4 +1,4 @@
-// Varje Tile kan innehålla en Planta och sol
+// Varje Tile kan innehålla en Charactera och sol
 package com.mycompany.app.model;
 
 import com.mycompany.app.Interfaces.Placeable;

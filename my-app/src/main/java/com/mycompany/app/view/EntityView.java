@@ -1,17 +1,16 @@
 package com.mycompany.app.view;
 
-import com.mycompany.app.model.entities.*;
-
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.mycompany.app.model.entities.Entity;
 
 public class EntityView {
 
     private Texture texture;
 
     public EntityView() {
-        this.texture = new Texture("pea_shooter.png");
+        //this.texture = new Texture("pea_shooter.png");
     }
 
     public void draw(Texture texture, SpriteBatch batch, Entity entity) {

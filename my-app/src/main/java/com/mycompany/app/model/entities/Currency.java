@@ -7,15 +7,15 @@ import java.awt.geom.Rectangle2D;
 import com.badlogic.gdx.math.Vector2;
 
 
-public class Sun extends Entity{
+public class Currency extends Entity{
 
-    int sun_value;
+    int currency_value;
     double time_out=0;
     int dissapear_timer=8; //tid tills den försvinner
-    public Sun(EntityCfg cfg ,Vector2 position) {
+    public Currency(EntityCfg cfg ,Vector2 position) {
         //Health används bara för takedamage när den ska dö (this.die kraschar ifall det sker under iteration)/Sixten
         super(cfg,position,new Rectangle2D.Double(position.x+10, position.y+10, 90, 90));
-        this.sun_value=50;
+        this.currency_value=50;
         
     }
     @Override
@@ -26,8 +26,8 @@ public class Sun extends Entity{
         }
     }
 
-    public int get_sun_value(){
-        return this.sun_value;
+    public int get_currency_value(){
+        return this.currency_value;
     }
 
 

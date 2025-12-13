@@ -4,39 +4,39 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mycompany.app.CurrencySpawner;
 import com.mycompany.app.Interfaces.Shooter;
-import com.mycompany.app.Sunspawner;
+import com.mycompany.app.model.entities.Character;
+import com.mycompany.app.model.entities.Currency;
+import com.mycompany.app.model.entities.CurrencyCharacter;
+import com.mycompany.app.model.entities.Enemy;
 import com.mycompany.app.model.entities.Entity;
 import com.mycompany.app.model.entities.EntityCfg;
 import com.mycompany.app.model.entities.GameConfig;
-import com.mycompany.app.model.entities.Plant;
 import com.mycompany.app.model.entities.Projectile;
-import com.mycompany.app.model.entities.Sun;
-import com.mycompany.app.model.entities.Sunflower;
-import com.mycompany.app.model.entities.Zombie;
 
 public class Game {
 
     private boolean Playing;
     private boolean Paused;
     private boolean Over = false;
-    public int sun;
+    public int currency;
     private float elapsedTime = 0f;
 
     private final Lawn lawn = new Lawn(5, 8);
 
-    private final List<Plant> plants = new ArrayList<>();
-    private final List<Zombie> zombies = new ArrayList<>();
+    private final List<Character> characters = new ArrayList<>();
+    private final List<Enemy> enemys = new ArrayList<>();
     private final List<Projectile> projectiles = new ArrayList<>();
-    private final List<Sun> collectable_suns = new ArrayList<>();
+    private final List<Currency> collectable_currencys = new ArrayList<>();
 
     private EntityFactory entityFactory;
-    private ZombieSpawner zombieSpawner;
+    private EnemySpawner enemySpawner;
 
 
-    private final List<PlantSeed> plantSeeds = new ArrayList<>();
+    private final List<CharacterSeed> characterSeeds = new ArrayList<>();
     
-    private Sunspawner sunspawner = new Sunspawner();
+    private CurrencySpawner currencyspawner = new CurrencySpawner();
 
     private long lastUpdateTime;
     // private void startGame() {
@@ -53,16 +53,16 @@ public class Game {
     //     }
     // }
     public Game(GameConfig gcfg) {
-        // Lägg till initiala zombies och plants här om det behövs
-        this.sun = 200;
+        // Lägg till initiala enemys och characters här om det behövs
+        this.currency = 200;
         this.entityFactory = new EntityFactory(gcfg);
-        this.zombieSpawner=new ZombieSpawner(this.entityFactory,Difficulty.EASY);
-        for(EntityCfg cfg : gcfg.plants){
-            this.plantSeeds.add(new PlantSeed(cfg));
+        this.enemySpawner=new EnemySpawner(this.entityFactory,Difficulty.EASY);
+        for(EntityCfg cfg : gcfg.characters){
+            this.characterSeeds.add(new CharacterSeed(cfg));
         }
 
         
-        //this.plants.add(new Plant("asd",asd,asd,asd,asd))
+        //this.characters.add(new Character("asd",asd,asd,asd,asd))
     }
 
     private void endGame() {
@@ -71,74 +71,74 @@ public class Game {
 
     public void updateGameState(double deltaTime) {
         updateProjectiles(deltaTime);
-        updateZombies(deltaTime);
-        updatePlants(deltaTime);
-        updatePlantSeeds(deltaTime);
-        updateSunSpawner(deltaTime);
+        updateEnemys(deltaTime);
+        updateCharacters(deltaTime);
+        updateCharacterSeeds(deltaTime);
+        updateCurrencySpawner(deltaTime);
         updateDeathCheck();
 
         //float tileW = 800 * 0.80f / lawn.getCols();
 
 
         //Det här borde nog inte vara här men jag visste inte riktigt hur man skulle få in det från view
-        //Innan kördes zombiesspawner.update från view, jag flyttade den till modelen(där den borde vara)
+        //Innan kördes enemysspawner.update från view, jag flyttade den till modelen(där den borde vara)
         //Men funktionen behöver värden från view 
         //det här är också väldigt oeffektivt(räknar ut samma sak varje frame)
         // /sixten 
         float tileH = 600 * 0.72f / lawn.getRows();
         float gridY = (600 - tileH * lawn.getRows()) / 2f - 50;
-        Zombie z = this.zombieSpawner.update((float)deltaTime, (float)800.0,gridY, tileH, this.getLawn().getRows());
+        Enemy z = this.enemySpawner.update((float)deltaTime, (float)800.0,gridY, tileH, this.getLawn().getRows());
         
 
         //System.out.println(deltaTime+" "+800+" "+gridY+" "+tileH+" "+this.getLawn().getRows());
         if(z!=null){
-            addZombie(z);
+            addEnemy(z);
         }
         if(!Over){
             elapsedTime += deltaTime;
         }
         
-        //System.out.println(+zombies.size()+collecable_suns.size()+projectiles.size());
+        //System.out.println(+enemys.size()+collecable_currencys.size()+projectiles.size());
         
-        //System.out.println("plants "+ plants.size());
+        //System.out.println("characters "+ characters.size());
     }
 
     
     private void updateDeathCheck() {
         // Tar bort döda entities från listorna
-        plants.removeIf(plant -> !plant.isAlive());
-        zombies.removeIf(zombie -> !zombie.isAlive());
+        characters.removeIf(character -> !character.isAlive());
+        enemys.removeIf(enemy -> !enemy.isAlive());
         projectiles.removeIf(projectile -> !projectile.isAlive());
-        collectable_suns.removeIf(s -> !s.isAlive());
+        collectable_currencys.removeIf(s -> !s.isAlive());
     }
 
 
 
     private void removeEntity(Entity e) {
-        if (e instanceof Zombie)
-            //zombies.remove(e);
+        if (e instanceof Enemy)
+            //enemys.remove(e);
             e=null;
-        else if (e instanceof Plant)
-           ((Plant) e).removeFromTile();
+        else if (e instanceof Character)
+           ((Character) e).removeFromTile();
         else if (e instanceof Projectile)
             //projectiles.remove(e);
         e = null;
     }
 
-    private void updatePlants(double deltaTime) {
-        for (Plant plant : plants) {
+    private void updateCharacters(double deltaTime) {
+        for (Character character : characters) {
             
-            plant.update(deltaTime);
-            if (plant instanceof Shooter shooter) { 
+            character.update(deltaTime);
+            if (character instanceof Shooter shooter) { 
                 Projectile p = shooter.shoot();
                 if (p != null) {
                     addProjectile(p);
                 }
             }
-            if(plant instanceof Sunflower flower){
-                Sun s = flower.spawnSun();
+            if(character instanceof CurrencyCharacter flower){
+                Currency s = flower.spawnCurrency();
                 if(s != null){
-                    collectable_suns.add(s);
+                    collectable_currencys.add(s);
                 }
 
             }
@@ -146,28 +146,28 @@ public class Game {
     }
 
 
-    private void updateSunSpawner(double deltaTime) {
-        this.sunspawner.update(deltaTime);
-        Sun s = sunspawner.spawnSun();
+    private void updateCurrencySpawner(double deltaTime) {
+        this.currencyspawner.update(deltaTime);
+        Currency s = currencyspawner.spawnCurrency();
         if(s != null){
-            collectable_suns.add(s);
+            collectable_currencys.add(s);
         }
     }
 
-    private void updateZombies(double deltaTime) {
-        for (Zombie zombie : zombies) {
-            zombie.update(deltaTime);
-            boolean hittatplanta = false;
-            for (Plant plant : plants) {
-                if (zombie.checkCollision(plant)) {
-                    if (zombie.canEat()) {
-                    zombie.eat(plant);
+    private void updateEnemys(double deltaTime) {
+        for (Enemy enemy : enemys) {
+            enemy.update(deltaTime);
+            boolean hittatcharactera = false;
+            for (Character character : characters) {
+                if (enemy.checkCollision(character)) {
+                    if (enemy.canEat()) {
+                    enemy.eat(character);
                     }
-                    hittatplanta = true;
+                    hittatcharactera = true;
                 }   
             }
-                if(!hittatplanta){
-                zombie.move(deltaTime);
+                if(!hittatcharactera){
+                enemy.move(deltaTime);
                 }
         }
     }
@@ -175,22 +175,22 @@ public class Game {
     private void updateProjectiles(double deltaTime) {
         for (Projectile projectile : projectiles) {
             projectile.update((float) deltaTime);
-            for (Zombie zombie : zombies) {
-                if (projectile.checkCollision(zombie)) {
-                    projectile.onHit(zombie);
+            for (Enemy enemy : enemys) {
+                if (projectile.checkCollision(enemy)) {
+                    projectile.onHit(enemy);
                 }
             }
         }
     }
-    private void updatePlantSeeds(double deltaTime) {
-        for (PlantSeed plantseed : this.plantSeeds) {
-            plantseed.update((float) deltaTime);
+    private void updateCharacterSeeds(double deltaTime) {
+        for (CharacterSeed characterseed : this.characterSeeds) {
+            characterseed.update((float) deltaTime);
         }
     }
 
-    public void addZombie(Zombie zombie){
-        zombies.add(zombie);
-        addEntity(zombie);
+    public void addEnemy(Enemy enemy){
+        enemys.add(enemy);
+        addEntity(enemy);
     }
 
     public void addProjectile(Projectile projectile){
@@ -199,36 +199,36 @@ public class Game {
     }
 
 
-    public void placePlant(int plantseedIndex,Tile tile, int row, int col,float x, float y) {
-        PlantSeed p =getPlantSeed(plantseedIndex);
+    public void placeCharacter(int characterseedIndex,Tile tile, int row, int col,float x, float y) {
+        CharacterSeed p =getCharacterSeed(characterseedIndex);
 
         if(p==null){
-            System.out.print("No plantseed selected");
+            System.out.print("No characterseed selected");
         }
         else{
             
             
-            Plant newPlant = this.entityFactory.createPlant(p.type, x, y, row, col);
+            Character newCharacter = this.entityFactory.createCharacter(p.type, x, y, row, col);
             
-            if(newPlant==null){
-                System.out.print("Plant error, plant does not exist");
+            if(newCharacter==null){
+                System.out.print("Character error, character does not exist");
             }
-            else if(this.sun<newPlant.getSunCost()){
-                System.out.println("Not enough sun for "+newPlant.getName()+", current:"+this.sun+" "+newPlant.getSunCost());
+            else if(this.currency<newCharacter.getCurrencyCost()){
+                System.out.println("Not enough currency for "+newCharacter.getName()+", current:"+this.currency+" "+newCharacter.getCurrencyCost());
             }
-            else if (!this.getPlantSeed(plantseedIndex).ready_to_place()) {
-                System.out.print(newPlant.getName()+" Is not ready yet,"+getPlantSeed(plantseedIndex).cooldown_left+" seconds left");
+            else if (!this.getCharacterSeed(characterseedIndex).ready_to_place()) {
+                System.out.print(newCharacter.getName()+" Is not ready yet,"+getCharacterSeed(characterseedIndex).cooldown_left+" seconds left");
             }   
             else if(tile.is_occupied()){
                 System.out.print("That tile is already occupied");
             }
             else{
-                this.plants.add(newPlant);
-                sun -= newPlant.getSunCost();
-                addEntity(newPlant);
-                tile.place(newPlant);
-                this.getPlantSeed(plantseedIndex).try_place();
-                System.out.println("Placed "+newPlant.getName()+" at row " + row + ", col " + col);
+                this.characters.add(newCharacter);
+                currency -= newCharacter.getCurrencyCost();
+                addEntity(newCharacter);
+                tile.place(newCharacter);
+                this.getCharacterSeed(characterseedIndex).try_place();
+                System.out.println("Placed "+newCharacter.getName()+" at row " + row + ", col " + col);
             }
         }
         
@@ -242,48 +242,48 @@ public class Game {
         });
     }
 
-    public List<Zombie> getZombies(){
-        return this.zombies;
+    public List<Enemy> getEnemys(){
+        return this.enemys;
     }
-    public List<Plant> getPlants(){
-        return this.plants;
+    public List<Character> getCharacters(){
+        return this.characters;
     }
     public List<Projectile> getProjectiles(){
         return this.projectiles;
     }
 
-    public List<Sun> getSuns(){
-        return this.collectable_suns;
+    public List<Currency> getCurrencys(){
+        return this.collectable_currencys;
     }
-    public int get_current_sun(){
-        return this.sun;
+    public int get_current_currency(){
+        return this.currency;
     }
 
     //Funktion för att försöka kollekta sol, iterarar över varje sol och kollar ifall musen är på rätt plats
     //Vector2 strulade så jag konverterade det till point istället
-    public void collect_sun(Point mouse){
+    public void collect_currency(Point mouse){
         System.out.print(mouse);
-        for(Sun s :this.collectable_suns){
+        for(Currency s :this.collectable_currencys){
             System.out.print(s.getHitBox().getMinX());
             if(s.getHitBox().contains(mouse)){
-                sun+=s.get_sun_value();
+                currency+=s.get_currency_value();
                 //"döda" solen
                 s.takeDamage(1000);
                 System.out.print("du collectade");
             }
         }
     }
-    public  List<PlantSeed> getplantSeeds(){
-        return this.plantSeeds;
+    public  List<CharacterSeed> getcharacterSeeds(){
+        return this.characterSeeds;
     }
     
 
 
-    public PlantSeed getPlantSeed(int index){
-        if (index<0 || index>=this.plantSeeds.size()){
+    public CharacterSeed getCharacterSeed(int index){
+        if (index<0 || index>=this.characterSeeds.size()){
             return null;
         }
-        return this.plantSeeds.get(index);
+        return this.characterSeeds.get(index);
     }
 
     public Lawn getLawn() {

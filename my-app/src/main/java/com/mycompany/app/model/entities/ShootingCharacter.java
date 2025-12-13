@@ -1,15 +1,14 @@
 package com.mycompany.app.model.entities;
 
 
-import java.awt.geom.Rectangle2D;
-import com.mycompany.app.Interfaces.Shooter;
 import com.badlogic.gdx.math.Vector2;
+import com.mycompany.app.Interfaces.Shooter;
 
-public class PeaShooter extends Plant implements Shooter {
+public class ShootingCharacter extends Character implements Shooter {
     private final double cooldownSeconds = 1.5;
     private double timeSinceLastShot = 0;
 
-    public PeaShooter(EntityCfg cfg,Vector2 position) {
+    public ShootingCharacter(EntityCfg cfg,Vector2 position) {
         super(cfg,position);
 
     }
@@ -31,7 +30,7 @@ public class PeaShooter extends Plant implements Shooter {
             cfg.health = 1;
             cfg.name = "Pea";
             cfg.moveSpeed = 500;
-            cfg.texture = "pea.png";
+            cfg.texture = "projectile.png";
             return new Projectile(cfg,new Vector2(getPosition()));
         }
         return null;

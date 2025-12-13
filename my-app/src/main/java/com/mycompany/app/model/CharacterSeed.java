@@ -1,12 +1,7 @@
 package com.mycompany.app.model;
-import java.util.Vector;
-import com.badlogic.gdx.math.Vector2;
-
-import com.mycompany.app.model.entities.PeaShooter;
 import com.mycompany.app.model.entities.EntityCfg;
-import com.mycompany.app.model.entities.Plant;
 
-public class PlantSeed {
+public class CharacterSeed {
     public EntityCfg type;
     public String t;
     public int cost;
@@ -15,11 +10,11 @@ public class PlantSeed {
 
     
 
-    public PlantSeed(EntityCfg cfg){
+    public CharacterSeed(EntityCfg cfg){
         this.type=cfg;
         this.t=cfg.texture;
         this.cooldown=cfg.cooldown;
-        this.cost = cfg.sunCost;
+        this.cost = cfg.currencyCost;
     }
     
     public void update(double deltaTime){

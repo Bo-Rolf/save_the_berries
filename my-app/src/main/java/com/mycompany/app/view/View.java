@@ -20,10 +20,10 @@ import com.mycompany.app.model.Game;
 import com.mycompany.app.model.Lawn;
 import com.mycompany.app.model.Model;
 import com.mycompany.app.model.Tile;
-import com.mycompany.app.model.entities.Plant;
+import com.mycompany.app.model.entities.Character;
+import com.mycompany.app.model.entities.Currency;
+import com.mycompany.app.model.entities.Enemy;
 import com.mycompany.app.model.entities.Projectile;
-import com.mycompany.app.model.entities.Sun;
-import com.mycompany.app.model.entities.Zombie;
 
 public class View {
 
@@ -43,7 +43,7 @@ public class View {
     private Model model;
 
     private Texturemanager t = new Texturemanager();
-    private PlantSeedView plantSeedView;
+    private CharacterSeedView characterSeedView;
 
     private BitmapFont font;
 
@@ -71,7 +71,7 @@ public class View {
         entityView = new EntityView();
         shapeRenderer = new ShapeRenderer();
         
-        plantSeedView = new PlantSeedView(this.t,this.whiteTexture,font);
+        characterSeedView = new CharacterSeedView(this.t,this.whiteTexture,font);
 
         Pixmap pm = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         pm.setColor(Color.WHITE);
@@ -79,11 +79,11 @@ public class View {
         this.whiteTexture = new Texture(pm);
         
         pm.dispose();
-        plantSeedView = new PlantSeedView(t,this.whiteTexture,this.font);
+        characterSeedView = new CharacterSeedView(t,this.whiteTexture,this.font);
 
 
 
-        controller = new Controller(this.game, viewport, plantSeedView);
+        controller = new Controller(this.game, viewport, characterSeedView);
 
 
     }
@@ -98,9 +98,9 @@ public class View {
         
         float delta = Gdx.graphics.getDeltaTime();
 
-        List<Zombie> zombies = this.game.getZombies();
+        List<Enemy> enemys = this.game.getEnemys();
         List<Projectile> projectiles = this.game.getProjectiles();
-        List<Sun> suns = this.game.getSuns();
+        List<Currency> currencys = this.game.getCurrencys();
 
         ScreenUtils.clear(Color.BLACK);
         viewport.apply();
@@ -110,8 +110,8 @@ public class View {
         spriteBatch.draw(backgroundTexture, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
 
         
-        // draw the plant seed icons in the top-left of the screen (pass viewport and selected index)
-        plantSeedView.draw(spriteBatch, viewport, this.game.getplantSeeds(), 10, 10, 64, 8, controller.getSelectedSeedIndex());
+        // draw the character seed icons in the top-left of the screen (pass viewport and selected index)
+        characterSeedView.draw(spriteBatch, viewport, this.game.getcharacterSeeds(), 10, 10, 64, 8, controller.getSelectedSeedIndex());
 
         // Grid
         float tileW = viewport.getWorldWidth() * 0.80f / lawn.getCols();
@@ -123,20 +123,20 @@ public class View {
         controller.handleInput(gridX, gridY, tileW, tileH);
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        // Draw plants
+        // Draw characters
         for (int r = 0; r < lawn.getRows(); r++) {
             for (int c = 0; c < lawn.getCols(); c++) {
                 Tile tile = lawn.getTile(r, c);
-                if (tile.getPlaceable() instanceof Plant plant) {
+                if (tile.getPlaceable() instanceof Character character) {
                     float x = gridX + c * tileW;
                     float y = gridY + r * tileH;
-                    entityView.draw(t.get_Texture(plant.getTexturestring()), spriteBatch, plant, x, y, tileW, tileH);
+                    entityView.draw(t.get_Texture(character.getTexturestring()), spriteBatch, character, x, y, tileW, tileH);
                 }
             }
         }
 
-        // Draw zombies
-        for (Zombie z : zombies) {
+        // Draw enemys
+        for (Enemy z : enemys) {
             Vector2 pos = z.getPosition();
             entityView.draw(t.get_Texture(z.getTexturestring()), spriteBatch, z, pos.x, pos.y, tileW, tileH);
         }
@@ -146,12 +146,12 @@ public class View {
             entityView.draw(t.get_Texture(p.getTexturestring()), spriteBatch, p, pPos.x, pPos.y, 50, 50);
         }
 
-        for (Sun s : suns) {
+        for (Currency s : currencys) {
             Vector2 pPos = s.getPosition();
             //shapeRenderer.line((float)s.getHitBox().getMinX(),(float)s.getHitBox().getMinY(),(float)s.getHitBox().getMaxX(), (float)s.getHitBox().getMaxY());
-            entityView.draw(t.get_Texture(s.getTexturestring()), spriteBatch, s, pPos.x, pPos.y, 100, 100);
+            entityView.draw(t.get_Texture(s.getTexturestring()), spriteBatch, s, pPos.x, pPos.y, 50, 50);
         }
-        font.draw(spriteBatch,"Sun:"+this.game.get_current_sun(),500,500);
+        font.draw(spriteBatch,"Currency:"+this.game.get_current_currency(),500,500);
 
         font.draw(spriteBatch, "Time: " + (int)gameTime, viewport.getWorldWidth() - 100, viewport.getWorldHeight() - 10);
         shapeRenderer.end();
@@ -166,7 +166,7 @@ public class View {
 
             this.game.updateGameState(delta);
             
-            if (checkZombie()) {
+            if (checkEnemy()) {
                 gameOver = true;
                 model.setGameOver(true);
                 model.setGameOver((int) gameTime);
@@ -174,8 +174,8 @@ public class View {
         }
     }
 
-    private boolean checkZombie(){
-        for(Zombie z : this.game.getZombies()){
+    private boolean checkEnemy(){
+        for(Enemy z : this.game.getEnemys()){
             if(z.getPosition().x <= 0){
                 return true;
             }
@@ -215,7 +215,7 @@ public class View {
         spriteBatch.dispose();
         backgroundTexture.dispose();
         shapeRenderer.dispose();
-        plantSeedView.dispose();
+        characterSeedView.dispose();
         font.dispose();
     }
 }
