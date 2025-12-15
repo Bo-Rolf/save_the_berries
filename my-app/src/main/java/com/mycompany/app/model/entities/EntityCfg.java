@@ -18,7 +18,8 @@ public class EntityCfg {
     public double cooldown;
     public int row;
     public int column;
-
+    public double cooldownSeconds;
+    public EntityCfg SpawnedEntityCfg;
     
     //Dom här används för att kalla på deras konstruktor, tex om jag vill s
     public Class<Character> p_type;

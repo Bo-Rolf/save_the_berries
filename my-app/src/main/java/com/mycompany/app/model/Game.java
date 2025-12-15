@@ -70,6 +70,9 @@ public class Game {
     }
 
     public void updateGameState(double deltaTime) {
+        
+
+
         updateProjectiles(deltaTime);
         updateEnemys(deltaTime);
         updateCharacters(deltaTime);

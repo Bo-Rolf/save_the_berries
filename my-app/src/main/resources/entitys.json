@@ -34,6 +34,53 @@
     }
   ],
   "characters":[
+        {
+      "class": "EntityCfg",
+      "health":1000,
+      "name":"Currency_Character",
+      "currencyCost":50,
+      "cooldown":15,
+      "cooldownSeconds":15,
+      "texture":"currency_character.png",
+      "class_type":"CurrencyCharacter"
+    },
+    {
+      "class": "EntityCfg",
+      "health":1000,
+      "name":"Shootingcharacter",
+      "currencyCost":100,
+      "cooldown":15,
+      "cooldownSeconds":2.5,
+      "texture":"shooting_character.png",
+      "class_type":"Shooter",
+      "SpawnedEntityCfg":{
+        "health" : 1,
+        "name" : "Pea",
+        "moveSpeed":  500,
+        "texture" : "projectile.png"
+      }
+
+      
+    },
+    {
+      "class": "EntityCfg",
+      "health":1000,
+      "name":"Megaman",
+      "currencyCost":150,
+      "cooldown":20,
+      "cooldownSeconds":5,
+      "texture":"megaman.png",
+      "class_type":"Shooter",
+      "SpawnedEntityCfg":{
+        "health" : 1,
+        "name" : "Pea",
+        "damage":5,
+        "moveSpeed":  500,
+        "texture" : "megaball.png"
+      }
+
+      
+    },
     {
       "class": "EntityCfg",
       "health":1000,
@@ -43,24 +90,6 @@
       "texture":"tank.png",
       "class_type":"Character"
       
-    },
-    {
-      "class": "EntityCfg",
-      "health":1000,
-      "name":"Shootingcharacter",
-      "currencyCost":100,
-      "cooldown":15,
-      "texture":"shooting_character.png",
-      "class_type":"Shooter"
-    },
-    {
-      "class": "EntityCfg",
-      "health":1000,
-      "name":"Currency_Character",
-      "currencyCost":50,
-      "cooldown":15,
-      "texture":"currency_character.png",
-      "class_type":"CurrencyCharacter"
     }
 
   ]

@@ -11,8 +11,8 @@ public class Projectile extends Entity {
 
     public Projectile(EntityCfg cfg,Vector2 position) {
         super(cfg,position,new Rectangle2D.Double(position.x,position.y,20,20));
-        this.MoveSpeed = 500;
-        this.damage = 1;
+        this.MoveSpeed = cfg.moveSpeed;
+        this.damage = cfg.damage;
     }
     private void move(double delta) {
         Vector2 pos = getPosition();

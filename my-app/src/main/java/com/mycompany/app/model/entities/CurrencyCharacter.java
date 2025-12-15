@@ -4,13 +4,15 @@ package com.mycompany.app.model.entities;
 import com.badlogic.gdx.math.Vector2;
 
 public class CurrencyCharacter extends Character{
-    private final double currencyCooldown = 15;
+    private final double cooldownSeconds;
     private double timeSinceLastCurrency = 0;
 
 
     public CurrencyCharacter(EntityCfg cfg, Vector2 pos){
         super(cfg,pos);
+        this.cooldownSeconds = cfg.cooldownSeconds;
     }
+
     
 
     @Override
@@ -19,7 +21,7 @@ public class CurrencyCharacter extends Character{
     }
 
     public boolean canSpawnCurrency() {
-        return timeSinceLastCurrency >= currencyCooldown;
+        return timeSinceLastCurrency >= cooldownSeconds;
     }
 
     
