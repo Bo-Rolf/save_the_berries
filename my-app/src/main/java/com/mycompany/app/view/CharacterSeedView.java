@@ -12,7 +12,7 @@ import com.mycompany.app.model.CharacterSeed;
 public class CharacterSeedView {
     private final Texture placeholder;
     private final Texturemanager t;
-    public static Texture white;
+    public Texture white;
     public BitmapFont font;
 
     public CharacterSeedView(Texturemanager texture_manager,Texture white,BitmapFont font) {

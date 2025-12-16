@@ -46,7 +46,6 @@ public class EntityFactory {
         try {
             
             EntityCfg cfg = this.enemy_cfgs.get(type);
-            System.out.println("info:"+type+" "+cfg.name+" "+cfg.class_type+" ");
             Enemy z = cfg.z_type.getDeclaredConstructor(EntityCfg.class,Vector2.class).newInstance(cfg,new Vector2(x, y)); //Kör konstruktorn för typen
             return z;
             //return enemy_construct.get(type).getDeclaredConstructor(Vector2.class).newInstance(new Vector2(x, y)); //Kör konstruktorn för typen

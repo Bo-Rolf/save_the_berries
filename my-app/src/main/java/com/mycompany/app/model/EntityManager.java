@@ -56,9 +56,6 @@ public class EntityManager{
         float tileH = 600 * 0.72f / lawn.getRows();
         float gridY = (600 - tileH * lawn.getRows()) / 2f - 50;
         Enemy z = this.enemySpawner.update((float)deltaTime, (float)800.0,gridY, tileH, this.lawn.getRows());
-        
-
-                //System.out.println(deltaTime+" "+800+" "+gridY+" "+tileH+" "+this.getLawn().getRows());
         if(z!=null){
             enemys.add(z);
         }
@@ -168,31 +165,15 @@ public class EntityManager{
     }
     public boolean placeCharacter(int characterseedIndex,Tile tile, int row, int col,float x, float y) {
         CharacterSeed p =getCharacterSeed(characterseedIndex);
-
-        if(p==null){
-            System.out.print("No characterseed selected");
-        }
-        else{            
+        if(p!=null){            
             Character newCharacter = this.entityFactory.createCharacter(p.type, x, y, row, col);
-            if(newCharacter==null){
-                System.out.print("Character error, character does not exist");
-            }
-            else if (!this.getCharacterSeed(characterseedIndex).ready_to_place()) {
-                System.out.print(newCharacter.getName()+" Is not ready yet,"+getCharacterSeed(characterseedIndex).cooldown_left+" seconds left");
-            }   
-            else if(tile.is_occupied()){
-                System.out.print("That tile is already occupied");
-            }
-            else{
+            if(newCharacter!=null && this.getCharacterSeed(characterseedIndex).ready_to_place() && !tile.is_occupied()){
                 this.characters.add(newCharacter);
                 tile.place(newCharacter);
                 this.getCharacterSeed(characterseedIndex).try_place();
-                System.out.println("Placed "+newCharacter.getName()+" at row " + row + ", col " + col);
                 return true;
             }
-            return false;
         }
-        
         return false;
     }
 
