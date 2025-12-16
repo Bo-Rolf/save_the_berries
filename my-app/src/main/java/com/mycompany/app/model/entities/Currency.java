@@ -30,7 +30,4 @@ public class Currency extends Entity{
         return this.currency_value;
     }
 
-
-
-    
 }

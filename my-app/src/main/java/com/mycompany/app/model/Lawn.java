@@ -5,19 +5,13 @@ package com.mycompany.app.model;
 import com.mycompany.app.Interfaces.Placeable;
 
 public class Lawn {
-
-    private final int rows;
-    private final int cols;
-    private Tile[][] grid;
-
+    private final Tile[][] grid;
     public Lawn(int rows, int cols) {
-        this.rows=rows;
-        this.cols=cols;
         grid = new Tile[rows][cols];
         // Initialisera varje cell i gräsmattan med ett Tile-objekt
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                grid[i][j] = new Tile(i, j);
+                grid[i][j] = new Tile();
             }
         }
     }

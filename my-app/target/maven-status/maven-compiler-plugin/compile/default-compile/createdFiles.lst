@@ -20,7 +20,6 @@ com\mycompany\app\model\EnemySpawner.class
 com\mycompany\app\screens\MainMenuScreen$4.class
 com\mycompany\app\view\Texturemanager.class
 com\mycompany\app\model\entities\ShootingCharacter.class
-com\mycompany\app\model\Model.class
 com\mycompany\app\model\SpawnConfig.class
 com\mycompany\app\model\CharacterSeed.class
 com\mycompany\app\model\Game.class

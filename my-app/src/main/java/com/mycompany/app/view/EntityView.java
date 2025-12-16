@@ -18,7 +18,7 @@ public class EntityView {
         batch.draw(texture, pos.x, pos.y);
     }
 
-    public void draw(Texture texture, SpriteBatch batch, Entity entity, float x, float y, float width, float height) {
+    public void draw(Texture texture, SpriteBatch batch, float x, float y, float width, float height) {
         batch.draw(texture, x, y, width, height);
     }
 

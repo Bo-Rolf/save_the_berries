@@ -8,7 +8,7 @@ public class DesktopLauncher {
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setTitle("Save the Berries");
         config.setWindowedMode(800, 600);
-
-        new Lwjgl3Application(new MainGame(), config);
+        Lwjgl3Application application = new Lwjgl3Application(new MainGame(), config);
+        System.out.print(application.getVersion());
     }
 }

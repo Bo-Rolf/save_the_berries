@@ -6,8 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.mycompany.app.Interfaces.Placeable;
 
 public class Character extends Entity implements Placeable {
-    private final int currencyCost;
-
+    private final int currencyCost; 
     private final double cooldown; // to place the character again
     private final int row;
     private final int column;
@@ -23,8 +22,6 @@ public class Character extends Entity implements Placeable {
         
     }
 
-
-    
     public int getRow() {
         return row;
     }
@@ -59,9 +56,9 @@ public class Character extends Entity implements Placeable {
         }
     }
 
+    @Override
     public void update(double deltaTime) {
         //kör ej update hitbox för characteror här, den ska skapas ibörjan och alldrig ändras efteråt
-
     }
     
 }

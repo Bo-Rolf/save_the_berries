@@ -4,16 +4,11 @@ package com.mycompany.app.model;
 import com.mycompany.app.Interfaces.Placeable;
 
 public class Tile {
-    private int row;
-    private int column;
-
-    private boolean isWater;
     public Placeable placeable;
 
-    public Tile(int row, int column) {
-        this.row = row;
-        this.column = column;
-        this.isWater = false;
+    public Tile() {
+        //this.row = row;
+        //this.column = column;
     }
 
     public Placeable getPlaceable() {

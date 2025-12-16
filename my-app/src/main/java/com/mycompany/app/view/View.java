@@ -1,7 +1,5 @@
 package com.mycompany.app.view;
 
-import java.util.List;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.graphics.Color;
@@ -10,20 +8,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mycompany.app.controller.Controller;
-import com.mycompany.app.model.Difficulty;
+import com.mycompany.app.model.EntityManager;
 import com.mycompany.app.model.Game;
 import com.mycompany.app.model.Lawn;
-import com.mycompany.app.model.Model;
-import com.mycompany.app.model.Tile;
-import com.mycompany.app.model.entities.Character;
-import com.mycompany.app.model.entities.Currency;
-import com.mycompany.app.model.entities.Enemy;
-import com.mycompany.app.model.entities.Projectile;
 
 public class View {
 
@@ -31,184 +22,96 @@ public class View {
     private Lawn lawn;
     private SpriteBatch spriteBatch;
     private Viewport viewport;
-    private float gameTime = 0;
-    private Boolean gameOver = false;
-    private json_reader js;
-    private Texture backgroundTexture;
+    private CharacterRenderer characterRenderer;
+    private Texturemanager t = new Texturemanager();
+    private CharacterSeedView characterSeedView;
+
     private EntityView entityView;
     private ShapeRenderer shapeRenderer;
     private Controller controller;
     private Texture whiteTexture;
-    private Difficulty difficulty;
-    private Model model;
-
-    private Texturemanager t = new Texturemanager();
-    private CharacterSeedView characterSeedView;
-
+    private Texture backgroundTexture;   
     private BitmapFont font;
 
-    public View(Model model) {
-        this.model=model;
+    public View(Game model) {
+        //this.model=model;
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setTitle("Game");
         config.setWindowedMode(800, 600);
         config.useVsync(true);
         t = new Texturemanager();
-        this.difficulty = model.getDifficulty();
     }
 
     
     public void create() {
         font = new BitmapFont();
-        this.js = new json_reader();
-        this.game = new Game(js.config);
+        this.game = new Game();
         this.lawn = game.getLawn();
         viewport = new FitViewport(800, 600);
         spriteBatch = new SpriteBatch();
-
         backgroundTexture = new Texture("board.png");
-
         entityView = new EntityView();
         shapeRenderer = new ShapeRenderer();
-        
         characterSeedView = new CharacterSeedView(this.t,this.whiteTexture,font);
-
         Pixmap pm = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
         pm.setColor(Color.WHITE);
         pm.fill();
         this.whiteTexture = new Texture(pm);
-        
         pm.dispose();
         characterSeedView = new CharacterSeedView(t,this.whiteTexture,this.font);
-
-
-
-        controller = new Controller(this.game, viewport, characterSeedView);
-
-
+        controller = new Controller(this.game, viewport);
+        this.characterRenderer = new CharacterRenderer(entityView, t);
     }
 
     public void resize(int width, int height) {
         viewport.update(width, height, true);
     }
 
-    public void render() {
-        
-        //System.out.print(this.gameOver);
-        
+
+    public void render(){
         float delta = Gdx.graphics.getDeltaTime();
-
-        List<Enemy> enemys = this.game.getEnemys();
-        List<Projectile> projectiles = this.game.getProjectiles();
-        List<Currency> currencys = this.game.getCurrencys();
-
-        ScreenUtils.clear(Color.BLACK);
-        viewport.apply();
-
-        spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
-        spriteBatch.begin();
-        spriteBatch.draw(backgroundTexture, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
-
-        
-        // draw the character seed icons in the top-left of the screen (pass viewport and selected index)
-        characterSeedView.draw(spriteBatch, viewport, this.game.getcharacterSeeds(), 10, 10, 64, 8, controller.getSelectedSeedIndex());
-
-        // Grid
         float tileW = viewport.getWorldWidth() * 0.80f / lawn.getCols();
         float tileH = viewport.getWorldHeight() * 0.72f / lawn.getRows();
         float gridX = (viewport.getWorldWidth() - tileW * lawn.getCols()) / 2f + 15;
         float gridY = (viewport.getWorldHeight() - tileH * lawn.getRows()) / 2f - 50;
 
+        EntityManager entitys = this.game.gEntityManager();
+        ScreenUtils.clear(Color.BLACK);
+        viewport.apply();
+        spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
+        //drawGrid(gridX, gridY, tileW, tileH, lawn.getCols(), lawn.getRows());
+        spriteBatch.begin();
+        spriteBatch.draw(backgroundTexture, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
+        // draw the character seed icons in the top-left of the screen (pass viewport and selected index)
+
+        
+        characterSeedView.draw(spriteBatch, viewport, entitys.getcharacterSeeds(), 10, 10, 64, 8, game.getSelectedSeedIndex());
+
+        // Grid
+
+
 
         controller.handleInput(gridX, gridY, tileW, tileH);
-
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        // Draw characters
-        for (int r = 0; r < lawn.getRows(); r++) {
-            for (int c = 0; c < lawn.getCols(); c++) {
-                Tile tile = lawn.getTile(r, c);
-                if (tile.getPlaceable() instanceof Character character) {
-                    float x = gridX + c * tileW;
-                    float y = gridY + r * tileH;
-                    entityView.draw(t.get_Texture(character.getTexturestring()), spriteBatch, character, x, y, tileW, tileH);
-                }
-            }
-        }
-
-        // Draw enemys
-        for (Enemy z : enemys) {
-            Vector2 pos = z.getPosition();
-            entityView.draw(t.get_Texture(z.getTexturestring()), spriteBatch, z, pos.x, pos.y, tileW, tileH);
-        }
-
-        for (Projectile p : projectiles) {
-            Vector2 pPos = p.getPosition();
-            entityView.draw(t.get_Texture(p.getTexturestring()), spriteBatch, p, pPos.x, pPos.y, 50, 50);
-        }
-
-        for (Currency s : currencys) {
-            Vector2 pPos = s.getPosition();
-            //shapeRenderer.line((float)s.getHitBox().getMinX(),(float)s.getHitBox().getMinY(),(float)s.getHitBox().getMaxX(), (float)s.getHitBox().getMaxY());
-            entityView.draw(t.get_Texture(s.getTexturestring()), spriteBatch, s, pPos.x, pPos.y, 50, 50);
-        }
+        
+        
+        characterRenderer.render(entitys, spriteBatch, tileW, tileH,gridX,gridY);
         font.draw(spriteBatch,"Currency:"+this.game.get_current_currency(),500,500);
-
-        font.draw(spriteBatch, "Time: " + (int)gameTime, viewport.getWorldWidth() - 100, viewport.getWorldHeight() - 10);
+        font.draw(spriteBatch, "Time: " + (int)game.getelapsedtime(), viewport.getWorldWidth() - 100, viewport.getWorldHeight() - 10);
         shapeRenderer.end();
         spriteBatch.end();
 
-        //System.out.println(delta+ " "+viewport.getWorldWidth()+" " + gridY+" "+ tileH+" ");
+        this.controller.update(delta);
         // Draw grid
-        drawGrid(gridX, gridY, tileW, tileH, lawn.getCols(), lawn.getRows());
-
-        if (!gameOver) {
-            gameTime += delta;
-
-            this.game.updateGameState(delta);
-            
-            if (checkEnemy()) {
-                gameOver = true;
-                model.setGameOver(true);
-                model.setGameOver((int) gameTime);
-            }
-        }
-    }
-
-    private boolean checkEnemy(){
-        for(Enemy z : this.game.getEnemys()){
-            if(z.getPosition().x <= 0){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private void drawGrid(float gridX, float gridY, float tileW, float tileH, int cols, int rows) {
-        shapeRenderer.setProjectionMatrix(viewport.getCamera().combined);
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(Color.RED);
-
-        // Vertical lines
-        for (int i = 0; i <= cols; i++) {
-            float x = gridX + i * tileW;
-            shapeRenderer.line(x, gridY, x, gridY + rows * tileH);
-        }
-
-        //Horizontal lines
-        for (int j = 0; j <= rows; j++) {
-            float y = gridY + j * tileH;
-            shapeRenderer.line(gridX, y, gridX + cols * tileW, y);
-        }
-
-        shapeRenderer.end();
-
+        
     }
 
 
-    public void pause() {}
+
+    // public void pause() {}
 
 
-    public void resume() {}
+    // public void resume() {}
 
 
     public void dispose() {
@@ -217,5 +120,6 @@ public class View {
         shapeRenderer.dispose();
         characterSeedView.dispose();
         font.dispose();
+        t.Disposetextures();
     }
 }

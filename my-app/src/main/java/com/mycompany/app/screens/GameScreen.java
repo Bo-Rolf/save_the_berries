@@ -5,41 +5,40 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mycompany.app.MainGame;
 import com.mycompany.app.model.Difficulty;
-import com.mycompany.app.model.Model;
+import com.mycompany.app.model.Game;
 import com.mycompany.app.view.View;
 
 
 public class GameScreen extends ScreenAdapter {
 
-    private final MainGame game;
-    private final Model model;
+    private final MainGame mainGame;
+    private final Game game;
+    
     private View view;
 
     private Stage uiStage; 
     private Skin skin;
-    private Table pauseTable;
+    //private Table pauseTable;
     private boolean paused = false;
     private TextButton pauseBtn;
 
     private final Difficulty selectedDifficulty;
 
-    public GameScreen(MainGame game, Model model, Difficulty selectedDifficulty) {
+    public GameScreen(MainGame mainGame, Game game, Difficulty selectedDifficulty) {
+        this.mainGame = mainGame;
         this.game = game;
-        this.model = model;
         this.selectedDifficulty = selectedDifficulty;
     }
 
  @Override
 public void show() {
-    model.setDifficulty(selectedDifficulty);
-
-    view = new View(model);
+    game.setDifficulty(selectedDifficulty);
+    view = new View(game);
     view.create();
     view.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
@@ -70,7 +69,7 @@ public void show() {
     menuBtn.addListener(new ClickListener() {
         @Override
         public void clicked(InputEvent event, float x, float y) {
-            game.setScreen(new MainMenuScreen(game));
+            mainGame.setScreen(new MainMenuScreen(mainGame));
         }
     });
 }
@@ -86,16 +85,16 @@ public void show() {
         uiStage.act(delta);
         uiStage.draw();
 
-        if (model.isGameOver()) {
-            int finalTime = model.getFinalTime();
-            game.setScreen(new GameOverScreen(game, finalTime));
-            return;
+        if (game.isGameOver()) {
+            int finalTime = game.getFinalTime();
+            mainGame.setScreen(new GameOverScreen(mainGame, finalTime));
+            
         }
 
-        if (model.isGoToMainMenu()) {
-            model.setGoToMainMenu(false);
-            game.setScreen(new MainMenuScreen(game));
-            return;
+        if (game.isGoToMainMenu()) {
+            game.setGoToMainMenu(false);
+            mainGame.setScreen(new MainMenuScreen(mainGame));
+            
         }
     }
 

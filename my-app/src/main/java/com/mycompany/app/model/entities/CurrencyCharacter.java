@@ -13,8 +13,6 @@ public class CurrencyCharacter extends Character{
         this.cooldownSeconds = cfg.cooldownSeconds;
     }
 
-    
-
     @Override
     public void update(double deltaTime) { // den räknar tid ifrån förra skottet
         timeSinceLastCurrency +=deltaTime;

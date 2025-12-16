@@ -7,13 +7,13 @@ import com.mycompany.app.model.entities.Enemy;
 public class EnemySpawner {
 
     private final SpawnConfig config;
-    private EntityFactory factory;
+    private final EntityFactory factory;
 
     private float spawnTimer = 0f;
     private float currentInterval;
     private float gameTime = 0f;
 
-    private Random random = new Random();
+    private final Random random = new Random();
 
     public EnemySpawner(EntityFactory factory2,Difficulty difficulty) {
         this.factory = factory2;
@@ -22,7 +22,7 @@ public class EnemySpawner {
     }
 
     public Enemy update(float delta,float worldWidth, float gridY, float tileHeight, int rows) {
-        gameTime += delta;
+        this.gameTime += delta;
         spawnTimer += delta;
 
         // Ramping
@@ -38,29 +38,29 @@ public class EnemySpawner {
             float y = gridY + row * tileHeight;
             
 
-            Enemy z = chooseEnemy(row, x, y);
+            Enemy z = chooseEnemy(x, y);
             return z;
         }
         return null;
     }
 
-    private Enemy chooseEnemy(int row, float x, float y) {
+    private Enemy chooseEnemy(float x, float y) {
         float r = random.nextFloat();
 
         float normalChance = 1f;
         float fastChance = 0.0f;
-        float tankyChance = 0.0f;
+        //float tankChance = 0.0f;
 
         // More tank/fast later in the game
         if (gameTime > 30) {
             normalChance = 0.5f;
             fastChance = 0.35f;
-            tankyChance = 0.15f;
+            //tankChance = 0.15f;
         }
         if (gameTime > 60) {
             normalChance = 0.3f;
             fastChance = 0.45f;
-            tankyChance = 0.25f;
+            //tankChance = 0.25f;
         }
         
 

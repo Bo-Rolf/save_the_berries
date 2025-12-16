@@ -15,20 +15,20 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mycompany.app.MainGame;
 import com.mycompany.app.model.Difficulty;
-import com.mycompany.app.model.Model;
+import com.mycompany.app.model.Game;
 
 
 public class MainMenuScreen extends ScreenAdapter {
 
-    private final MainGame game;
+    private final MainGame mainGame;
     private Stage stage;
     private Skin skin;
     private Texture backgroundTexture;
     private SpriteBatch batch;
 
 
-    public MainMenuScreen(MainGame game) {
-        this.game = game;
+    public MainMenuScreen(MainGame mainGame) {
+        this.mainGame = mainGame;
     }
 
     @Override
@@ -87,9 +87,10 @@ quitBtn.addListener(new ClickListener() {
     }
 
     private void startGame(Difficulty diff) {
-        Model model = new Model();
+        Game game = new Game();
         if(stage != null) stage.dispose();
-        game.setScreen(new GameScreen(game, model, diff));
+        //this.mainGame.setScreen(mainGame,game,diff);
+        mainGame.setScreen(new GameScreen(mainGame, game, diff));
                 
     }
 

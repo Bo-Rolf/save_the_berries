@@ -1,27 +1,23 @@
 package com.mycompany.app.view;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mycompany.app.model.CharacterSeed;
 
 public class CharacterSeedView {
-    private final Map<String, Texture> textures = new HashMap<>();
     private final Texture placeholder;
     private final Texturemanager t;
-    public static Texture white_tex;
+    public static Texture white;
     public BitmapFont font;
 
     public CharacterSeedView(Texturemanager texture_manager,Texture white,BitmapFont font) {
         // load known seed textures (adjust filenames to match your assets)
-        this.white_tex = white;
+        this.white = white;
         this.t = texture_manager;
         this.font = font;
         placeholder = new Texture("projectile.png"); // fallback texture - add to assets or change name
@@ -34,7 +30,6 @@ public class CharacterSeedView {
     public void draw(SpriteBatch batch, Viewport viewport, List<CharacterSeed> characterSeedList, float marginLeft, float marginTop, float size, float spacing, int selectedIndex) {
         batch.end();
         float x = marginLeft;
-        ShapeRenderer shape = new ShapeRenderer();
         float y = viewport.getWorldHeight() - marginTop - size; // top-left in world units
         
         for (CharacterSeed e2: characterSeedList){
@@ -46,7 +41,7 @@ public class CharacterSeedView {
             
                   // stop sprite batch before shape renderer
             batch.setColor(Color.GRAY);
-            batch.draw(this.white_tex,x - offset, y - offset, drawSize, drawSize);
+            batch.draw(white,x - offset, y - offset, drawSize, drawSize);
             batch.setColor(Color.WHITE);
             
             // Draw texture card
@@ -59,13 +54,8 @@ public class CharacterSeedView {
                 double overlayHeight = drawSize * progress; 
                 batch.begin();
                 batch.setColor(0, 0, 0, 0.55f);  // ändrar färgen till svart och halvtransparant
-            
-                // Draw rectangle at TOP of the card
-                //batch.draw(tex, x - offset, y - offset, drawSize, drawSize);
-                //batch.draw(this.white_tex, x - offset, y - offset, drawSize, drawSize);
-                batch.draw(this.white_tex,(x - offset),(float)((y - offset) + (drawSize - overlayHeight)), // top aligned
-                    drawSize,(float)overlayHeight);
-
+                batch.draw(white,(x - offset),(float)((y - offset) + (drawSize - overlayHeight)), // top aligned
+                drawSize,(float)overlayHeight);
                 batch.setColor(Color.WHITE); // reseta färgen
                 batch.end();
             }
@@ -80,7 +70,7 @@ public class CharacterSeedView {
     }
 
     // Return index of seed clicked in world coords, or -1 if miss.
-    public int getSeedIndexAt(float worldX, float worldY, Viewport viewport, List<CharacterSeed> characterSeeds,
+    public static int getSeedIndexAt(float worldX, float worldY, Viewport viewport, List<CharacterSeed> characterSeeds,
                               float marginLeft, float marginTop, float size, float spacing) {
         float x = marginLeft;
         float y = viewport.getWorldHeight() - marginTop - size;
@@ -94,9 +84,6 @@ public class CharacterSeedView {
     }
 
     public void dispose() {
-        for (Texture tex : textures.values()) {
-            tex.dispose();
-        }
         placeholder.dispose();
     }
 }

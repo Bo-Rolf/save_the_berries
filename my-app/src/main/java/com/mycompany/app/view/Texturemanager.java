@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 public class Texturemanager {
 
 
-    private Map<String, Texture> textures;
+    private final Map<String, Texture> textures;
     public Texturemanager(){
         this.textures = new HashMap<>();
     }
@@ -22,4 +22,10 @@ public class Texturemanager {
         return this.textures.get(texString);
     }
 
+    //
+    public void Disposetextures(){
+        for (Texture tex : this.textures.values()) {
+            tex.dispose();
+        }
+    }
 }
