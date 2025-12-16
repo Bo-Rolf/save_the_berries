@@ -31,8 +31,6 @@ public class json_reader {
         
         for(EntityCfg cfg : gcfg.characters){
             cfg.p_type = j.getClass(cfg.class_type);
-            System.out.print(cfg.p_type);
-            System.out.print(cfg.class_type);
         }
         for(EntityCfg cfg : gcfg.enemys){
            cfg.z_type = j.getClass(cfg.class_type);

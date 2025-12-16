@@ -14,12 +14,10 @@ import com.mycompany.app.model.entities.Projectile;
 
 
 public class CharacterRenderer {
-    private final EntityView entityView;
     private final Texturemanager t;
     List<String> tiletexs;
     
-    public CharacterRenderer(EntityView view, Texturemanager t){
-        this.entityView = view;
+    public CharacterRenderer(Texturemanager t){
         this.t = t;
         tiletexs = new ArrayList<>();
         tiletexs.add("tile_dark.png");
@@ -37,24 +35,24 @@ public class CharacterRenderer {
                 Tile tile = lawn.getTile(r, c);
                 float x = gridX + c * tileW;
                 float y = gridY + r * tileH;
-                entityView.draw(t.get_Texture(tiletexs.get(((r+1)+(c+1))%2)), batch, x,y,tileW,tileH);
+                EntityView.draw(t.get_Texture(tiletexs.get(((r+1)+(c+1))%2)), batch, x,y,tileW,tileH);
                 if (tile.getPlaceable() instanceof Character character) {
-                    entityView.draw(t.get_Texture(character.getTexturestring()), batch, x, y, tileW, tileH);
+                    EntityView.draw(t.get_Texture(character.getTexturestring()), batch, x, y, tileW, tileH);
                 }
             }
         }
         for (Enemy z : enemys) {
             Vector2 pos = z.getPosition();
-            entityView.draw(this.t.get_Texture(z.getTexturestring()), batch, pos.x,pos.y,tileW,tileH);
+            EntityView.draw(this.t.get_Texture(z.getTexturestring()), batch, pos.x,pos.y,tileW,tileH);
         }
         for (Projectile p : projectiles) {
             Vector2 pPos = p.getPosition();
-            entityView.draw(t.get_Texture(p.getTexturestring()), batch, pPos.x, pPos.y, 50, 50);
+            EntityView.draw(t.get_Texture(p.getTexturestring()), batch, pPos.x, pPos.y, 50, 50);
         }
         for (Currency s : currencys) {
             Vector2 pPos = s.getPosition();
             //shapeRenderer.line((float)s.getHitBox().getMinX(),(float)s.getHitBox().getMinY(),(float)s.getHitBox().getMaxX(), (float)s.getHitBox().getMaxY());
-            entityView.draw(t.get_Texture(s.getTexturestring()), batch, pPos.x, pPos.y, 50, 50);
+            EntityView.draw(t.get_Texture(s.getTexturestring()), batch, pPos.x, pPos.y, 50, 50);
         }
 
 

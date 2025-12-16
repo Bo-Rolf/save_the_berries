@@ -11,7 +11,6 @@ public abstract class Entity implements Damageable {
     private final String name;
     private Vector2 position; // characteror kanske inte ska ha sån här position utan grid position?
     private final Rectangle2D hitBox;
-    private Runnable deathListener;
     public String textureString;
 
     
@@ -30,9 +29,6 @@ public abstract class Entity implements Damageable {
     @Override
     public void takeDamage(int amount) {
         health -= amount;
-        if (health <= 0) {
-            die();
-        }
     }
 
     public boolean isAlive() {
@@ -65,15 +61,9 @@ public abstract class Entity implements Damageable {
     public Rectangle2D getHitBox() {
         return hitBox;
     }
-
-    public void setDeathListener(Runnable listener) {
-        this.deathListener = listener;
-    }
     @Override
     public void die() {
-        if (deathListener != null) {
-            deathListener.run();
-        }
+        takeDamage(this.health);
     }
     public String getTexturestring(){
         return this.textureString;

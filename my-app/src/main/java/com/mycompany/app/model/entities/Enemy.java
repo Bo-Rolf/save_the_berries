@@ -36,7 +36,6 @@ public class Enemy extends Entity {
 
     public void eat(Character target) {
         target.takeDamage(damage);
-        System.out.println("health "+target.getHealth());
         TimeSinceLastBite = 0.0;
     }
 

@@ -7,27 +7,15 @@ import com.mycompany.app.model.entities.Entity;
 
 public class EntityView {
 
-    private Texture texture;
 
-    public EntityView() {
-        //this.texture = new Texture("pea_shooter.png");
-    }
-
-    public void draw(Texture texture, SpriteBatch batch, Entity entity) {
+    public static void draw(Texture texture, SpriteBatch batch, Entity entity) {
         Vector2 pos = entity.getPosition();
         batch.draw(texture, pos.x, pos.y);
     }
 
-    public void draw(Texture texture, SpriteBatch batch, float x, float y, float width, float height) {
+    public static void draw(Texture texture, SpriteBatch batch, float x, float y, float width, float height) {
         batch.draw(texture, x, y, width, height);
     }
-
-
-    public void dispose() {
-        texture.dispose();
-    }
-
-
 
 }
 

@@ -22,7 +22,7 @@ public class Currency extends Entity{
     public void update(double deltaTime) {
         this.time_out+=deltaTime;
         if(this.time_out>this.dissapear_timer){
-            this.takeDamage(1000);
+            this.die();
         }
     }
 

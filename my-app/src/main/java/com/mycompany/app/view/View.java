@@ -25,8 +25,6 @@ public class View {
     private CharacterRenderer characterRenderer;
     private Texturemanager t = new Texturemanager();
     private CharacterSeedView characterSeedView;
-
-    private EntityView entityView;
     private ShapeRenderer shapeRenderer;
     private Controller controller;
     private Texture whiteTexture;
@@ -50,7 +48,6 @@ public class View {
         viewport = new FitViewport(800, 600);
         spriteBatch = new SpriteBatch();
         backgroundTexture = new Texture("board.png");
-        entityView = new EntityView();
         shapeRenderer = new ShapeRenderer();
         characterSeedView = new CharacterSeedView(this.t,this.whiteTexture,font);
         Pixmap pm = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
@@ -60,7 +57,7 @@ public class View {
         pm.dispose();
         characterSeedView = new CharacterSeedView(t,this.whiteTexture,this.font);
         controller = new Controller(this.game, viewport);
-        this.characterRenderer = new CharacterRenderer(entityView, t);
+        this.characterRenderer = new CharacterRenderer(t);
     }
 
     public void resize(int width, int height) {

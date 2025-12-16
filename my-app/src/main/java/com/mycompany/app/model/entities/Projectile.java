@@ -27,7 +27,7 @@ public class Projectile extends Entity {
     public void onHit(Enemy target) {
         if (checkCollision(target)==true) {
         target.takeDamage(damage);
-        takeDamage(1); // så den dödar sig själv
+        this.takeDamage(1); // så den dödar sig själv
         }
     }
 
@@ -43,7 +43,7 @@ public class Projectile extends Entity {
         Vector2 pos = getPosition();
 
         if(pos.x>1000 || pos.x<-200 ||pos.y>700 || pos.y <-200){
-            takeDamage(1000);
+            die();
         }
         move(deltaTime);
     }

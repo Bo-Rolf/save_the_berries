@@ -36,7 +36,7 @@
   "characters":[
         {
       "class": "EntityCfg",
-      "health":1000,
+      "health":200,
       "name":"Currency_Character",
       "currencyCost":50,
       "cooldown":15,
@@ -46,7 +46,7 @@
     },
     {
       "class": "EntityCfg",
-      "health":1000,
+      "health":300,
       "name":"Shootingcharacter",
       "currencyCost":100,
       "cooldown":15,

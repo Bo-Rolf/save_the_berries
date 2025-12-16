@@ -45,10 +45,8 @@ public class Game {
         //int oldIndex = this.
         int clickedSeed = CharacterSeedView.getSeedIndexAt(worldCoords.x, worldCoords.y, viewport, this.entity_manager.getcharacterSeeds(),
                 seedMarginLeft, seedMarginTop, seedSize, seedSpacing);
-        System.out.println(clickedSeed);
         if (clickedSeed != -1) {
             selectedSeedIndex = clickedSeed;
-            System.out.println("Selected seed index " + selectedSeedIndex + " -> " + this.entity_manager.getCharacterSeed(selectedSeedIndex));
             return; // don't try to place on grid for this click
         }            
 
@@ -57,32 +55,22 @@ public class Game {
             int col = (int) ((worldCoords.x - startX) / tileWidth);
             int row = (int) ((worldCoords.y - startY) / tileHeight);
             Tile clickedTile = this.lawn.getTile(row, col);
-
-
             if (clickedTile != null) { //(clickedTile != null && clickedTile.placeable == null)
                 float x = startX + col * tileWidth + tileWidth / 2f;
                 float y = startY + row * tileHeight + tileHeight / 2f;
                 Tile tile =this.getLawn().getTile(row, col);
-
                 if(selectedSeedIndex!=-1){
                     if(currency>=entity_manager.getCharacterSeed(selectedSeedIndex).cost){
-                    boolean result = entity_manager.placeCharacter(selectedSeedIndex,tile, row, col, x, y);
-                    if(result==true){
-                        currency -= entity_manager.getCharacterSeed(selectedSeedIndex).cost;
+                        boolean result = entity_manager.placeCharacter(selectedSeedIndex,tile, row, col, x, y);
+                        if(result==true){
+                            currency -= entity_manager.getCharacterSeed(selectedSeedIndex).cost;
+                        }
+                    
                     }
-                    
                 }
-                }
-
-                
                 selectedSeedIndex = -1; //oselecta seedet du använder
-            }            
-            else {
-                System.out.println("Tile already has a character at row " + row + ", col " + col);
-            }
-
-                    
-            }
+            }                        
+        }
 
     
     }
@@ -115,14 +103,10 @@ public class Game {
     //Vector2 strulade så jag konverterade det till point istället
 
     public void collect_currency(Point mouse){
-        System.out.print(mouse);
         for(Currency s :this.entity_manager.getCurrencys()){
-            System.out.print(s.getHitBox().getMinX());
             if(s.getHitBox().contains(mouse)){
                 currency += s.get_currency_value();
-                //"döda" solen
-                s.takeDamage(1000);
-                System.out.print("du collectade");
+                s.die();
             }
         }
     }
