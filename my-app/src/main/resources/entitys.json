@@ -47,7 +47,7 @@
     {
       "class": "EntityCfg",
       "health":300,
-      "name":"Shootingcharacter",
+      "name":"Slangbella Smurf",
       "currencyCost":100,
       "cooldown":15,
       "cooldownSeconds":2.5,
@@ -56,12 +56,16 @@
       "SpawnedEntityCfg":{
         "health" : 1,
         "name" : "Pea",
+        "damage":1,
         "moveSpeed":  500,
         "texture" : "projectile.png"
       }
+      },
+
+
 
       
-    },
+    
     {
       "class": "EntityCfg",
       "health":1000,
@@ -90,7 +94,25 @@
       "texture":"tank.png",
       "class_type":"Character"
       
+    },
+          {
+      "class": "EntityCfg",
+      "health":300,
+      "name":"Gammelsmurfen",
+      "currencyCost":500,
+      "cooldown":15,
+      "cooldownSeconds":2,
+      "texture":"Gammelsmurf.png",
+      "class_type":"Shooter",
+      "SpawnedEntityCfg":{
+        "health" : 25,
+        "name" : "Fireball",
+        "damage":10,
+        "moveSpeed":  750,
+        "texture" : "Gammelsmurf_magi.png"
+      }
     }
+
 
   ]
 }
