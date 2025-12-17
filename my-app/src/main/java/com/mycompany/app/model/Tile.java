@@ -15,7 +15,7 @@ public class Tile {
         return this.placeable;
     }
 
-    public boolean is_occupied(){
+    public boolean isOccupied(){
         return !(this.placeable==null);
     }
 

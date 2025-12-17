@@ -1,6 +1,6 @@
 {
 
-  "enemys": [
+  "enemies": [
     {
       "class": "EntityCfg",
       "health": 10,
@@ -36,26 +36,26 @@
   "characters":[
         {
       "class": "EntityCfg",
-      "health":200,
-      "name":"Currency_Character",
+      "health":150,
+      "name":"Smurfberry bush Collector Smurf",
       "currencyCost":50,
-      "cooldown":15,
+      "cooldown":7.5,
       "cooldownSeconds":15,
       "texture":"currency_character.png",
       "class_type":"CurrencyCharacter"
     },
     {
       "class": "EntityCfg",
-      "health":300,
-      "name":"Slangbella Smurf",
+      "health":200,
+      "name":"Slingshot Smurf",
       "currencyCost":100,
-      "cooldown":15,
+      "cooldown":10,
       "cooldownSeconds":2.5,
       "texture":"shooting_character.png",
       "class_type":"Shooter",
       "SpawnedEntityCfg":{
         "health" : 1,
-        "name" : "Pea",
+        "name" : "Pebble",
         "damage":1,
         "moveSpeed":  500,
         "texture" : "projectile.png"
@@ -68,7 +68,7 @@
     
     {
       "class": "EntityCfg",
-      "health":1000,
+      "health":250,
       "name":"Megaman",
       "currencyCost":150,
       "cooldown":20,
@@ -77,9 +77,9 @@
       "class_type":"Shooter",
       "SpawnedEntityCfg":{
         "health" : 1,
-        "name" : "Pea",
+        "name" : "Megaball",
         "damage":5,
-        "moveSpeed":  500,
+        "moveSpeed":  700,
         "texture" : "megaball.png"
       }
 
@@ -87,8 +87,8 @@
     },
     {
       "class": "EntityCfg",
-      "health":1000,
-      "name":"Tank",
+      "health":1200,
+      "name":"Smurf House",
       "currencyCost":50,
       "cooldown":15,
       "texture":"tank.png",

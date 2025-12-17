@@ -18,9 +18,9 @@ public class EntityManager{
 
 
     private final List<Character> characters = new ArrayList<>();
-    private final List<Enemy> enemys = new ArrayList<>();
+    private final List<Enemy> enemies = new ArrayList<>();
     private final List<Projectile> projectiles = new ArrayList<>();
-    private final List<Currency> collectable_currencys = new ArrayList<>();
+    private final List<Currency> collectableCurrencies = new ArrayList<>();
     private final List<CharacterSeed> characterSeeds = new ArrayList<>();
     private final CurrencySpawner currencyspawner = new CurrencySpawner();
     private final EntityFactory entityFactory;
@@ -40,7 +40,7 @@ public class EntityManager{
 
     public void updateGameState(double deltaTime) {
         updateProjectiles(deltaTime);
-        updateEnemys(deltaTime);
+        updateEnemies(deltaTime);
         updateCharacters(deltaTime);
         updateCharacterSeeds(deltaTime);
         updateCurrencySpawner(deltaTime);
@@ -58,11 +58,11 @@ public class EntityManager{
         float gridY = (600 - tileH * lawn.getRows()) / 2f - 50;
         Enemy z = this.enemySpawner.update((float)deltaTime, (float)800.0,gridY, tileH, this.lawn.getRows());
         if(z!=null){
-            enemys.add(z);
+            enemies.add(z);
         }
     }
 
-    public  List<CharacterSeed> getcharacterSeeds(){
+    public  List<CharacterSeed> getCharacterSeeds(){
         return this.characterSeeds;
     }
 
@@ -86,7 +86,7 @@ public class EntityManager{
             if(character instanceof CurrencyCharacter flower){
                 Currency s = flower.spawnCurrency();
                 if(s != null){
-                    collectable_currencys.add(s);
+                    collectableCurrencies.add(s);
                 }
 
             }
@@ -98,23 +98,23 @@ public class EntityManager{
         this.currencyspawner.update(deltaTime);
         Currency s = currencyspawner.spawnCurrency();
         if(s != null){
-            collectable_currencys.add(s);
+            collectableCurrencies.add(s);
         }
     }
 
-    private void updateEnemys(double deltaTime) {
-        for (Enemy enemy : enemys) {
+    private void updateEnemies(double deltaTime) {
+        for (Enemy enemy : enemies) {
             enemy.update(deltaTime);
-            boolean hittatcharactera = false;
+            boolean foundCharacter = false;
             for (Character character : characters) {
                 if (enemy.checkCollision(character)) {
                     if (enemy.canEat()) {
                     enemy.eat(character);
                     }
-                    hittatcharactera = true;
+                    foundCharacter = true;
                 }   
             }
-                if(!hittatcharactera){
+                if(!foundCharacter){
                 enemy.move(deltaTime);
                 }
         }
@@ -123,7 +123,7 @@ public class EntityManager{
     private void updateProjectiles(double deltaTime) {
         for (Projectile projectile : projectiles) {
             projectile.update((float) deltaTime);
-            for (Enemy enemy : enemys) {
+            for (Enemy enemy : enemies) {
                 if (projectile.checkCollision(enemy)) {
                     projectile.onHit(enemy);
                 }
@@ -139,17 +139,17 @@ public class EntityManager{
     private void updateDeathCheck() {
         // Tar bort döda entities från listorna
         characters.removeIf(character -> !character.isAlive());
-        enemys.removeIf(enemy -> !enemy.isAlive());
+        enemies.removeIf(enemy -> !enemy.isAlive());
         projectiles.removeIf(projectile -> !projectile.isAlive());
-        collectable_currencys.removeIf(s -> !s.isAlive());
+        collectableCurrencies.removeIf(s -> !s.isAlive());
     }
 
     public void addProjectile(Projectile projectile){
         projectiles.add(projectile);
     }
 
-    public List<Enemy> getEnemys(){
-        return this.enemys;
+    public List<Enemy> getEnemies(){
+        return this.enemies;
     }
     public List<Character> getCharacters(){
         return this.characters;
@@ -162,13 +162,13 @@ public class EntityManager{
     }
 
     public List<Currency> getCurrencys(){
-        return this.collectable_currencys;
+        return this.collectableCurrencies;
     }
     public boolean placeCharacter(int characterseedIndex,Tile tile, int row, int col,float x, float y) {
         CharacterSeed p =getCharacterSeed(characterseedIndex);
         if(p!=null){            
             Character newCharacter = this.entityFactory.createCharacter(p.type, x, y, row, col);
-            if(newCharacter!=null && this.getCharacterSeed(characterseedIndex).ready_to_place() && !tile.is_occupied()){
+            if(newCharacter!=null && this.getCharacterSeed(characterseedIndex).ready_to_place() && !tile.isOccupied()){
                 newCharacter.setTileRemovalListener(() -> {
             // entities.remove(e);
             tile.removePlaceable();
@@ -183,7 +183,7 @@ public class EntityManager{
     }
 
     public boolean checkEnemy(){
-        for(Enemy z : this.getEnemys()){
+        for(Enemy z : this.getEnemies()){
             if(z.getPosition().x <= 0){
                 return true;
             }

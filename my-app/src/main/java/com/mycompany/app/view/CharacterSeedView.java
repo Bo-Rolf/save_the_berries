@@ -15,10 +15,10 @@ public class CharacterSeedView {
     public Texture white;
     public BitmapFont font;
 
-    public CharacterSeedView(Texturemanager texture_manager,Texture white,BitmapFont font) {
+    public CharacterSeedView(Texturemanager textureManager,Texture white,BitmapFont font) {
         // load known seed textures (adjust filenames to match your assets)
         this.white = white;
-        this.t = texture_manager;
+        this.t = textureManager;
         this.font = font;
         placeholder = new Texture("projectile.png"); // fallback texture - add to assets or change name
     }
@@ -34,7 +34,7 @@ public class CharacterSeedView {
         
         for (CharacterSeed e2: characterSeedList){
             batch.begin();
-            Texture tex = this.t.get_Texture(e2.getTexturestring());
+            Texture tex = this.t.getTexture(e2.getTexturestring());
             int i = characterSeedList.indexOf(e2);
             float drawSize = (i == selectedIndex) ? size * 1.08f : size;
             float offset = (drawSize - size) / 2f;
@@ -48,9 +48,9 @@ public class CharacterSeedView {
             batch.draw(tex, x - offset, y - offset, drawSize, drawSize);
             batch.end();
             // --- Cooldown Overlay ---
-            if (e2.cooldown_left > 0) {
+            if (e2.cooldownLeft > 0) {
 
-                double progress = e2.cooldown_left / e2.cooldown;  
+                double progress = e2.cooldownLeft / e2.cooldown;  
                 double overlayHeight = drawSize * progress; 
                 batch.begin();
                 batch.setColor(0, 0, 0, 0.55f);  // ändrar färgen till svart och halvtransparant

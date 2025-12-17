@@ -74,7 +74,7 @@ public class View {
         float gridX = (viewport.getWorldWidth() - tileW * lawn.getCols()) / 2f + 15;
         float gridY = (viewport.getWorldHeight() - tileH * lawn.getRows()) / 2f - 50;
 
-        EntityManager entitys = this.game.gEntityManager();
+        EntityManager entities = this.game.gEntityManager();
         ScreenUtils.clear(Color.BLACK);
         viewport.apply();
         spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
@@ -82,12 +82,12 @@ public class View {
         spriteBatch.begin();
         spriteBatch.draw(backgroundTexture, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
         // draw the character seed icons in the top-left of the screen (pass viewport and selected index)
-        characterSeedView.draw(spriteBatch, viewport, entitys.getcharacterSeeds(), 10, 10, 64, 8, game.getSelectedSeedIndex());
+        characterSeedView.draw(spriteBatch, viewport, entities.getCharacterSeeds(), 10, 10, 64, 8, game.getSelectedSeedIndex());
         controller.handleInput(gridX, gridY, tileW, tileH);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        characterRenderer.render(entitys, spriteBatch, tileW, tileH,gridX,gridY);
-        font.draw(spriteBatch,"Currency:"+this.game.get_current_currency(),500,500);
-        font.draw(spriteBatch, "Time: " + (int)game.getelapsedtime(), viewport.getWorldWidth() - 100, viewport.getWorldHeight() - 10);
+        characterRenderer.render(entities, spriteBatch, tileW, tileH,gridX,gridY);
+        font.draw(spriteBatch,"Currency:"+this.game.getCurrentCurrency(),500,500);
+        font.draw(spriteBatch, "Time: " + (int)game.getElapsedTime(), viewport.getWorldWidth() - 100, viewport.getWorldHeight() - 10);
         shapeRenderer.end();
         spriteBatch.end();
         this.controller.update(delta);

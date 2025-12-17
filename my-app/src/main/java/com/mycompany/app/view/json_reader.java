@@ -25,14 +25,14 @@ public class json_reader {
         j.addClassTag("EntityCfg",EntityCfg.class);
 
 
-        GameConfig gcfg = j.fromJson(GameConfig.class, Gdx.files.internal("entitys.json"));
+        GameConfig gcfg = j.fromJson(GameConfig.class, Gdx.files.internal("entities.json"));
         
         
         
         for(EntityCfg cfg : gcfg.characters){
             cfg.p_type = j.getClass(cfg.class_type);
         }
-        for(EntityCfg cfg : gcfg.enemys){
+        for(EntityCfg cfg : gcfg.enemies){
            cfg.z_type = j.getClass(cfg.class_type);
         }
 

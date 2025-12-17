@@ -14,7 +14,7 @@ public class Texturemanager {
         this.textures = new HashMap<>();
     }
 
-    public Texture get_Texture(String texString){
+    public Texture getTexture(String texString){
         if(!this.textures.containsKey(texString)){
             this.textures.put(texString, new Texture(texString));
         }

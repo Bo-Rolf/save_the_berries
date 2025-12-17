@@ -21,7 +21,7 @@ public class EntityFactory {
         for(EntityCfg e : gcfg.characters){
             character_cfgs.put(e.name, e);
         }
-        for(EntityCfg e2 : gcfg.enemys){
+        for(EntityCfg e2 : gcfg.enemies){
             enemy_cfgs.put(e2.name, e2);
         }
 

@@ -27,7 +27,7 @@ public class Game {
     public Game(Difficulty difficulty) {
         this.difficulty = difficulty;
         this.js = new json_reader();
-        // Lägg till initiala enemys och characters här om det behövs
+        // Lägg till initiala enemies och characters här om det behövs
         this.currency = 200;
         this.entity_manager = new EntityManager(js.config,this.lawn,difficulty);
     }
@@ -38,10 +38,10 @@ public class Game {
         float seedMarginTop = 10f;
         float seedSize = 64f;
         float seedSpacing = 8f;
-        collect_currency(new Point((int)worldCoords.x, (int)worldCoords.y));
+        collectCurrency(new Point((int)worldCoords.x, (int)worldCoords.y));
 
         //int oldIndex = this.
-        int clickedSeed = CharacterSeedView.getSeedIndexAt(worldCoords.x, worldCoords.y, viewport, this.entity_manager.getcharacterSeeds(),
+        int clickedSeed = CharacterSeedView.getSeedIndexAt(worldCoords.x, worldCoords.y, viewport, this.entity_manager.getCharacterSeeds(),
                 seedMarginLeft, seedMarginTop, seedSize, seedSpacing);
         if (clickedSeed != -1) {
             selectedSeedIndex = clickedSeed;
@@ -88,21 +88,21 @@ public class Game {
         }
     }
 
-    public double getelapsedtime(){
+    public double getElapsedTime(){
         return this.elapsedTime;
     }
 
-    public int get_current_currency(){
+    public int getCurrentCurrency(){
         return this.currency;
     }
 
     //Funktion för att försöka kollekta sol, iterarar över varje sol och kollar ifall musen är på rätt plats
     //Vector2 strulade så jag konverterade det till point istället
 
-    public void collect_currency(Point mouse){
+    public void collectCurrency(Point mouse){
         for(Currency s :this.entity_manager.getCurrencys()){
             if(s.getHitBox().contains(mouse)){
-                currency += s.get_currency_value();
+                currency += s.getCurrencyValue();
                 s.die();
             }
         }

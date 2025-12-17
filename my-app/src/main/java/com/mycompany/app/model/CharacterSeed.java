@@ -6,7 +6,7 @@ public class CharacterSeed {
     public String t;
     public int cost;
     public double cooldown;
-    public double cooldown_left;
+    public double cooldownLeft;
 
     
 
@@ -19,19 +19,19 @@ public class CharacterSeed {
     
     public void update(double deltaTime){
         
-        cooldown_left-=deltaTime;
-        if(cooldown_left<0){
-            cooldown_left=0;
+        cooldownLeft-=deltaTime;
+        if(cooldownLeft<0){
+            cooldownLeft=0;
         }
 
     }
     
     public boolean ready_to_place(){
-        return cooldown_left<=0;
+        return cooldownLeft<=0;
     }
     public void try_place(){
         if(ready_to_place()){
-            this.cooldown_left=this.cooldown;
+            this.cooldownLeft=this.cooldown;
         }
     }
 
