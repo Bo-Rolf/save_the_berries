@@ -168,6 +168,10 @@ public class EntityManager{
         if(p!=null){            
             Character newCharacter = this.entityFactory.createCharacter(p.type, x, y, row, col);
             if(newCharacter!=null && this.getCharacterSeed(characterseedIndex).ready_to_place() && !tile.is_occupied()){
+                newCharacter.setTileRemovalListener(() -> {
+            // entities.remove(e);
+            tile.removePlaceable();
+            });
                 this.characters.add(newCharacter);
                 tile.place(newCharacter);
                 this.getCharacterSeed(characterseedIndex).try_place();
