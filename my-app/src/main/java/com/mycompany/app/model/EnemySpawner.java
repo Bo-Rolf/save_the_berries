@@ -25,9 +25,14 @@ public class EnemySpawner {
         this.gameTime += delta;
         spawnTimer += delta;
 
+
+        
         // Ramping
         if (currentInterval > config.minInterval) {
             currentInterval -= config.rampSpeed * delta;
+            if(currentInterval<config.minInterval){
+                currentInterval=config.minInterval;
+            }    
         }
 
         if (spawnTimer >= currentInterval) {

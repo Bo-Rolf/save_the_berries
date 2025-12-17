@@ -26,10 +26,11 @@ public class EntityManager{
     private final EntityFactory entityFactory;
     private final EnemySpawner enemySpawner;
     private final Lawn lawn;
+    
 
-    public EntityManager(GameConfig gcfg,Lawn lawn){ 
+    public EntityManager(GameConfig gcfg,Lawn lawn, Difficulty diff){ 
         this.entityFactory = new EntityFactory(gcfg);
-        this.enemySpawner=new EnemySpawner(this.entityFactory,Difficulty.EASY);
+        this.enemySpawner=new EnemySpawner(this.entityFactory,diff);
         this.lawn = lawn;
         for(EntityCfg cfg : gcfg.characters){
             this.characterSeeds.add(new CharacterSeed(cfg));

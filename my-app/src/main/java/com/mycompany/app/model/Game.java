@@ -10,9 +10,6 @@ import com.mycompany.app.view.json_reader;
 
 public class Game {
 
-    
-
-    //private boolean Over = false;
     public int currency;
     private float elapsedTime = 0f;
     private Difficulty difficulty;
@@ -27,11 +24,12 @@ public class Game {
 
 
 
-    public Game() {
+    public Game(Difficulty difficulty) {
+        this.difficulty = difficulty;
         this.js = new json_reader();
         // Lägg till initiala enemys och characters här om det behövs
         this.currency = 200;
-        this.entity_manager = new EntityManager(js.config,this.lawn);
+        this.entity_manager = new EntityManager(js.config,this.lawn,difficulty);
     }
 
 
@@ -79,11 +77,10 @@ public class Game {
         return this.entity_manager;
     }
     public void updateGameState(double deltaTime) {
-
         if (!gameOver) {        
             entity_manager.updateGameState(deltaTime);
             if (entity_manager.checkEnemy()) {
-                setGameOver(finalTime);
+                setGameOver((int)this.elapsedTime);
             }
             else{
                 elapsedTime+=deltaTime;
@@ -116,11 +113,11 @@ public class Game {
     }
 
     public boolean isPaused() {
-    return paused;
+        return paused;
     }
 
     public void setPaused(boolean paused) {
-    this.paused = paused;
+        this.paused = paused;
     }
 
     public Difficulty getDifficulty() {
@@ -140,8 +137,9 @@ public class Game {
     }
 
     public void setGameOver(int time) {
-        this.gameOver = true;
         this.finalTime = time;
+        this.gameOver = true;
+        
     }
 
     public boolean isGameOver() {

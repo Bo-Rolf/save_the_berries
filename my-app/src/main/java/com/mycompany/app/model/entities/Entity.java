@@ -63,7 +63,7 @@ public abstract class Entity implements Damageable {
     }
     @Override
     public void die() {
-        takeDamage(this.health);
+        this.health=0;
     }
     public String getTexturestring(){
         return this.textureString;

@@ -39,9 +39,16 @@ public class Character extends Entity implements Placeable {
     }
 
     @Override
+    public void takeDamage(int damage){
+        super.takeDamage(damage);
+        if(!this.isAlive()){
+            die();
+        }
+    }
+
+    @Override
     public void die() {
         super.die();
-
         removeFromTile();
         // Notify tile-listener that the character has died
     }

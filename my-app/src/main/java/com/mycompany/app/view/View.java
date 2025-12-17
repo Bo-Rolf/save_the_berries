@@ -31,7 +31,8 @@ public class View {
     private Texture backgroundTexture;   
     private BitmapFont font;
 
-    public View(Game model) {
+    public View(Game game) {
+        this.game = game;
         //this.model=model;
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
         config.setTitle("Game");
@@ -43,8 +44,8 @@ public class View {
     
     public void create() {
         font = new BitmapFont();
-        this.game = new Game();
-        this.lawn = game.getLawn();
+        
+        this.lawn = this.game.getLawn();
         viewport = new FitViewport(800, 600);
         spriteBatch = new SpriteBatch();
         backgroundTexture = new Texture("board.png");
@@ -58,6 +59,7 @@ public class View {
         characterSeedView = new CharacterSeedView(t,this.whiteTexture,this.font);
         controller = new Controller(this.game, viewport);
         this.characterRenderer = new CharacterRenderer(t);
+        
     }
 
     public void resize(int width, int height) {
@@ -80,27 +82,18 @@ public class View {
         spriteBatch.begin();
         spriteBatch.draw(backgroundTexture, 0, 0, viewport.getWorldWidth(), viewport.getWorldHeight());
         // draw the character seed icons in the top-left of the screen (pass viewport and selected index)
-
-        
         characterSeedView.draw(spriteBatch, viewport, entitys.getcharacterSeeds(), 10, 10, 64, 8, game.getSelectedSeedIndex());
-
-        // Grid
-
-
-
         controller.handleInput(gridX, gridY, tileW, tileH);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        
-        
         characterRenderer.render(entitys, spriteBatch, tileW, tileH,gridX,gridY);
         font.draw(spriteBatch,"Currency:"+this.game.get_current_currency(),500,500);
         font.draw(spriteBatch, "Time: " + (int)game.getelapsedtime(), viewport.getWorldWidth() - 100, viewport.getWorldHeight() - 10);
         shapeRenderer.end();
         spriteBatch.end();
-
         this.controller.update(delta);
-        // Draw grid
-        
+        if(game.isGameOver()){
+
+        }
     }
 
 

@@ -87,7 +87,7 @@ quitBtn.addListener(new ClickListener() {
     }
 
     private void startGame(Difficulty diff) {
-        Game game = new Game();
+        Game game = new Game(diff);
         if(stage != null) stage.dispose();
         //this.mainGame.setScreen(mainGame,game,diff);
         mainGame.setScreen(new GameScreen(mainGame, game, diff));
